@@ -8,6 +8,10 @@ import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './web/footer/footer.component';
 import { HeaderComponent } from './web/header/header.component';
+import { MenuComponent } from './web/menu/menu.component';
+import { HourFormComponent } from './web/hour-form/hour-form.component';
+import { HourTableComponent } from './web/hour-table/hour-table.component';
+import { ModalsComponent } from './web/menu/modals/modals.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +20,11 @@ import { HeaderComponent } from './web/header/header.component';
     AdminComponent,
     HomeComponent,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
+    MenuComponent,
+    HourFormComponent,
+    HourTableComponent,
+    ModalsComponent
   ],
   imports: [
     BrowserModule,
