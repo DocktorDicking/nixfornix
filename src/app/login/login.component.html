@@ -1,1 +1,42 @@
-<p>login works!</p>
+<div class="login-page">
+  <div class="container d-flex align-items-center">
+    <div class="form-holder has-shadow">
+      <div class="row">
+        <!-- Logo & Information Panel-->
+        <div class="col-lg-6">
+          <div class="info d-flex align-items-center">
+            <div class="content">
+              <div class="logo">
+                <img src="../../assets/img/CompanyLogo.png" class="img-fluid">
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Form Panel    -->
+        <div class="col-lg-6 bg-white">
+          <div class="form d-flex align-items-center">
+            <div class="content">
+              <form id="login-form" method="post">
+                <div class="form-group">
+                  <input id="login-username" type="text" name="loginUsername" required="" oninvalid="this.setCustomValidity('Please enter valid user name')"
+                         oninput="setCustomValidity('')" class="input-material">
+                  <label for="login-username" class="label-material">User Name</label>
+                </div>
+                <div class="form-group">
+                  <input id="login-password" type="password" name="loginPassword" required="" oninvalid="this.setCustomValidity('Please enter password')"
+                         oninput="setCustomValidity('')" class="input-material">
+                  <label for="login-password" class="label-material">Password</label>
+                  <!--</div><button id="login" href="home.html" class="btn btn-primary">Inloggen</button>-->
+                </div><a id="login" href="home.html" class="btn btn-primary">Inloggen</a>
+                <!-- @FIXME: Change <a> to <btn>. <a> for demo purpose. -->
+              </form><a href="#" class="forgot-pass">Wachtwoord vergeten ?</a><br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="copyrights text-center">
+    <p class="no-margin-bottom"><small>2019 &copy; Software by <a href="http://lucacatering.nl">Nix4Nix</a>. Powered by <a href="https://angular.io">Angular</a>. Design by <a href="https://bootstrapious.com">Bootstrapious</a>.</small></p>
+  </div>
+</div>
