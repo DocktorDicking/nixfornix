@@ -1,0 +1,50 @@
+.login-page .form-holder .info {
+  background: #404040;
+  color: #fff;
+}
+
+.small-chart-padding {
+  padding-top: 5%;
+  padding-bottom: 16.5%;
+}
+
+.defaultFontColor {
+  color: #429244;
+}
+
+.home-chartSwitch {
+  margin-left: 5%;
+  font-size: 130%;
+  color: #429244;
+  background: none;
+  border: none;
+}
+
+.home-chartSwitch:hover {
+  color: #367838;
+}
+
+.home-chartSwitch:focus {
+  outline: 0;
+}
+
+.centerCol6 {
+  margin-left: 22%;
+}
+
+@media only screen and (max-width: 500px)  {
+  .centerCol6 {
+    margin-left: 0%;
+  }
+}
+
+#home-lineCanvas {
+  display: block;
+}
+
+#home-barCanvas {
+  display: none;
+}
+
+
+

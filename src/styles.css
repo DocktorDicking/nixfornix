@@ -1,1 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
+@import "css/font.global.css";
+@import "css/default.global.css";
+@import "css/custom.global.css";
