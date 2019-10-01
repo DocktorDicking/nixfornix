@@ -1,3 +1,6 @@
+/**
+ * Datamodel for user data.
+ */
 export class User {
   private id: number;
   private _firstName: string;
