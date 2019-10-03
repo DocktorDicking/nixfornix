@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {TimeRow} from '../../shared/models/timeRow.mode';
+import {TimeRow} from '../../shared/models/timeRow.model';
 
 @Component({
   selector: 'app-hour-form',
