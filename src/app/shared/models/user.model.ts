@@ -2,11 +2,15 @@
  * Datamodel for user data.
  */
 export class User {
-  private id: number;
+  private _id: number;
   private _firstName: string;
   private _prepostition: string;
   private _lastName: string;
   private _username: string;
+
+  constructor(id: number) {
+    this._id = id;
+  }
 
   get firstName(): string {
     return this._firstName;
@@ -17,7 +21,8 @@ export class User {
   }
 
   get FullName() {
-    return this._firstName + ' ' + this._prepostition + ' ' + this._lastName;
+    const prepostition = this._prepostition ? ' ' + this._prepostition + ' ' : ' ';
+    return this._firstName + prepostition + this._lastName;
   }
 
   set firstName(value: string) {

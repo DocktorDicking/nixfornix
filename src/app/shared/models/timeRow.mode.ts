@@ -9,6 +9,8 @@ export class TimeRow {
   private _location: string;
   private _description: string;
 
+  constructor() {}
+
   set date(value: string) {
     this._date = value;
   }

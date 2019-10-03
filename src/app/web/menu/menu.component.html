@@ -15,18 +15,10 @@
     <li><a href="#employees" aria-expanded="false" data-toggle="collapse"> <i
       class="icon-user-1"></i>Medewerkers </a>
       <ul id="employees" class="collapse list-unstyled ">
-        <li><a href="employee.html">Vic van Wieringen</a></li>
-        <li><a href="employee.html">Pip van Wieringen</a></li>
-        <li><a href="employee.html">Gwenn Tomei</a></li>
-        <li><a href="employee.html">Nico van Wieringen</a></li>
-        <li><a href="employee.html">Jim van Wieringen</a></li>
-        <li><a href="employee.html">Irma Eykens</a></li>
-        <li><a href="employee.html">Anouk Kroon</a></li>
-        <li><a href="employee.html">Ton Tomei</a></li>
-        <li><a href="employee.html">Kitty Corel</a></li>
-        <li><a href="employee.html">Jack Corel</a></li>
-        <li><a href="employee.html">Dick Corel</a></li>
-        <li><a href="employee.html">Ronald Corel</a></li>
+        <li *ngFor="let user of users">
+          <a href="#">{{ user.FullName }}</a>
+        </li>
+
       </ul>
     </li>
     <li><a href="login.html"> <i class="icon-logout"></i>Uitloggen </a></li>
