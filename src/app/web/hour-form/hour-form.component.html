@@ -17,11 +17,10 @@
             <input [(ngModel)]="time.stopTime" name="stopTime" type="time"  placeholder="Tijd" class="form-control" >
           </div>
           <div class="form-group">
-            <label class="col-sm-3 form-control-label">Pauze?</label>
+            <label class="col-sm-3 form-control-label">Pauze</label>
             <div class="col-sm-9 select">
               <select [(ngModel)]="time.break" name="break" class="form-control mb-3">
-                <option [ngValue]="true">Ja</option>
-                <option [ngValue]="false">Nee</option>
+                <option *ngFor="let breaktime of breaktimes" value="{{breaktime}}" [ngValue]="breaktime">{{getBreakName(breaktime)}}</option>
               </select>
             </div>
           </div>
@@ -31,7 +30,7 @@
               <select [(ngModel)]="time.location" name="location" class="form-control mb-3">
                 <option [ngValue]="'Luca Catering'">Luca catering</option>
                 <option [ngValue]="'DKA'">DKA</option>
-                <option [ngValue]="'Anders'">Anders</option>
+                <option [ngValue]="'Extern'">Extern (invullen bij omschrijving)</option>
               </select>
             </div>
           </div>
