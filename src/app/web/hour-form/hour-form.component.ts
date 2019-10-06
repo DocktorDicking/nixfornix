@@ -6,11 +6,16 @@ import {TimeService} from '../../shared/services/time.service';
   selector: 'app-hour-form',
   templateUrl: './hour-form.component.html',
   styleUrls: ['./hour-form.component.css'],
-  providers: [TimeService]
+  providers: []
 })
 export class HourFormComponent implements OnInit {
-  time: TimeRow = new TimeRow();
+  private time: TimeRow;
   breaktimes = [0, 15, 30, 45, 60];
+
+  submitTime() {
+    this.timeService.onRegisterTime(this.time);
+    this.time = this.timeService.newTimeObj();
+  }
 
   getBreakName(num: number) {
     if (num === 0) {
@@ -24,7 +29,7 @@ export class HourFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timeService.resetTimeObj(this.time);
+    this.time = this.timeService.newTimeObj();
   }
 
 }
