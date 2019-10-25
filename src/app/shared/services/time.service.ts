@@ -9,13 +9,17 @@ export class TimeService {
 
   onRegisterTime(time: TimeRow) {
     const pushTime = new TimeRow();
-    pushTime.location = time.location;
-    pushTime.startTime = time.startTime;
-    pushTime.stopTime = time.stopTime;
-    pushTime.break = time.break;
-    pushTime.date = time.date;
-    pushTime.description = time.description;
+    let newId = 1;
+    const lastTimeRow = this._times[this._times.length - 1];
 
+    if (typeof lastTimeRow !== 'undefined') {
+      if (typeof lastTimeRow.id !== 'undefined') {
+        newId = lastTimeRow.id + 1; // TODO: change id assignment when db is available.
+      }
+    }
+    pushTime.id = newId;
+
+    pushTime.cloneTimeRow(time);
     this._times.push(pushTime);
     this.timesChanged.emit(this._times);
   }
@@ -31,5 +35,25 @@ export class TimeService {
     return this._times.slice(); // Slice returns a copy, so the source data cannot be changed.
   }
 
-  // TODO: add function to calculate worked hours.
+  getOneTime(id: number): TimeRow {
+    const time = new TimeRow();
+    for (let timeRef of this._times) {
+      if (Number(timeRef.id) === id) {
+
+        return ;
+      }
+
+    }
+
+    return time;
+  }
+
+  updateTime(id: number): boolean {return null;}
+
+  deleteTime(id: number): boolean {return null;}
+
+
+
+
+  // TODO: add function to calculate worked hours. And other CRUD functions.
 }

@@ -2,6 +2,7 @@
  * Datamodel for timeRow. Used for hour registration and reading.
  */
 export class TimeRow {
+  private _id: number;
   private _date: string;
   private _startTime: string;
   private _stopTime: string;
@@ -10,6 +11,23 @@ export class TimeRow {
   private _description: string;
 
   constructor() {}
+
+  /**
+   * Clones data of parameter time into this object. This will delete all previous data in this TimeRow.
+   * @param time TimeRow
+   */
+  cloneTimeRow(time: TimeRow) {
+    this._date = time.date;
+    this._startTime = time.startTime;
+    this._stopTime = time.stopTime;
+    this._break = time.break;
+    this._location = time.location;
+    this._description = time.description;
+  }
+
+  set id(value: number) { // TODO: Make return boolean to check if value was correct? Does Angular have a build in mechanism for this?
+    this._id = value;
+  }
 
   set date(value: string) {
     this._date = value;
@@ -33,6 +51,10 @@ export class TimeRow {
 
   set description(value: string) {
     this._description = value;
+  }
+
+  get id(): number {
+    return this._id;
   }
 
   get date(): string {

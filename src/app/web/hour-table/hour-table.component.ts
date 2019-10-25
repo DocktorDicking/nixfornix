@@ -9,7 +9,7 @@ import {TimeRow} from '../../shared/models/timeRow.model';
   providers: []
 })
 export class HourTableComponent implements OnInit {
-  @Input() times: TimeRow[];
+  @Input() times: TimeRow[] = [];
 
   constructor(private timeService: TimeService) { }
 
