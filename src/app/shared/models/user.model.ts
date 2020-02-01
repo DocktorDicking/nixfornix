@@ -1,5 +1,5 @@
 /**
- * Datamodel for user data.
+ * Data model for user data.
  */
 export class User {
   private _id: number;
@@ -7,6 +7,8 @@ export class User {
   private _middleName: string;
   private _lastName: string;
   private _username: string;
+  private _role: string;
+  private _password: string;
 
   constructor(id: number) {
     this._id = id;
@@ -20,9 +22,25 @@ export class User {
     return this._lastName;
   }
 
-  get FullName() {
+  get fullName() {
     const prepostition = this._middleName ? ' ' + this._middleName + ' ' : ' ';
     return this._firstName + prepostition + this._lastName;
+  }
+
+  get role() {
+    return this._role;
+  }
+
+  get password() {
+    return this._password;
+  }
+
+  get username() {
+    return this._username;
+  }
+
+  set password(value: string) {
+    this._password = value;
   }
 
   set firstName(value: string) {
