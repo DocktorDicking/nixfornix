@@ -14,7 +14,7 @@
         <div class="col-lg-6 bg-white">
           <div class="form d-flex align-items-center">
             <div class="content">
-              <form #loginform="ngForm">
+              <form #loginform="ngForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label for="username" class="label-material">Gebruikersnaam</label>
                   <input [(ngModel)]="user.username" name="username" type="text" class="form-control input-material" id="username" required>
@@ -27,7 +27,7 @@
 
                 <button type="submit" class="btn btn-primary">Inloggen</button>
               </form>
-              <!--<a href="#" class="forgot-pass">Wachtwoord vergeten ?</a><br>-->
+              <!--<a href="#" class="forgot-pass">Wachtwoord vergeten ?</a><br>--> <!-- TODO: Implement something for forgotten passwords -->
             </div>
           </div>
         </div>
