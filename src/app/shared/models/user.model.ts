@@ -4,7 +4,7 @@
 export class User {
   private _id: number;
   private _firstName: string;
-  private _prepostition: string;
+  private _middleName: string;
   private _lastName: string;
   private _username: string;
 
@@ -21,7 +21,7 @@ export class User {
   }
 
   get FullName() {
-    const prepostition = this._prepostition ? ' ' + this._prepostition + ' ' : ' ';
+    const prepostition = this._middleName ? ' ' + this._middleName + ' ' : ' ';
     return this._firstName + prepostition + this._lastName;
   }
 
@@ -29,8 +29,8 @@ export class User {
     this._firstName = value;
   }
 
-  set prepostition(value: string) {
-    this._prepostition = value;
+  set middleName(value: string) {
+    this._middleName = value;
   }
 
   set lastName(value: string) {

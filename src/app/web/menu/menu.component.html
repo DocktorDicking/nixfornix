@@ -8,7 +8,8 @@
       <p>Beheerder</p>
     </div>
   </div>
-  <!-- Sidebar Navidation Menus--><span class="heading">Menu</span>
+  <!-- Sidebar Navidation Menus-->
+<span class="heading">Menu</span>
   <ul class="list-unstyled">
     <li class="active"><a href="home.html"> <i class="fa fa-bar-chart"></i>Home </a></li>
     <li><a href="clientManagement.html"> <i class="icon-controls"></i>Beheer gebruikers </a></li>
@@ -18,18 +19,14 @@
         <li *ngFor="let user of users">
           <a href="#">{{ user.FullName }}</a>
         </li>
-
       </ul>
     </li>
     <li><a href="login.html"> <i class="icon-logout"></i>Uitloggen </a></li>
   </ul>
   <span class="heading">Overig</span>
   <ul class="list-unstyled">
-    <li><a href="#" data-toggle="modal" data-target="#about"> <i class="icon-info"></i>Over deze applicatie </a>
-    </li>
-    <li><a href="#" data-toggle="modal" data-target="#contactSupport"> <i class="icon-paper-and-pencil"></i>Help
-    </a></li>
-    <!-- Onclick een popup met contact gegevens Jim -->
+    <li><a href="#" data-toggle="modal" data-target="#about"> <i class="icon-info"></i>Over deze applicatie </a></li>
+    <li><a href="#" data-toggle="modal" data-target="#contactSupport"><i class="icon-paper-and-pencil"></i>Help</a></li>
   </ul>
 
 <!-- Sidebar Navigation end-->
