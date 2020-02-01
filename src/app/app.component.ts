@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, NgModule} from '@angular/core';
 import {Title, Meta} from '@angular/platform-browser';
 import {TimeService} from './shared/services/time.service';
 

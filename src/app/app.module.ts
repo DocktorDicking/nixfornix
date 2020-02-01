@@ -1,7 +1,10 @@
+/** Imports */
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {SnackbarModule} from 'ngx-snackbar'; // TODO: Create some way to show fancy snackbars (in app notification stuff)
 
+/** Declarations */
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -12,7 +15,9 @@ import { HeaderComponent } from './web/header/header.component';
 import { MenuComponent } from './web/menu/menu.component';
 import { HourFormComponent } from './web/hour-form/hour-form.component';
 import { HourTableComponent } from './web/hour-table/hour-table.component';
-import { ModalsComponent } from './web/menu/modals/modals.component';
+import { HelpModalComponent } from './web/modals/help/help.modal.component';
+import { HourUpdateComponent } from './web/modals/hour-update/hour-update.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -25,14 +30,17 @@ import { ModalsComponent } from './web/menu/modals/modals.component';
     MenuComponent,
     HourFormComponent,
     HourTableComponent,
-    ModalsComponent
+    HelpModalComponent,
+    HourUpdateComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    SnackbarModule.forRoot()
   ],
-  providers: [],
+  providers: [AppRoutingModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
