@@ -17,14 +17,21 @@
               <form #loginform="ngForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label for="username" class="label-material">Gebruikersnaam</label>
-                  <input [(ngModel)]="user.username" name="username" type="text" class="form-control input-material" id="username" required>
+                  <input [(ngModel)]="user.username" #username="ngModel"  name="username" id="username" type="text" class="form-control input-material" required minlength="3">
+                  <div *ngIf="username.invalid && username.touched" class="alert alert-warning">
+                    <div *ngIf="username.errors.required">
+                      Dit veld mag niet leeg zijn.
+                    </div>
+                    <div *ngIf="username.errors.minlength">
+                      Gebruikersnaam moet minimaal 4 karakters zijn.
+                    </div>
+                  </div>
                 </div>
 
                 <div class="form-group">
                   <label for="password" class="label-material">Password</label>
                   <input [(ngModel)]="user.password" name="password" type="password" class="form-control input-material" id="password" required>
                 </div>
-
                 <button type="submit" class="btn btn-primary">Inloggen</button>
               </form>
               <!--<a href="#" class="forgot-pass">Wachtwoord vergeten ?</a><br>--> <!-- TODO: Implement something for forgotten passwords -->
