@@ -14,6 +14,13 @@ export class User {
     this._id = id;
   }
 
+  public hasCredentials(): boolean {
+    if (this.username && this.password) {
+      return true;
+    }
+    return false;
+  }
+
   get firstName(): string {
     return this._firstName;
   }
@@ -31,11 +38,11 @@ export class User {
     return this._role;
   }
 
-  get password() {
+  get password(): string {
     return this._password;
   }
 
-  get username() {
+  get username(): string {
     return this._username;
   }
 

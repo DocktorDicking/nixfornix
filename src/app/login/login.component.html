@@ -17,19 +17,25 @@
               <form #loginform="ngForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label for="username" class="label-material">Gebruikersnaam</label>
-                  <input [(ngModel)]="user.username" #username="ngModel"  name="username" id="username" type="text" class="form-control input-material" required minlength="3">
-                  <div *ngIf="username.invalid && username.touched" class="alert alert-warning">
-                    <div *ngIf="username.errors.required">
-                      Dit veld mag niet leeg zijn.
+                  <input [(ngModel)]="user.username" #username="ngModel"  name="username" id="username" type="text" class="form-control input-material" required minlength="3" #spy>
+                  <!-- Error messages -->
+                  <div class="alert-text" id="alert-text">
+                    <div *ngIf="username.invalid && username.touched" class="shakeIt">
+                      <div *ngIf="username.errors.required">
+                        Dit veld mag niet leeg zijn.
+                      </div>
+                      <div *ngIf="username.errors.minlength">
+                        Gebruikersnaam moet minimaal 3 karakters zijn.
+                      </div>
                     </div>
-                    <div *ngIf="username.errors.minlength">
-                      Gebruikersnaam moet minimaal 3 karakters zijn.
+                    <div *ngIf="!this.canLogin && this.message" class="shakeIt">
+                      <p [textContent]="this.message"></p>
                     </div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="password" class="label-material">Password</label>
+                  <label for="password" class="label-material">Wachtwoord</label>
                   <input [(ngModel)]="user.password" name="password" type="password" class="form-control input-material" id="password" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Inloggen</button>

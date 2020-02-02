@@ -8,22 +8,45 @@ import { User } from '../shared/models/user.model';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  submitted = false;
-  user = new User(0);
+  users = {
+    jim: 'welkom01',
+    nico: 'welkom02',
+    admin: 'admin'
+  };
+
+  canLogin: boolean;
+  message: string;
+  user = new User(null);
 
   onSubmit() {
-    this.submitted = true;
-
-    // Get form data
-    // Create http request
-    // Send to server
-    // If user != null redirect and load user data.
-
-    this.router.navigate(['./home']);
+    this.canLogin = this.login(this.user);
+    if (this.canLogin) {
+      this.router.navigate(['./home']);
+    } else if (this.message) {
+      setTimeout(() => {
+        this.message = undefined;  // TODO: Add directive to error msges and fadeout after 4 seconds.
+      }, 5000);
+    }
   }
 
   constructor(private router: Router) { }
 
   ngOnInit() {
+  }
+
+  private login(user: User) {
+    if (!user.hasCredentials()) {
+      return false;
+    }
+
+    // TODO: move to login service when backend haves database.
+    const data = this.users;
+    // @ts-ignore
+    if (!user.username in data || !(data[user.username] === user.password)) {
+      this.message = 'Gebruikersnaam of wachtwoord incorrect.'
+      return false;
+    } else {
+      return true;
+    }
   }
 }
