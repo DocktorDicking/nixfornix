@@ -14,10 +14,11 @@ import { FooterComponent } from './web/footer/footer.component';
 import { HeaderComponent } from './web/header/header.component';
 import { MenuComponent } from './web/menu/menu.component';
 import { HourFormComponent } from './web/hour-form/hour-form.component';
-import { HourTableComponent } from './web/hour-table/hour-table.component';
+import { HourTableRecentComponent } from './web/hour-table-recent/hour-table-recent.component';
 import { HelpModalComponent } from './web/modals/help/help.modal.component';
 import { HourUpdateComponent } from './web/modals/hour-update/hour-update.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { HourTableTotalComponent } from './web/hour-table-total/hour-table-total.component';
 
 @NgModule({
   declarations: [
@@ -29,10 +30,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
     HeaderComponent,
     MenuComponent,
     HourFormComponent,
-    HourTableComponent,
+    HourTableRecentComponent,
     HelpModalComponent,
     HourUpdateComponent,
     NotFoundComponent,
+    HourTableTotalComponent,
   ],
   imports: [
     BrowserModule,

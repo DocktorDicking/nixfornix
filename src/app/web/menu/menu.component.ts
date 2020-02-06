@@ -7,6 +7,10 @@ import {User} from '../../shared/models/user.model';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+
+  constructor() {
+    this.generateUsers(10);
+  }
   firstnames: string[] = [
     'Jim',
     'Anouk',
@@ -43,11 +47,15 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  constructor() {
-    this.generateUsers(10);
+  loadUserManagement() {
+
+  }
+
+  loadHome() {
+
   }
 
   ngOnInit() {
-  }
 
+  }
 }

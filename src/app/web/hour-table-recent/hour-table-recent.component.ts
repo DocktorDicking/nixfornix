@@ -4,11 +4,11 @@ import {TimeRow} from '../../shared/models/timeRow.model';
 
 @Component({
   selector: 'app-hour-table',
-  templateUrl: './hour-table.component.html',
-  styleUrls: ['./hour-table.component.css'],
+  templateUrl: './hour-table.component-recent.html',
+  styleUrls: ['./hour-table-recent.component.css'],
   providers: []
 })
-export class HourTableComponent implements OnInit {
+export class HourTableRecentComponent implements OnInit {
   @Input() times: TimeRow[] = [];
 
   constructor(private timeService: TimeService) { }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HourTableComponent } from './hour-table.component';
+import { HourTableRecentComponent } from './hour-table-recent.component';
 
 describe('HourTableComponent', () => {
-  let component: HourTableComponent;
-  let fixture: ComponentFixture<HourTableComponent>;
+  let component: HourTableRecentComponent;
+  let fixture: ComponentFixture<HourTableRecentComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HourTableComponent ]
+      declarations: [ HourTableRecentComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HourTableComponent);
+    fixture = TestBed.createComponent(HourTableRecentComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
