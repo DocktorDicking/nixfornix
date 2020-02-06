@@ -1,5 +1,6 @@
 import {TimeRow} from '../models/timeRow.model';
 import {EventEmitter} from '@angular/core';
+import {User} from '../models/user.model';
 
 export class TimeService {
   timesChanged = new EventEmitter<TimeRow[]>();
@@ -7,6 +8,11 @@ export class TimeService {
   private _defaultBreakTime = 30; // TODO: Move to settings file or something alike.
   private _defaultLocation = 'Luca Catering'; // TODO: Change to numeric value
 
+  /**
+   * Registered a time row.
+   * TODO: Add logic to save to database.
+   * @param time
+   */
   onRegisterTime(time: TimeRow) {
     const pushTime = new TimeRow();
     let newId = 1;
@@ -24,6 +30,9 @@ export class TimeService {
     this.timesChanged.emit(this._times);
   }
 
+  /**
+   * Returns a new time object.
+   */
   newTimeObj(): TimeRow {
     const time = new TimeRow();
     time.break = String(this._defaultBreakTime);
@@ -31,7 +40,10 @@ export class TimeService {
     return time;
   }
 
-  get allTimes(): Array<TimeRow> {
+  /**
+   * Will return all times of a user.
+   */
+  getAllTimes(user: User): Array<TimeRow> {
     return this._times.slice(); // Slice returns a copy, so the source data cannot be changed.
   }
 

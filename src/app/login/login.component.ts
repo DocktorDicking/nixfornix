@@ -18,6 +18,9 @@ export class LoginComponent implements OnInit {
   message: string;
   user = new User(null);
 
+  /**
+   * Will submit data from login form and check if credentials exist and match.
+   */
   onSubmit() {
     this.canLogin = this.login(this.user);
     if (this.canLogin) {
@@ -34,6 +37,10 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  /**
+   * This method need to be moved the the login service sometime.
+   * @param user
+   */
   private login(user: User) {
     if (!user.hasCredentials()) {
       return false;
