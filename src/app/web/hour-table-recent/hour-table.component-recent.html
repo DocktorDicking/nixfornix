@@ -22,8 +22,7 @@
             <td>{{time.startTime}}</td>
             <td>{{time.stopTime}}</td>
             <td>{{time.break}}</td>
-            <td>{{time.break}}</td> <!-- TODO: Change to worked hours -->
-            <td>{{time.id}}</td> <!-- TODO: DELETE AFTER TESTING -->
+            <td>{{timeService.calculateWorkedHours(time)}}</td> <!-- TODO: Change to worked hours -->
           </tr>
           </tbody>
         </table>

@@ -1,6 +1,7 @@
 import {TimeRow} from '../models/timeRow.model';
 import {EventEmitter} from '@angular/core';
 import {User} from '../models/user.model';
+import {Time} from '@angular/common';
 
 export class TimeService {
   timesChanged = new EventEmitter<TimeRow[]>();
@@ -40,16 +41,38 @@ export class TimeService {
     return time;
   }
 
+  calculateWorkedHours(time: TimeRow): number {
+    const splitStart = time.startTime.split(':', 2);
+    const splitStop = time.stopTime.split(':', 2);
+
+    // Create dateobjects
+    const start = new Date(time.date);
+    const end = new Date(time.date);
+    start.setHours(parseInt(splitStart[0]) , parseInt(splitStart[1]));
+    end.setHours(parseInt(splitStop[0]), parseInt(splitStop[1]));
+
+    // If endtime is past midnight add a day to end
+    if (end < start) {
+      end.setDate(end.getDate() + 1);
+    }
+
+    // @ts-ignore
+    let diff = (end - start); // milliseconds
+    let minutes = Math.floor(diff / 1000 / 60);
+    minutes = minutes - time.break;
+    return (minutes / 60);
+  }
+
   /**
    * Will return all times of a user.
    */
-  getAllTimes(user: User): Array<TimeRow> {
+  getAllTimes(user: User): Array<TimeRow> { // TODO: Make this fetch data from a database
     return this._times.slice(); // Slice returns a copy, so the source data cannot be changed.
   }
 
   getOneTime(id: number): TimeRow {
     const time = new TimeRow();
-    for (let timeRef of this._times) {
+    for (const timeRef of this._times) {
       if (Number(timeRef.id) === id) {
 
         return ;
@@ -60,12 +83,12 @@ export class TimeService {
     return time;
   }
 
-  updateTime(id: number): boolean {return null;}
+  updateTime(id: number): boolean {return null; }
 
-  deleteTime(id: number): boolean {return null;}
-
-
+  deleteTime(id: number): boolean {return null; }
 
 
-  // TODO: add function to calculate worked hours. And other CRUD functions.
+
+
+  // TODO: add function to calculate worked hours.
 }
