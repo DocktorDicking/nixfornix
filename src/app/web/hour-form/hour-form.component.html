@@ -1,29 +1,58 @@
-<section class="no-padding-bottom">
+<!--<section class="no-padding-bottom">-->
   <div class="col-lg-6 centerCol6">
     <div class="block">
       <div class="title"><strong class="d-block">Uren registreren</strong><span class="d-block"></span></div>
       <div class="block-body">
-        <form>
+
+        <form #hourform="ngForm" (ngSubmit)="submitTime()">
           <div class="form-group">
-            <label class="form-control-label">Datum</label>
-            <input [(ngModel)]="this.time.date" name="date" type="date" placeholder="Datum" class="form-control">
+            <label for="date" class="form-control-label">Datum</label>
+            <input [(ngModel)]="this.time.date" #date="ngModel" id="date" name="date" type="date" placeholder="Datum" class="form-control">
+            <!-- Error messages -->
+            <div class="alert-text">
+              <div *ngIf="date.invalid && date.touched" class="shakeIt">
+                <div *ngIf="date.errors.required">
+                  Dit veld mag niet leeg zijn.
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="form-group">
-            <label class="form-control-label">Begintijd</label>
-            <input [(ngModel)]="this.time.startTime" name="startTime" type="time"  placeholder="Tijd" class="form-control">
+            <label for="starttime" class="form-control-label">Begintijd</label>
+            <input [(ngModel)]="this.time.startTime" #starttime="ngModel" id="starttime" name="starttime" type="time"  placeholder="Tijd" class="form-control">
+            <!-- Error messages -->
+            <div class="alert-text">
+              <div *ngIf="starttime.invalid && starttime.touched" class="shakeIt">
+                <div *ngIf="starttime.errors.required">
+                  Dit veld mag niet leeg zijn.
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="form-group">
             <label class="form-control-label">Eindtijd</label>
-            <input [(ngModel)]="this.time.stopTime" name="stopTime" type="time"  placeholder="Tijd" class="form-control" >
+            <input [(ngModel)]="this.time.stopTime" #stoptime="ngModel" id="stoptime" name="stoptime" type="time"  placeholder="Tijd" class="form-control" >
+            <!-- Error messages -->
+            <div class="alert-text">
+              <div *ngIf="stoptime.invalid && stoptime.touched" class="shakeIt">
+                <div *ngIf="stoptime.errors.required">
+                  Dit veld mag niet leeg zijn.
+                </div>
+              </div>
+            </div>
           </div>
+
           <div class="form-group">
             <label class="col-sm-3 form-control-label">Pauze</label>
             <div class="col-sm-9 select">
               <select [(ngModel)]="this.time.break" name="break" class="form-control mb-3">
-                <option *ngFor="let breaktime of breaktimes" value="{{breaktime}}" [ngValue]="breaktime">{{getBreakName(breaktime)}}</option>
+                <option *ngFor="let breaktime of breaktimes" [ngValue]="breaktime">{{getBreakName(breaktime)}}</option>
               </select>
             </div>
           </div>
+
           <div class="form-group">
             <label class="col-sm-3 form-control-label">Locatie</label>
             <div class="col-sm-9 select">
@@ -34,16 +63,21 @@
               </select>
             </div>
           </div>
+
           <div class="form-group">
             <label class="form-control-label">Omschrijving</label>
             <input [(ngModel)]="this.time.description" type="text" name="description" placeholder="(optioneel)" class="form-control">
           </div>
 
-          <div class="form-group">
-            <input (click)="submitTime()" type="submit" value="Registreren" class="btn btn-primary">
+          <!-- Error messages -->
+          <div class="alert-text">
+            <div *ngIf="this.message" class="shakeIt">
+              <p [textContent]="this.message"></p>
+            </div>
           </div>
+          <button type="submit" class="btn btn-primary">Registreren</button>
         </form>
       </div>
     </div>
   </div>
-</section>
+<!--</section>-->
