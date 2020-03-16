@@ -6,7 +6,7 @@ export class TimeRow {
   private _date: string;
   private _startTime: string;
   private _stopTime: string;
-  private _break: string;
+  private _break: number;
   private _location: string;
   private _description: string;
 
@@ -41,7 +41,7 @@ export class TimeRow {
     this._stopTime = value;
   }
 
-  set break(value: string) {
+  set break(value: number) {
     this._break = value;
   }
 
@@ -69,7 +69,7 @@ export class TimeRow {
     return this._stopTime;
   }
 
-  get break(): string {
+  get break(): number {
     return this._break;
   }
 

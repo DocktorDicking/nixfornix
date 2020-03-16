@@ -1,7 +1,6 @@
 import {TimeRow} from '../models/timeRow.model';
 import {EventEmitter} from '@angular/core';
 import {User} from '../models/user.model';
-import {Time} from '@angular/common';
 
 export class TimeService {
   timesChanged = new EventEmitter<TimeRow[]>();
@@ -36,7 +35,7 @@ export class TimeService {
    */
   newTimeObj(): TimeRow {
     const time = new TimeRow();
-    time.break = String(this._defaultBreakTime);
+    time.break = this._defaultBreakTime;
     time.location = this._defaultLocation;
     return time;
   }
@@ -57,10 +56,10 @@ export class TimeService {
     }
 
     // @ts-ignore
-    let diff = (end - start); // milliseconds
+    const diff = (end - start); // milliseconds
     let minutes = Math.floor(diff / 1000 / 60);
     minutes = minutes - time.break;
-    return (minutes / 60);
+    return Math.floor((minutes / 60) * 100) / 100; // TODO: Bepalen hoe we afronden
   }
 
   /**
