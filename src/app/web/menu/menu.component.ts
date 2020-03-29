@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../shared/models/user.model';
+import { StateService } from '../../shared/services/state.service';
 
 @Component({
   selector: 'app-menu',
@@ -8,7 +9,7 @@ import {User} from '../../shared/models/user.model';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() {
+  constructor(private stateService: StateService) {
     this.generateUsers(10);
   }
   firstnames: string[] = [
@@ -47,15 +48,11 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  loadUserManagement() {
-
+  setState(state: string) {
+    debugger;
+    this.stateService.updateState(state);
   }
 
-  loadHome() {
-
-  }
-
-  ngOnInit() {
-
+  ngOnInit(): void {
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StateService } from '../shared/services/state.service';
 
 @Component({
   selector: 'app-admin',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-
-  constructor() { }
+  private state: string;
+  constructor(private stateService: StateService) { }
 
   ngOnInit() {
+    this.stateService.setUserRole('ADMIN');
+    this.stateService.currentState.subscribe(currentState => this.state = currentState);
   }
-
 }

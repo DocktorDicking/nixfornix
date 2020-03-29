@@ -10,11 +10,10 @@
   </div>
   <!-- Sidebar Navidation Menus-->
 <span class="heading">Menu</span>
-
   <!-- TODO: add some if contruction on roles to filter menu items -->
   <ul class="list-unstyled">
-    <li><a (click)="loadHome()"> <i class="fa fa-bar-chart"></i>Home </a></li>
-    <li><a (click)="loadUserManagement()"> <i class="icon-controls"></i>Beheer gebruikers </a></li>
+    <li><a (click)="setState('OVERVIEW')"> <i class="fa fa-bar-chart"></i>Overzicht </a></li>
+    <li><a (click)="setState('MANAGE_USERS')"> <i class="icon-controls"></i>Beheer gebruikers </a></li>
     <li><a href="#"> <i class="icon-controls"></i>Mijn uren </a></li>
 <!--    <li><a href="#"> <i class="icon-controls"></i>Mijn gegevens </a></li>-->
     <li><a href="#employees" aria-expanded="false" data-toggle="collapse"> <i

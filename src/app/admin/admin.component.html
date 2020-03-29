@@ -19,6 +19,14 @@
     </div>
 
     <app-hour-table></app-hour-table>
+
+    <div *ngIf="state == 'OVERVIEW'">
+      <app-hour-table></app-hour-table>
+    </div>
+    <div *ngIf="state == 'MANAGE_USERS'">
+      Kek
+    </div>
+
     <app-footer></app-footer>
   </div>
 </div>
