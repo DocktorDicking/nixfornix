@@ -14,14 +14,14 @@
   <ul class="list-unstyled">
     <li><a (click)="setState('OVERVIEW')"> <i class="fa fa-bar-chart"></i>Overzicht </a></li>
     <li><a (click)="setState('MANAGE_USERS')"> <i class="icon-controls"></i>Beheer gebruikers </a></li>
-    <li><a href="#"> <i class="icon-controls"></i>Mijn uren </a></li>
+    <li><a> <i class="icon-controls"></i>Mijn uren </a></li>
 <!--    <li><a href="#"> <i class="icon-controls"></i>Mijn gegevens </a></li>-->
     <li><a href="#employees" aria-expanded="false" data-toggle="collapse"> <i
       class="icon-user-1"></i>Medewerkers </a>
       <ul id="employees" class="collapse list-unstyled ">
         <!-- place holder -->
         <li *ngFor="let user of users">
-          <a href="#">{{ user.fullName }}</a>
+          <a>{{ user.fullName }}</a>
         </li>
       </ul>
     </li>
