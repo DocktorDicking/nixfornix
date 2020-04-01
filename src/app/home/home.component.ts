@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { StateService } from '../shared/services/state.service';
 
 @Component({
   selector: 'app-home',
@@ -8,12 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   private state: string;
 
-  constructor() { }
+  constructor(private stateService: StateService) { }
 
   ngOnInit() {
   }
 
   setState(state: string): void {
-
+    this.stateService.setUserRole('EMPLOYEE');
+    this.stateService.currentState.subscribe(currentState => this.state = currentState);
   }
 }

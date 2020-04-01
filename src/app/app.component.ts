@@ -2,12 +2,13 @@ import {Component, NgModule} from '@angular/core';
 import {Title, Meta} from '@angular/platform-browser';
 import {TimeService} from './shared/services/time.service';
 import {StateService} from './shared/services/state.service';
+import {SessionService} from './shared/services/session.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TimeService, StateService]
+  providers: [TimeService, StateService, SessionService]
 })
 export class AppComponent {
   title = 'nixfornix';

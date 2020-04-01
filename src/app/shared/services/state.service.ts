@@ -29,10 +29,6 @@ export class StateService {
     this.initState();
   }
 
-  // public getState(): string {
-  //   return this.currentState.getValue();
-  // }
-
   public updateState(state: string): void {
     if (this.userRole === 'ADMIN') {
       if (this.adminStates.includes(state)) {
