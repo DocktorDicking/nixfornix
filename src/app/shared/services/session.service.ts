@@ -8,10 +8,13 @@ import {User} from '../models/user.model';
 @Injectable()
 export class SessionService {
   // Tmp array with user objects
-  private users = [];
+  private users = {
+    jim: 'welkom01',
+    nico: 'welkom02',
+    admin: 'admin'
+  };
 
-
-  private login(user: User) {
+  public login(user: User) {
     if (!user.hasCredentials()) {
       return false;
     }
