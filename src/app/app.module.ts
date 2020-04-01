@@ -19,6 +19,7 @@ import { HelpModalComponent } from './web/modals/help/help.modal.component';
 import { HourUpdateComponent } from './web/modals/hour-update/hour-update.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HourTableTotalComponent } from './web/hour-table-total/hour-table-total.component';
+import { ManageUsersComponent } from './web/manage-users/manage-users.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { HourTableTotalComponent } from './web/hour-table-total/hour-table-total
     HourUpdateComponent,
     NotFoundComponent,
     HourTableTotalComponent,
+    ManageUsersComponent,
   ],
   imports: [
     BrowserModule,

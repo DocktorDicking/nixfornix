@@ -17,13 +17,13 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let time of this.times" class="htable-text">
-            <td>{{time.date}}</td>
-            <td>{{time.startTime}}</td>
-            <td>{{time.stopTime}}</td>
-            <td>{{time.break}}</td>
-            <td>{{timeService.calculateWorkedHours(time)}}</td> <!-- TODO: Change to worked hours -->
-          </tr>
+            <tr *ngFor="let time of this.times" class="htable-text">
+              <td>{{time.date}}</td>
+              <td>{{time.startTime}}</td>
+              <td>{{time.stopTime}}</td>
+              <td>{{time.break}}</td>
+              <td>{{timeService.calculateWorkedHours(time)}}</td> <!-- TODO: Change to worked hours -->
+            </tr>
           </tbody>
         </table>
       </div>

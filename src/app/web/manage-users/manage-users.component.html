@@ -1,0 +1,116 @@
+<section class="no-padding-bottom">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="block">
+        <div class="title"><strong>Gebruikers</strong></div>
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+              <th class="form-control-label">Naam</th>
+              <th class="form-control-label">Rol</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="htable-text">
+              <td>Jim van Wieringen</td>
+              <td>Admin</td>
+            </tr>
+            <tr class="htable-text">
+              <td>Nicolaas van Wieringen</td>
+              <td>Admin</td>
+            </tr>
+            <tr class="htable-text">
+              <td>Gerben Hendriks</td>
+              <td>Medewerker</td>
+            </tr>
+            <tr class="htable-text">
+              <td>Carmen Lucacatering</td>
+              <td>Medewerker</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="block">
+        <div class="title"><strong>Toevoegen/Aanpassen</strong></div>
+
+        <form #userForm="ngForm" (ngSubmit)="onSave()">
+          <div class="form-group">
+            <label for="date" class="form-control-label">Datum</label>
+            <input [(ngModel)]="this.time.date" #date="ngModel" id="date" name="date" type="date" placeholder="Datum" class="form-control">
+            <!-- Error messages -->
+            <div class="alert-text">
+              <div *ngIf="date.invalid && date.touched" class="shakeIt">
+                <div *ngIf="date.errors.required">
+                  Dit veld mag niet leeg zijn.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="starttime" class="form-control-label">Begintijd</label>
+            <input [(ngModel)]="this.time.startTime" #starttime="ngModel" id="starttime" name="starttime" type="time"  placeholder="Tijd" class="form-control">
+            <!-- Error messages -->
+            <div class="alert-text">
+              <div *ngIf="starttime.invalid && starttime.touched" class="shakeIt">
+                <div *ngIf="starttime.errors.required">
+                  Dit veld mag niet leeg zijn.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label">Eindtijd</label>
+            <input [(ngModel)]="this.time.stopTime" #stoptime="ngModel" id="stoptime" name="stoptime" type="time"  placeholder="Tijd" class="form-control" >
+            <!-- Error messages -->
+            <div class="alert-text">
+              <div *ngIf="stoptime.invalid && stoptime.touched" class="shakeIt">
+                <div *ngIf="stoptime.errors.required">
+                  Dit veld mag niet leeg zijn.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 form-control-label">Pauze</label>
+            <div class="col-sm-9 select">
+              <select [(ngModel)]="this.time.break" name="break" class="form-control mb-3">
+                <option *ngFor="let breaktime of breaktimes" [ngValue]="breaktime">{{getBreakName(breaktime)}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-3 form-control-label">Locatie</label>
+            <div class="col-sm-9 select">
+              <select [(ngModel)]="this.time.location" name="location" class="form-control mb-3">
+                <option [ngValue]="'Luca Catering'">Luca catering</option>
+                <option [ngValue]="'DKA'">DKA</option>
+                <option [ngValue]="'Extern'">Extern (invullen bij omschrijving)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-control-label">Omschrijving</label>
+            <input [(ngModel)]="this.time.description" type="text" name="description" placeholder="(optioneel)" class="form-control">
+          </div>
+
+          <!-- Error messages -->
+          <div class="alert-text">
+            <div *ngIf="this.message" class="shakeIt">
+              <p [textContent]="this.message"></p>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Registreren</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
