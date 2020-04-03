@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../shared/models/user.model';
+import {UserService} from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-manage-users',
@@ -7,12 +8,13 @@ import {User} from '../../shared/models/user.model';
   styleUrls: ['./manage-users.component.css']
 })
 export class ManageUsersComponent implements OnInit {
+  public users: User[];
 
-  user = new User(null);
-
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+    debugger;
+    this.users = this.userService.getUsers();
   }
 
   public onSave() {
