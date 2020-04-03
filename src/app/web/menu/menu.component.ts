@@ -49,7 +49,6 @@ export class MenuComponent implements OnInit {
   }
 
   setState(state: string) {
-    debugger;
     this.stateService.updateState(state);
   }
 

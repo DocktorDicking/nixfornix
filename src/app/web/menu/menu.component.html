@@ -14,8 +14,12 @@
   <!-- TODO: add some if contruction on roles to filter menu items -->
   <ul class="list-unstyled">
     <li><a (click)="setState('OVERVIEW')"> <i class="fa fa-bar-chart"></i>Overzicht </a></li>
-    <li><a (click)="setState('MANAGE_USERS')"> <i class="icon-controls"></i>Beheer gebruikers </a></li>
-    <li><a> <i class="icon-controls"></i>Mijn uren </a></li>
+    <div *ngIf="stateService.getAdmin()">
+      <li><a (click)="setState('MANAGE_USERS')"> <i class="icon-controls"></i>Beheer gebruikers </a></li>
+    </div>
+    <div *ngIf="!stateService.getAdmin()">
+      <li><a> <i class="icon-controls"></i>Mijn uren </a></li>
+    </div>
 <!--    <li><a href="#"> <i class="icon-controls"></i>Mijn gegevens </a></li>-->
     <li><a href="#employees" aria-expanded="false" data-toggle="collapse"> <i
       class="icon-user-1"></i>Medewerkers </a>
