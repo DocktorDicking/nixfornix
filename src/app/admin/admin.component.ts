@@ -11,7 +11,7 @@ export class AdminComponent implements OnInit {
   constructor(private stateService: StateService) { }
 
   ngOnInit() {
-    this.stateService.setUserRole('ADMIN');
+    this.stateService.setAdmin(true); // TODO: this is for testing, change whenever we have a db with users.
     this.stateService.currentState.subscribe(currentState => this.state = currentState);
   }
 }

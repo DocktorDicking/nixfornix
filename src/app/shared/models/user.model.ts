@@ -7,7 +7,7 @@ export class User {
   private _middleName: string;
   private _lastName: string;
   private _username: string;
-  private _role: string;
+  private _admin: boolean;
   private _password: string;
 
   constructor(id: number) {
@@ -34,8 +34,8 @@ export class User {
     return this._firstName + prepostition + this._lastName;
   }
 
-  get role() {
-    return this._role;
+  get admin() {
+    return this._admin;
   }
 
   get password(): string {
@@ -64,5 +64,9 @@ export class User {
 
   set username(value: string) {
     this._username = value;
+  }
+
+  set admin(value: boolean) {
+    this._admin = value;
   }
 }

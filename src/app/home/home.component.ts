@@ -12,10 +12,7 @@ export class HomeComponent implements OnInit {
   constructor(private stateService: StateService) { }
 
   ngOnInit() {
-  }
-
-  setState(state: string): void {
-    this.stateService.setUserRole('EMPLOYEE');
+    this.stateService.setAdmin(false);
     this.stateService.currentState.subscribe(currentState => this.state = currentState);
   }
 }
