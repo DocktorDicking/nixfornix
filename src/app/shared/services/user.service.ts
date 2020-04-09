@@ -36,7 +36,8 @@ export class UserService {
       user.firstName = this.firstnames[i];
       user.lastName = this.lastnames[Math.floor(Math.random() * Math.floor(this.lastnames.length - 1))];
       user.admin = (user.firstName === 'Nico' || user.firstName === 'Nick');
-      user.username = (user.firstName + user.lastName);
+      user.email = (user.firstName + user.lastName);
+      user.password = 'welkom' + id;
       users.push(user);
       id++;
     }
@@ -56,6 +57,14 @@ export class UserService {
    * @return boolean
    */
   public updateUser(user: User): boolean {
+    return false;
+  }
+
+  /**
+   * Validates user object on errors and returns a boolean and a message.
+   * @return boolean
+   */
+  public validateUser(user: User, message: string): boolean {
     return false;
   }
 

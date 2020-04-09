@@ -6,19 +6,23 @@ export class User {
   private _firstName: string;
   private _middleName: string;
   private _lastName: string;
-  private _username: string;
-  private _admin: boolean;
+  private _email: string;
   private _password: string;
+  private _admin: boolean;
 
   constructor(id: number) {
     this._id = id;
   }
 
   public hasCredentials(): boolean {
-    if (this.username && this.password) {
+    if (this.email && this.password) {
       return true;
     }
     return false;
+  }
+
+  get id(): number {
+    return this._id;
   }
 
   get firstName(): string {
@@ -42,8 +46,8 @@ export class User {
     return this._password;
   }
 
-  get username(): string {
-    return this._username;
+  get email(): string {
+    return this._email;
   }
 
   set password(value: string) {
@@ -62,8 +66,8 @@ export class User {
     this._lastName = value;
   }
 
-  set username(value: string) {
-    this._username = value;
+  set email(value: string) {
+    this._email = value;
   }
 
   set admin(value: boolean) {

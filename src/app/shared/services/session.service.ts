@@ -19,6 +19,6 @@ export class SessionService {
       return false;
     }
     const data = this.users; // TODO: Replace this when we have a db.
-    return (user.username in data || (data[user.username] === user.password));
+    return (user.email in data || (data[user.email] === user.password));
   }
 }
