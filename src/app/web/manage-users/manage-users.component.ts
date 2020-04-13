@@ -8,26 +8,26 @@ import {UserService} from '../../shared/services/user.service';
   styleUrls: ['./manage-users.component.css']
 })
 export class ManageUsersComponent implements OnInit {
-  public users: User[];
   public formUser: User = new User(0);
   public message: string;
 
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.users = this.userService.getUsers();
+    if (this.userService.users.length === 0) {
+      this.userService.generateUsers();
+    }
   }
 
   public onSave() {
-    // If user is in user array update. Otherwise create
+    this.userService.submit(this.formUser);
   }
 
   public onUserData(id: number) {
-    for (const user of this.users) {
-      if (user.id === id) {
-        this.formUser = user;
-        break;
-      }
+    // TODO add some way to throw an error when a user id does not exist
+    const user = this.userService.getUser(id);
+    if (user) {
+      this.formUser = new User(null, user);
     }
   }
 

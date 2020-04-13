@@ -10,8 +10,19 @@ export class User {
   private _password: string;
   private _admin: boolean;
 
-  constructor(id: number) {
-    this._id = id;
+  constructor(id?: number, user?: User) {
+    if (id) {
+      this._id = id;
+    }
+    if (user) {
+      this.id = user.id;
+      this.firstName = user.firstName;
+      this.middleName = user.middleName;
+      this.lastName = user.lastName;
+      this.email = user.email;
+      this.password = user.password;
+      this.admin = user.admin;
+    }
   }
 
   public hasCredentials(): boolean {
@@ -48,6 +59,10 @@ export class User {
 
   get email(): string {
     return this._email;
+  }
+
+  set id(value: number) {
+    this._id = value;
   }
 
   set password(value: string) {

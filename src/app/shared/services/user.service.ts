@@ -24,12 +24,13 @@ export class UserService {
     'Tolen'
   ];
 
+  public users: User[] = [];
+
   /**
    * Returns all users
    * @return User[]
    */
-  public getUsers(): User[] {
-    const users: User[] = [];
+  public generateUsers() {
     let id = 1;
     for (let i = 0; i < this.firstnames.length - 1; i++) {
       const user = new User(id);
@@ -38,10 +39,9 @@ export class UserService {
       user.admin = (user.firstName === 'Nico' || user.firstName === 'Nick');
       user.email = (user.firstName + user.lastName);
       user.password = 'welkom' + id;
-      users.push(user);
+      this.users.push(user);
       id++;
     }
-    return users;
   }
 
   /**
@@ -68,6 +68,28 @@ export class UserService {
     return false;
   }
 
+  public getUser(id: number): User {
+    for (const user of this.users) {
+      if (user.id === id) {
+        return user;
+      }
+    }
+    return null;
+  }
 
-
+  public submit(formUser: User) {
+    // TODO Check if user exists
+    const user = this.getUser(formUser.id);
+    if (user) {
+      user.firstName = formUser.firstName;
+      user.middleName = formUser.middleName;
+      user.lastName = formUser.lastName;
+      user.password = formUser.password;
+      user.email = formUser.email;
+      user.admin = formUser.admin;
+    } else {
+      formUser.id = (this.users.length + 1);
+      this.users.push(formUser);
+    }
+  }
 }
