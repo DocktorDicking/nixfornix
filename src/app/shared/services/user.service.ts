@@ -92,4 +92,14 @@ export class UserService {
       this.users.push(formUser);
     }
   }
+
+  deleteUser(id: number): boolean {
+    for (const user of this.users) {
+      if (user.id === id) {
+        this.users.splice(this.users.indexOf(user), 1);
+        return true;
+      }
+    }
+    return false;
+  }
 }

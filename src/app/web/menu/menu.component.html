@@ -9,9 +9,8 @@
     </div>
   </div>
 
-  <!-- Sidebar Navidation Menus-->
-<span class="heading">Menu</span>
-  <!-- TODO: add some if contruction on roles to filter menu items -->
+<!-- Sidebar Navidation Menu items-->
+  <span class="heading">Menu</span>
   <ul class="list-unstyled">
     <li><a (click)="setState('OVERVIEW')"> <i class="fa fa-bar-chart"></i>Overzicht </a></li>
     <div *ngIf="stateService.getAdmin()">
@@ -21,15 +20,15 @@
       <li><a> <i class="icon-controls"></i>Mijn uren </a></li>
     </div>
 <!--    <li><a href="#"> <i class="icon-controls"></i>Mijn gegevens </a></li>-->
-    <li><a href="#employees" aria-expanded="false" data-toggle="collapse"> <i
-      class="icon-user-1"></i>Medewerkers </a>
-      <ul id="employees" class="collapse list-unstyled ">
-        <!-- place holder -->
-        <li *ngFor="let user of users">
-          <a>{{ user.fullName }}</a>
-        </li>
-      </ul>
-    </li>
+<!--    <li><a href="#employees" aria-expanded="false" data-toggle="collapse"> <i-->
+<!--      class="icon-user-1"></i>Medewerkers </a>-->
+<!--      <ul id="employees" class="collapse list-unstyled ">-->
+<!--        &lt;!&ndash; place holder &ndash;&gt;-->
+<!--        <li *ngFor="let user of users">-->
+<!--          <a>{{ user.fullName }}</a>-->
+<!--        </li>-->
+<!--      </ul>-->
+<!--    </li>-->
     <li><a href="login.html"> <i class="icon-logout"></i>Uitloggen </a></li>
   </ul>
   <span class="heading">Overig</span>
@@ -37,4 +36,5 @@
     <li><a href="#" data-toggle="modal" data-target="#about"> <i class="icon-info"></i>Over deze applicatie </a></li>
     <li><a href="#" data-toggle="modal" data-target="#contactSupport"><i class="icon-paper-and-pencil"></i>Help</a></li>
   </ul>
-<!-- Sidebar Navigation end-->
+<!-- Sidebar modals-->
+<app-modals></app-modals>

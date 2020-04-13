@@ -31,6 +31,12 @@ export class ManageUsersComponent implements OnInit {
     }
   }
 
+  public onDelete(id: number) {
+    if (this.userService.deleteUser(id)) {
+      this.resetFormUser();
+    }
+  }
+
   public resetFormUser() {
     this.formUser = new User(0);
   }

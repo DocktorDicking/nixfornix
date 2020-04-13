@@ -95,10 +95,38 @@
               <p [textContent]="this.message"></p>
             </div>
           </div>
-          <button type="submit" class="btn btn-primary">Registreren</button>
+
+          <!-- TODO space buttons -->
+          <!-- TODO do something with returned bool 'delete' -->
+          <!-- TODO add confirmation window when deleting users 'are you sure you want to do this' -->
+          <button type="submit" class="btn btn-primary">Opslaan</button>
           <button type="reset" class="btn btn-dark" (click)="resetFormUser()">Reset</button>
+          <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">Verwijderen</button>
         </form>
       </div>
     </div>
   </div>
 </section>
+
+<!-- modals -->
+<div id="deleteConfirmation" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Waarschuwing</h4>
+      </div>
+      <div class="modal-body">
+        <p>Weet u zeker dat u gebruiker x wilt verwijderen? <br/>
+          <br/>
+          Alle data in relatie tot deze gebruiker zal verwijderd worden en kan niet worden hersteld.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="this.onDelete(this.formUser.id)">Verwijderen</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>
+      </div>
+    </div>
+  </div>
+</div>
