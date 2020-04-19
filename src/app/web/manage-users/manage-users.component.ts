@@ -40,6 +40,4 @@ export class ManageUsersComponent implements OnInit {
   public resetFormUser() {
     this.formUser = new User(0);
   }
-
-
 }

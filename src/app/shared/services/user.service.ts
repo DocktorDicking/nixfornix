@@ -77,7 +77,7 @@ export class UserService {
     }
   }
 
-  deleteUser(id: number): boolean {
+  public deleteUser(id: number): boolean {
     for (const user of this.users) {
       if (user.id === id) {
         this.users.splice(this.users.indexOf(user), 1);
@@ -85,5 +85,16 @@ export class UserService {
       }
     }
     return false;
+  }
+
+  public isEmpty(user: User) {
+    for (const key of Object.keys(user)) {
+      if (key !== 'id') {
+        if (!(user[key] === null || user[key] === '' || user[key] === undefined)) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }

@@ -99,7 +99,7 @@
           <!-- TODO space buttons -->
           <!-- TODO do something with returned bool 'delete' -->
           <!-- TODO add confirmation window when deleting users 'are you sure you want to do this' -->
-          <button type="submit" class="btn btn-primary">Opslaan</button>
+          <button *ngIf="!this.userService.isEmpty(this.formUser)" type="submit" class="btn btn-primary">Opslaan</button>
           <button type="reset" class="btn btn-dark" (click)="resetFormUser()">Reset</button>
           <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">Verwijderen</button>
         </form>
