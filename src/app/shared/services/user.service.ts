@@ -45,22 +45,6 @@ export class UserService {
   }
 
   /**
-   * Creates a new user
-   * @return boolean
-   */
-  public createUser(user: User): boolean {
-    return false;
-  }
-
-  /**
-   * Updates an existing user
-   * @return boolean
-   */
-  public updateUser(user: User): boolean {
-    return false;
-  }
-
-  /**
    * Validates user object on errors and returns a boolean and a message.
    * @return boolean
    */

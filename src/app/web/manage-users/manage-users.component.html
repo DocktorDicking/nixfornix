@@ -15,7 +15,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let user of this.userService.users" class="htable-text" (click)="onUserData(user.id)">
+                  <tr *ngFor="let user of this.userService.users" [class.table-row-selected]="user.id === this.formUser.id" class="htable htable-text" (click)="onUserData(user.id)">
                     <td>{{user.fullName}}</td>
                     <td>{{user.admin ? 'Administrator' : 'Werknemer'}}</td>
                   </tr>
@@ -118,7 +118,7 @@
         <h4 class="modal-title">Waarschuwing</h4>
       </div>
       <div class="modal-body">
-        <p>Weet u zeker dat u gebruiker x wilt verwijderen? <br/>
+        <p>Weet u zeker dat u gebruiker {{this.formUser.fullName}} wilt verwijderen? <br/>
           <br/>
           Alle data in relatie tot deze gebruiker zal verwijderd worden en kan niet worden hersteld.
         </p>

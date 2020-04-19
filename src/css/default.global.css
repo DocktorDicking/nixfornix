@@ -1926,8 +1926,15 @@ input.input-material ~ label.active {
   background-color: #282b2f;
 }
 
-.table-striped tbody tr:nth-of-type(odd):hover {
-  background-color: #26292d;
+.table-striped tbody tr:hover {
+  color: black;
+  background-color: #429244;
+  opacity: 0.5;
+}
+
+.table-striped tbody tr:active, .table-striped tbody tr.active {
+  color: black;
+  background-color: #429244;
 }
 
 .table-bordered td,

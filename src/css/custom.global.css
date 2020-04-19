@@ -50,5 +50,25 @@
   color: #8a8d93;
 }
 
+.table-striped tbody tr {
+  cursor: hand;
+  cursor: pointer;
+}
+
+.table-row-selected {
+  color: black;
+  background-color: #429244 !important;
+  opacity: 0.5;
+}
+
+a {
+  cursor: hand;
+  cursor: pointer;
+}
+
+/*td.active {*/
+/*  background: #429244;*/
+/*}*/
+
 
 
