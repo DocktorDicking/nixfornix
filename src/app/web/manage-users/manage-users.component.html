@@ -98,9 +98,8 @@
 
           <!-- TODO space buttons -->
           <!-- TODO do something with returned bool 'delete' -->
-          <!-- TODO add confirmation window when deleting users 'are you sure you want to do this' -->
           <button *ngIf="!this.userService.isEmpty(this.formUser)" type="submit" class="btn btn-primary">Opslaan</button>
-          <button type="reset" class="btn btn-dark" (click)="resetFormUser()">Reset</button>
+          <button *ngIf="!this.userService.isEmpty(this.formUser)" type="reset" class="btn btn-dark" data-toggle="modal" data-target="#resetConfirmation">Reset</button>
           <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">Verwijderen</button>
         </form>
       </div>
@@ -125,6 +124,28 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="this.onDelete(this.formUser.id)">Verwijderen</button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="resetConfirmation" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Waarschuwing</h4>
+      </div>
+      <div class="modal-body">
+        <p>Weet u zeker dat u het formulier wilt resetten?  <br/>
+          <br/>
+          Alle wijzigingen die u nog niet heeft opgeslagen gaan verloren.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="resetFormUser()">Resetten</button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>
       </div>
     </div>
