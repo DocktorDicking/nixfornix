@@ -19,7 +19,11 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.canLogin = this.sessionService.login(this.user);
     if (this.canLogin) {
-      this.router.navigate(['./home']);
+      if (this.user.admin) {
+        this.router.navigate(['./admin']);
+      } else {
+        this.router.navigate(['./home']);
+      }
     } else {
       this.setMessage('Gebruikersnaam of wachtwoord incorrect.');
     }
