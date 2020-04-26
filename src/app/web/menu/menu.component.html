@@ -12,23 +12,13 @@
 <!-- Sidebar Navidation Menu items-->
   <span class="heading">Menu</span>
   <ul class="list-unstyled">
-    <li><a (click)="setState('OVERVIEW')"> <i class="fa fa-bar-chart"></i>Overzicht </a></li>
-    <div *ngIf="stateService.getAdmin()">
-      <li><a (click)="setState('MANAGE_USERS')"> <i class="icon-controls"></i>Beheer gebruikers </a></li>
-    </div>
-    <div *ngIf="!stateService.getAdmin()">
-      <li><a> <i class="icon-controls"></i>Mijn uren </a></li>
-    </div>
-<!--    <li><a href="#"> <i class="icon-controls"></i>Mijn gegevens </a></li>-->
-<!--    <li><a href="#employees" aria-expanded="false" data-toggle="collapse"> <i-->
-<!--      class="icon-user-1"></i>Medewerkers </a>-->
-<!--      <ul id="employees" class="collapse list-unstyled ">-->
-<!--        &lt;!&ndash; place holder &ndash;&gt;-->
-<!--        <li *ngFor="let user of users">-->
-<!--          <a>{{ user.fullName }}</a>-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </li>-->
+    <!-- admin menu items -->
+    <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW')"> <i class="fa fa-bar-chart"></i>Overzicht </a></li>
+    <li *ngIf="stateService.getAdmin()"><a (click)="setState('MANAGE_USERS')"> <i class="icon-controls"></i>Beheer gebruikers </a></li>
+
+    <!-- User menu items -->
+    <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_FORM')"><i class="fa fa-pencil"></i>Registreren</a></li>
+    <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_FORM')"><i class="icon-controls"></i>Mijn uren </a></li>
     <li><a href="login.html"> <i class="icon-logout"></i>Uitloggen </a></li>
   </ul>
   <span class="heading">Overig</span>
