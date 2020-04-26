@@ -17,8 +17,11 @@
       </div>
     </div>
 
-    <app-hour-form></app-hour-form>
-    <app-hour-table></app-hour-table>
+    <app-hour-form *ngIf="state == 'HOUR_FORM'"></app-hour-form>
+    <app-hour-table *ngIf="state == 'HOUR_FORM'"></app-hour-table>
+
+    <app-hour-table *ngIf="state == 'HOUR_OVERVIEW'"></app-hour-table> <!-- reuse admin component? -->
+
     <app-footer></app-footer>
   </div>
 </div>

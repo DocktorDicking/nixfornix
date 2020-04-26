@@ -11,7 +11,7 @@ export class StateService {
   private previousState: string;
   private isAdmin: boolean;
   private adminStates = ['OVERVIEW', 'MANAGE_USERS'];
-  private userStates = ['HOUR_FORM'];
+  private userStates = ['HOUR_FORM', 'HOUR_OVERVIEW'];
 
   private initState(): void {
     if (this.isAdmin) {

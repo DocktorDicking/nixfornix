@@ -17,12 +17,8 @@
       </div>
     </div>
 
-    <div *ngIf="state == 'OVERVIEW'">
-      <app-hour-table></app-hour-table>
-    </div>
-    <div *ngIf="state == 'MANAGE_USERS'">
-      <app-manage-users></app-manage-users>
-    </div>
+    <app-hour-table *ngIf="state == 'OVERVIEW'"></app-hour-table>
+    <app-manage-users *ngIf="state == 'MANAGE_USERS'"></app-manage-users>
 
     <app-footer></app-footer>
   </div>
