@@ -17,12 +17,12 @@
           </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let time of this.times" class="htable-text">
+            <tr *ngFor="let time of this.times" class="htable-text"><!-- TODO: Change CSS so rows do now look like their are clickable -->
               <td>{{time.date}}</td>
               <td>{{time.startTime}}</td>
               <td>{{time.stopTime}}</td>
               <td>{{time.break}}</td>
-              <td>{{timeService.calculateWorkedHours(time)}}</td> <!-- TODO: Change to worked hours -->
+              <td>{{time.hours}}</td>
             </tr>
           </tbody>
         </table>
@@ -30,7 +30,3 @@
     </div>
   </div>
 </section>
-
-<!--
-TODO: Add function to change data in table. When a user clicks a row in this table it should be editable in the present form.
--->

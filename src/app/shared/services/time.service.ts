@@ -18,14 +18,16 @@ export class TimeService {
     let newId = 1;
     const lastTimeRow = this._times[this._times.length - 1];
 
+    // TODO: change id assignment when db is available.
     if (typeof lastTimeRow !== 'undefined') {
       if (typeof lastTimeRow.id !== 'undefined') {
-        newId = lastTimeRow.id + 1; // TODO: change id assignment when db is available.
+        newId = lastTimeRow.id + 1;
       }
     }
     pushTime.id = newId;
 
     pushTime.cloneTimeRow(time);
+    this.calculateWorkedHours(pushTime);
     this._times.push(pushTime);
     this.timesChanged.emit(this._times);
   }
@@ -40,7 +42,7 @@ export class TimeService {
     return time;
   }
 
-  calculateWorkedHours(time: TimeRow): number {
+  calculateWorkedHours(time: TimeRow) {
     const splitStart = time.startTime.split(':', 2);
     const splitStop = time.stopTime.split(':', 2);
 
@@ -59,7 +61,7 @@ export class TimeService {
     const diff = (end - start); // milliseconds
     let minutes = Math.floor(diff / 1000 / 60);
     minutes = minutes - time.break;
-    return Math.floor((minutes / 60) * 100) / 100; // TODO: Bepalen hoe we afronden
+    time.hours = Math.floor((minutes / 60) * 100) / 100;
   }
 
   /**
@@ -87,7 +89,4 @@ export class TimeService {
   deleteTime(id: number): boolean {return null; }
 
 
-
-
-  // TODO: add function to calculate worked hours.
 }

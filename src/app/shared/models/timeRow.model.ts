@@ -9,6 +9,7 @@ export class TimeRow {
   private _break: number;
   private _location: string;
   private _description: string;
+  private _hours: number;
 
   constructor() {}
 
@@ -53,6 +54,10 @@ export class TimeRow {
     this._description = value;
   }
 
+  set hours(value: number) {
+    this._hours = value;
+  }
+
   get id(): number {
     return this._id;
   }
@@ -79,5 +84,9 @@ export class TimeRow {
 
   get description(): string {
     return this._description;
+  }
+
+  get hours(): number {
+    return this._hours;
   }
 }
