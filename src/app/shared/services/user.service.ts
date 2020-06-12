@@ -1,8 +1,13 @@
-import {Injectable} from '@angular/core';
-import {User} from '../models/user.model';
+import { Injectable } from '@angular/core';
+import { User } from '../models/user.model';
+import { DatabaseService } from './database.service';
 
 @Injectable()
 export class UserService {
+
+  constructor(private dbs = DatabaseService) {
+  }
+
   private firstnames: string[] = [
     'Jim',
     'Anouk',
@@ -61,6 +66,7 @@ export class UserService {
     return null;
   }
 
+  // TODO: Rewrite this method when we have a working dbs.
   public submit(formUser: User) {
     // TODO Check if user exists
     const user = this.getUser(formUser.id);
@@ -73,6 +79,7 @@ export class UserService {
       user.admin = formUser.admin;
     } else {
       formUser.id = (this.users.length + 1);
+      const data = JSON.stringify(formUser);
       this.users.push(formUser);
     }
   }
