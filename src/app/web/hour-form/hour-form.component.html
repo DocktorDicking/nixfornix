@@ -20,7 +20,7 @@
 
           <div class="form-group">
             <label for="starttime" class="form-control-label">Begintijd</label>
-            <input [(ngModel)]="this.time.startTime" #starttime="ngModel" id="starttime" name="starttime" type="time"  placeholder="Tijd" class="form-control">
+            <input [(ngModel)]="this.time.start" #starttime="ngModel" id="starttime" name="starttime" type="time" placeholder="Tijd" class="form-control">
             <!-- Error messages -->
             <div class="alert-text">
               <div *ngIf="starttime.invalid && starttime.touched" class="shakeIt">
@@ -33,7 +33,7 @@
 
           <div class="form-group">
             <label class="form-control-label">Eindtijd</label>
-            <input [(ngModel)]="this.time.stopTime" #stoptime="ngModel" id="stoptime" name="stoptime" type="time"  placeholder="Tijd" class="form-control" >
+            <input [(ngModel)]="this.time.stop" #stoptime="ngModel" id="stoptime" name="stoptime" type="time" placeholder="Tijd" class="form-control" >
             <!-- Error messages -->
             <div class="alert-text">
               <div *ngIf="stoptime.invalid && stoptime.touched" class="shakeIt">

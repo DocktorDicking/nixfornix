@@ -44,17 +44,17 @@ export class HourFormComponent implements OnInit {
       return false;
     }
 
-    if (!time.startTime) {
+    if (!time.start) {
       this.message = 'Begintijd is een verplicht veld. ';
       return false;
     }
 
-    if (!time.stopTime) {
+    if (!time.stop) {
       this.message = 'Eindtijd is een verplicht veld. ';
       return false;
     }
 
-    if (time.startTime === time.stopTime) {
+    if (time.start === time.stop) {
       this.message = 'Pardon.. je heb 24 uur gewerkt?'; // TODO: Change to something nice
       return false;
     }

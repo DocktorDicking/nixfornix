@@ -4,12 +4,12 @@
 export class TimeRow {
   id: number;
   date: string;
-  startTime: string;
-  stopTime: string;
+  start: string;
+  stop: string;
   break: number;
   location: string;
   description: string;
-  hours: number;
+  hour: number;
 
   constructor() {}
 
@@ -19,8 +19,8 @@ export class TimeRow {
    */
   cloneTimeRow(time: TimeRow) {
     this.date = time.date;
-    this.startTime = time.startTime;
-    this.stopTime = time.stopTime;
+    this.start = time.start;
+    this.stop = time.stop;
     this.break = time.break;
     this.location = time.location;
     this.description = time.description;
