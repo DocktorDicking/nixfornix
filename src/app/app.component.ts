@@ -17,7 +17,7 @@ export class AppComponent {
   title = 'nixfornix';
 
   // TODO: Check if TimeService actually need to be initialized in this constructor. Seems to me its bollocks.
-  constructor(private titleService: Title, private meta: Meta, private timeService: TimeService) {
+  constructor(private titleService: Title, private meta: Meta) {
     titleService.setTitle('NixforNix - Urenregistratie');
     meta.addTag({name: 'description', content: ''}, true);
     meta.addTag({name: 'viewport', content: 'width=device-width, initial-scale=1'}, true);
