@@ -7,6 +7,8 @@ import {User} from '../models/user.model';
  */
 @Injectable()
 export class SessionService {
+  //TODO: Plan for now is to replace this with authService
+
   // Tmp array with user objects
   private users = {
     jim: 'welkom01',

@@ -2,12 +2,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SnackbarModule } from 'ngx-snackbar'; // TODO: Create some way to show fancy snackbars (in app notification stuff)?
+import { HttpClientModule } from '@angular/common/http';
 
 /** Declarations */
-import { environment } from 'src/environments/environment';
-import { AngularFireModule } from '@angular/fire'; // TODO: Remove before production
-import { AngularFirestoreModule } from '@angular/fire/firestore'; // TODO: Remove before production
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -44,10 +41,8 @@ import { ManageUsersComponent } from './web/manage-users/manage-users.component'
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    AngularFireModule.initializeApp(environment.firebaseConfig), // TODO: Remove before production
-    AngularFirestoreModule, // TODO: Remove before production
-    SnackbarModule.forRoot()
+    HttpClientModule,
+    FormsModule
   ],
   providers: [AppRoutingModule],
   bootstrap: [AppComponent]
