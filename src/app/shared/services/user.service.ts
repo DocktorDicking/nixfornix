@@ -5,7 +5,8 @@ import { DatabaseService } from './database.service';
 @Injectable()
 export class UserService {
 
-  constructor(private dbs = DatabaseService) {
+  // private dbs = DatabaseService <- putting this in the constructor broke the project. Has something to do with the order of importing stuff.
+  constructor() {
   }
 
   private firstnames: string[] = [
