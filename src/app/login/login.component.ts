@@ -13,6 +13,11 @@ export class LoginComponent implements OnInit {
   message: string;
   user = new User(null);
 
+  constructor(private router: Router, private sessionService: SessionService) { }
+
+  ngOnInit() {
+  }
+
   /**
    * Will submit data from login form and check if credentials exist and match.
    */
@@ -27,11 +32,6 @@ export class LoginComponent implements OnInit {
     } else {
       this.setMessage('Gebruikersnaam of wachtwoord incorrect.');
     }
-  }
-
-  constructor(private router: Router, private sessionService: SessionService) { }
-
-  ngOnInit() {
   }
 
   private setMessage(message: string) {
