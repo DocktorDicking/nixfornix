@@ -3,30 +3,77 @@ import {Injectable} from '@angular/core';
 import {User} from '../models/user.model';
 
 /**
+ * TODO:
+ *
+ * Add timeStamps to sessions so sessions can expire?
+ * Add an id to a session (sessionId) so we can indentify sessions for logging etc.
+ */
+
+/**
  * Handles all session related logic.
  */
 @Injectable()
 export class SessionService {
-  // TODO: Plan for now is to replace this with authService
-
-  // Tmp array with user objects
-  private DATA_SOURCE = {
-    jim: 'welkom01',
-    nico: 'welkom02',
-    admin: 'admin',
-    john: 'welkom'
-  };
+  // TODO: Make this actually do session stuff.
 
   /**
-   * Will authenticate a user based on pw and email. Will set a localstorage item to remember pw/email.
-   * The localstorage item will be valid for 30 days. After 30 days the user need to reauthenticate.
+   * Adds a new session to the sessionStorage
    * @param user User
    */
-  public login(user: User) {
-    if (!user.hasCredentials()) {
+  public addSession(user: User) {
+    sessionStorage.setItem('auth_email', user.email);
+    sessionStorage.setItem('auth_password', user.password);
+  }
+
+  /**
+   * Removes session variables from sessionStorage.
+   */
+  public destroySession() {
+    sessionStorage.removeItem('auth_email');
+    sessionStorage.removeItem('auth_password');
+  }
+
+  /**
+   * Creates a persistent session using the localStorage
+   * @param user User
+   */
+  public createPersistentSession(user: User) {
+    localStorage.setItem('auth_date', new Date().toISOString());
+    localStorage.setItem('auth_email', user.email);
+    localStorage.setItem('auth_password', user.password);
+    // TODO: Replace password with some sort of token, since we don't want to save passwords everywhere. Do we?
+  }
+
+  /**
+   * Removes persistent session variables from localStorage.
+   */
+  public destroyPersistentSession() {
+    localStorage.removeItem('auth_email');
+    localStorage.removeItem('auth_password');
+    localStorage.removeItem('auth_date');
+  }
+
+  /**
+   * Checks if a user haves an active session
+   * @param user User
+   */
+  public havesSession(user: User): boolean {
+    if (sessionStorage.length > 0) {
+      const authEmail = sessionStorage.getItem('auth_email');
+      const authPassword = sessionStorage.getItem('auth_password');
+      if (authEmail && authPassword) {
+        return (authEmail === user.email && authPassword === user.password);
+      }
       return false;
     }
+    return false;
+  }
 
+  /**
+   * Checks if the user haves an persistent session.
+   * @param user User
+   */
+  public havesPersistentSession(user: User): boolean {
     if (localStorage.length > 0) {
       const authEmail = localStorage.getItem('auth_email');
       const authPassword = localStorage.getItem('auth_password');
@@ -34,71 +81,17 @@ export class SessionService {
       if (authEmail && authPassword && authDate) {
         // TODO: Replace DATA_SOURCE with API call.
         if (this.dateDiffInDays(new Date(authDate), new Date()) < 30) {
-          if (authEmail in this.DATA_SOURCE && (this.DATA_SOURCE[authEmail] === authPassword)) {
-            sessionStorage.setItem('auth_email', authEmail);
-            sessionStorage.setItem('auth_password', authPassword);
-            return true;
-          }
+          return (authEmail === user.email && authPassword === user.password);
         } else {
           localStorage.removeItem('auth_email');
           localStorage.removeItem('auth_password');
           localStorage.removeItem('auth_date');
+          return false;
         }
       }
-    }
-
-    // TODO: Replace DATA_SOURCE with API call.
-    if (user.email in this.DATA_SOURCE && (this.DATA_SOURCE[user.email] === user.password)) {
-      sessionStorage.setItem('auth_email', user.email);
-      sessionStorage.setItem('auth_password', user.password);
-      user.admin = (user.email === 'admin'); // TODO: Remove before prod.
-
-      // TODO: Stay logged in checkbox check here. (auth_auto)
-      if (true) {
-        localStorage.setItem('auth_date', new Date().toISOString());
-        localStorage.setItem('auth_email', user.email);
-        localStorage.setItem('auth_password', user.password);
-      }
-      return true;
-    }
-  }
-
-  /**
-   * Checks if a user is authenticated by checking session for auth variables.
-   * If auth variables exist in session storage they will be evaluated.
-   * @param user User
-   */
-  public isAuthenticated(user: User) {
-    if (sessionStorage.length > 0) {
-      const authEmail = sessionStorage.getItem('auth_email');
-      const authPassword = sessionStorage.getItem('auth_password');
-      if (authEmail && authPassword) {
-        // TODO: Check if pw/email exist in db
-        if (authEmail === user.email && authPassword === user.password) {
-          return (authEmail in this.DATA_SOURCE && (this.DATA_SOURCE[authEmail] === authPassword));
-        } else {
-          sessionStorage.removeItem('auth_password');
-          sessionStorage.removeItem('auth_email');
-        }
-        return false;
-      }
+      return false;
     }
     return false;
-  }
-
-  /**
-   * Will delete auth variables in sessionStorage and localStorage.
-   */
-  public logout() {
-    if (sessionStorage.length > 0) {
-      sessionStorage.removeItem('auth_email');
-      sessionStorage.removeItem('auth_password');
-    }
-    if (localStorage.length > 0) {
-      localStorage.removeItem('auth_email');
-      localStorage.removeItem('auth_password');
-      localStorage.removeItem('auth_date');
-    }
   }
 
   /**
