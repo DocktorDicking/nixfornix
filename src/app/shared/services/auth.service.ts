@@ -1,31 +1,41 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { User } from '../models/user.model';
+import { SessionService } from './session.service';
 
 /**
  * Handles all authentication related logic.
  */
 @Injectable()
 export class AuthService {
-  authenticated = false;
+  private DATA_SOURCE = { // TODO: remove when we can call api.
+    jim: 'welkom01',
+    nico: 'welkom02',
+    admin: 'admin',
+    john: 'welkom'
+  };
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private sessionService: SessionService) {
   }
 
-  authenticate(credentials, callback) {
-    const headers = new HttpHeaders(credentials ? {
-      authorization : 'Basic ' + btoa(credentials.username + ':' + credentials.password)
-    } : {});
+  public authenticate(user: User) {
+    if (this.sessionService.havesPersistentSession(user)) {
+      this.sessionService.addSession(user);
+      return true;
+    }
 
-    // TODO: Set URL so it points to the api
-    this.http.get('http://localhost:8080/getUsers', {headers: headers}).subscribe(response => {
-      if (response['name']) {
-        this.authenticated = true;
-      } else {
-        this.authenticated = false;
-      }
-      return callback && callback();
-    });
-
+    if (user.email in this.DATA_SOURCE && this.DATA_SOURCE[user.email] === user.password) {
+      this.sessionService.addSession(user);
+      return true;
+    }
+    return false;
   }
 
+  public isUserLoggedIn(user: User): boolean {
+    return this.sessionService.havesSession(user);
+  }
+
+  public logout() {
+    this.sessionService.destroySession();
+  }
 }
