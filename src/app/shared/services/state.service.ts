@@ -4,12 +4,16 @@ import { BehaviorSubject } from 'rxjs';
 /**
  * StateService holds functionality to switch between states. A state determines which
  * component is active in the admin or user component.
+ *
+ * StateService is currently used to display the correct menu buttons and to keep track on which page (state) the user is.
  */
 @Injectable()
 export class StateService {
   currentState = new BehaviorSubject(null);
   private previousState: string;
   private isAdmin: boolean;
+
+  // Allowed states to access
   private adminStates = ['OVERVIEW', 'MANAGE_USERS'];
   private userStates = ['HOUR_FORM', 'HOUR_OVERVIEW'];
 

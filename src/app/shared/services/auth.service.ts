@@ -4,7 +4,7 @@ import { User } from '../models/user.model';
 import { SessionService } from './session.service';
 
 /**
- * Handles all authentication related logic.
+ * Handles all authentication related logic. Dependent on sessionService for session handling.
  */
 @Injectable()
 export class AuthService {
@@ -29,6 +29,12 @@ export class AuthService {
       return true;
     }
     return false;
+  }
+
+  public authenticateNewPersistent(user: User) {
+    if (this.isUserLoggedIn(user)) {
+      this.sessionService.createPersistentSession(user);
+    }
   }
 
   public isUserLoggedIn(user: User): boolean {
