@@ -24,3 +24,23 @@
   </div>
 </div>
 
+<script>
+  $('.sidebar-toggle').on('click', function () {
+    $(this).toggleClass('active');
+
+    $('#sidebar').toggleClass('shrinked');
+    $('.page-content').toggleClass('active');
+    $(document).trigger('sidebarChanged');
+
+    if ($('.sidebar-toggle').hasClass('active')) {
+      $('.navbar-brand .brand-sm').addClass('visible');
+      $('.navbar-brand .brand-big').removeClass('visible');
+      $(this).find('i').attr('class', 'fa fa-long-arrow-right');
+    } else {
+      $('.navbar-brand .brand-sm').removeClass('visible');
+      $('.navbar-brand .brand-big').addClass('visible');
+      $(this).find('i').attr('class', 'fa fa-long-arrow-left');
+    }
+  });
+</script>
+

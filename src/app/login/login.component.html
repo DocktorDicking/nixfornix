@@ -4,10 +4,10 @@
       <div class="row">
         <!-- Logo & Information Panel-->
         <div class="col-lg-6">
-          <div class="info d-flex align-items-center"> <!-- TODO: Center logo -->
-              <div class="logo">
-                <img src="../../assets/img/company-logo.png" class="img-fluid"/>
-              </div>
+          <div class="info d-flex justify-content-center align-items-center"> <!-- TODO: Center logo -->
+            <div class="d-flex justify-content-center align-items-center-center">
+              <img src="../../assets/img/company-logo.png" class="img-fluid"/>
+            </div>
           </div>
         </div>
         <!-- Form Panel -->
@@ -49,9 +49,13 @@
                     </div>
                   </div>
                 </div>
+
                 <button type="submit" class="btn btn-primary">Inloggen</button>
+                <div class="float-right margin-top-sm">
+                  <input id="persistentLogin" type="checkbox" class="mr-1"><label for="persistentLogin" class="label-material">Ingelogd blijven.</label>
+                </div>
               </form>
-              <!--<a href="#" class="forgot-pass">Wachtwoord vergeten ?</a><br>--> <!-- TODO: Implement something for forgotten passwords -->
+<!--                <a href="#" class="forgot-pass">Wachtwoord vergeten ?</a><br>  &lt;!&ndash; TODO: Implement something for forgotten passwords &ndash;&gt;-->
             </div>
           </div>
         </div>
