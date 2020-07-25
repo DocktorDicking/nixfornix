@@ -44,7 +44,7 @@
                         Dit veld mag niet leeg zijn.
                       </div>
                     </div>
-                    <div *ngIf="!this.canLogin && loginform.valid" class="shakeIt">
+                    <div *ngIf="!this.authenticated && loginform.valid" class="shakeIt">
                       <p [textContent]="this.message"></p>
                     </div>
                   </div>

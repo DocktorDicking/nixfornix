@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
-import { SessionService } from '../shared/services/session.service';
+import {AuthService} from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,11 +9,11 @@ import { SessionService } from '../shared/services/session.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  canLogin: boolean;
+  authenticated: boolean;
   message: string;
   user = new User(null);
 
-  constructor(private router: Router, private sessionService: SessionService) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -22,8 +22,8 @@ export class LoginComponent implements OnInit {
    * Will submit data from login form and check if credentials exist and match.
    */
   onSubmit() {
-    this.canLogin = this.sessionService.login(this.user);
-    if (this.canLogin) {
+    this.authenticated = this.authService.authenticate(this.user);
+    if (this.authenticated) {
       if (this.user.admin) {
         this.router.navigate(['./admin']);
       } else {
