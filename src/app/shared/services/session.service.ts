@@ -23,6 +23,7 @@ export class SessionService {
   public addSession(user: User) {
     sessionStorage.setItem('auth_email', user.email);
     sessionStorage.setItem('auth_password', user.password);
+    sessionStorage.setItem('auth_fullName', user.fullName);
   }
 
   /**
@@ -31,6 +32,7 @@ export class SessionService {
   public destroySession() {
     sessionStorage.removeItem('auth_email');
     sessionStorage.removeItem('auth_password');
+    sessionStorage.removeItem('auth_fullName');
   }
 
   /**

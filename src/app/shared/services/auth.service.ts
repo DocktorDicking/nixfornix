@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { SessionService } from './session.service';
+import { Router } from '@angular/router';
 
 /**
  * Handles all authentication related logic. Dependent on sessionService for session handling.
@@ -15,9 +16,14 @@ export class AuthService {
     john: 'welkom'
   };
 
-  constructor(private http: HttpClient, private sessionService: SessionService) {
+  constructor(private http: HttpClient, private sessionService: SessionService, private router: Router) {
   }
 
+  /**
+   * Authenticates the user by checking credentials. If the user is legit a session will be created.
+   * This method also checks for a persistent session.
+   * @param user User
+   */
   public authenticate(user: User) {
     if (this.sessionService.havesPersistentSession(user)) {
       this.sessionService.addSession(user);
@@ -31,7 +37,11 @@ export class AuthService {
     return false;
   }
 
-  public authenticateNewPersistent(user: User) {
+  /**
+   * Creates a new persistent login for the user.
+   * @param user User
+   */
+  public authenticateAddPersistent(user: User) {
     if (this.isUserLoggedIn(user)) {
       this.sessionService.createPersistentSession(user);
     }
@@ -41,7 +51,11 @@ export class AuthService {
     return this.sessionService.havesSession(user);
   }
 
+  /**
+   * Destroys the active session.
+   */
   public logout() {
     this.sessionService.destroySession();
+    this.router.navigate(['./login']);
   }
 }

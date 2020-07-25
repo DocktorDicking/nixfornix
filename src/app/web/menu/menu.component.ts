@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../shared/models/user.model';
 import { StateService } from '../../shared/services/state.service';
+import {AuthService} from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,7 +10,7 @@ import { StateService } from '../../shared/services/state.service';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private stateService: StateService) {
+  constructor(private stateService: StateService, private authService: AuthService) {
     this.generateUsers(10);
   }
   firstnames: string[] = [
@@ -50,6 +51,14 @@ export class MenuComponent implements OnInit {
 
   setState(state: string) {
     this.stateService.updateState(state);
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  getSessionFullName(): string {
+    return sessionStorage.getItem('auth_fullName');
   }
 
   ngOnInit(): void {
