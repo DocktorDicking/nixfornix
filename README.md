@@ -28,7 +28,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## TODO: 
 * Create something which handles routing (routing service) or adding the routing logic to the state service which kind off makes sense. 
-* Create an AuthGuard which keeps routes safe untill authentication is succesfull. Also check the admin flag here. This will keep people out untill they are logged in.
+* Create an AuthGuard which keeps routes safe until authentication is successful. Also check the admin flag here. This will keep people out untill they are logged in.
 * Add checkbox to login so the user can create a persistent session.
 * Connect API to Angular app and be greeted by bugs :) 
-* !!!Fix the sidebar menu toggle. The toggle isnt working and after some searching it seems te toggle was using jQuery in the past. We should rewrite the jQuery logic into Angular since using jQuery with Angular is a bad idea. 
+

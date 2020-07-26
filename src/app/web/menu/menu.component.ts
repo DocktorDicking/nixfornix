@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {User} from '../../shared/models/user.model';
 import { StateService } from '../../shared/services/state.service';
 import {AuthService} from '../../shared/services/auth.service';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-menu',
@@ -62,5 +63,22 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    $('.sidebar-toggle').on('click', function () {
+      $(this).toggleClass('active');
+
+      $('#sidebar').toggleClass('shrinked');
+      $('.page-content').toggleClass('active');
+      $(document).trigger('sidebarChanged');
+
+      if ($('.sidebar-toggle').hasClass('active')) {
+        $('.navbar-brand .brand-sm').addClass('visible');
+        $('.navbar-brand .brand-big').removeClass('visible');
+        $(this).find('i').attr('class', 'fa fa-long-arrow-right');
+      } else {
+        $('.navbar-brand .brand-sm').removeClass('visible');
+        $('.navbar-brand .brand-big').addClass('visible');
+        $(this).find('i').attr('class', 'fa fa-long-arrow-left');
+      }
+    });
   }
 }
