@@ -52,7 +52,8 @@
 
                 <button type="submit" class="btn btn-primary">Inloggen</button>
                 <div class="float-right margin-top-sm">
-                  <input id="persistentLogin" type="checkbox" class="mr-1"><label for="persistentLogin" class="label-material">Ingelogd blijven.</label>
+                  <input id="persistentLogin" type="checkbox" class="mr-1" name="persistentLogin" [(ngModel)]="persistentLogin">
+                  <label for="persistentLogin" class="label-material">Hou mij ingelogd.</label>
                 </div>
               </form>
 <!--                <a href="#" class="forgot-pass">Wachtwoord vergeten ?</a><br>  &lt;!&ndash; TODO: Implement something for forgotten passwords &ndash;&gt;-->

@@ -12,10 +12,20 @@ export class LoginComponent implements OnInit {
   authenticated: boolean;
   message: string;
   user = new User(null);
+  persistentLogin: boolean;
 
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    if (this.authService.havesPersistentSession()) {
+      if (this.authService.authenticate(this.authService.getPersistentUser())) {
+        if (this.user.admin) {
+          this.router.navigate(['./admin']);
+        } else {
+          this.router.navigate(['./home']);
+        }
+      }
+    }
   }
 
   /**
@@ -29,6 +39,10 @@ export class LoginComponent implements OnInit {
 
     this.authenticated = this.authService.authenticate(this.user);
     if (this.authenticated) {
+      if (this.persistentLogin) {
+        this.authService.createPersistentSession(this.user);
+      }
+
       if (this.user.admin) {
         this.router.navigate(['./admin']);
       } else {

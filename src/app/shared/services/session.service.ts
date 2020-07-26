@@ -85,15 +85,20 @@ export class SessionService {
         if (this.dateDiffInDays(new Date(authDate), new Date()) < 30) {
           return (authEmail === user.email && authPassword === user.password);
         } else {
-          localStorage.removeItem('auth_email');
-          localStorage.removeItem('auth_password');
-          localStorage.removeItem('auth_date');
+          this.destroyPersistentSession();
           return false;
         }
       }
       return false;
     }
     return false;
+  }
+
+  public getPersistentUser(): User {
+    const user = new User();
+    user.email = localStorage.getItem('auth_email');
+    user.password = localStorage.getItem('auth_password');
+    return user;
   }
 
   /**

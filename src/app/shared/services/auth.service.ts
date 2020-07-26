@@ -25,11 +25,6 @@ export class AuthService {
    * @param user User
    */
   public authenticate(user: User) {
-    if (this.sessionService.havesPersistentSession(user)) {
-      this.sessionService.addSession(user);
-      return true;
-    }
-
     if (user.email in this.DATA_SOURCE && this.DATA_SOURCE[user.email] === user.password) {
       this.sessionService.addSession(user);
       return true;
@@ -41,14 +36,22 @@ export class AuthService {
    * Creates a new persistent login for the user.
    * @param user User
    */
-  public authenticateAddPersistent(user: User) {
-    if (this.isUserLoggedIn(user)) {
+  public createPersistentSession(user: User) {
+    if (this.havesSession(user)) {
       this.sessionService.createPersistentSession(user);
     }
   }
 
-  public isUserLoggedIn(user: User): boolean {
+  public havesSession(user: User): boolean {
     return this.sessionService.havesSession(user);
+  }
+
+  public havesPersistentSession(): boolean {
+    return this.sessionService.havesPersistentSession(this.sessionService.getPersistentUser());
+  }
+
+  public getPersistentUser(): User {
+    return this.sessionService.getPersistentUser();
   }
 
   /**
@@ -56,6 +59,9 @@ export class AuthService {
    */
   public logout() {
     this.sessionService.destroySession();
+    if (this.havesPersistentSession()) {
+      this.sessionService.destroyPersistentSession();
+    }
     this.router.navigate(['./login']);
   }
 }
