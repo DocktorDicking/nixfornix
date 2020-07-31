@@ -46,6 +46,10 @@ export class AuthService {
     return this.sessionService.havesSession(user);
   }
 
+  public getSession(): User {
+    return this.sessionService.getSession();
+  }
+
   public havesPersistentSession(): boolean {
     return this.sessionService.havesPersistentSession(this.sessionService.getPersistentUser());
   }

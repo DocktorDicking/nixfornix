@@ -17,7 +17,7 @@ export class SessionService {
   // TODO: Make this actually do session stuff.
 
   /**
-   * Adds a new session to the sessionStorage
+   * Adds a new session to the sessionStorage. Will update session when session variables exist.
    * @param user User
    */
   public addSession(user: User) {
@@ -69,6 +69,23 @@ export class SessionService {
       return false;
     }
     return false;
+  }
+
+  /**
+   * Returns a user based on the session variables.
+   */
+  public getSession(): User {
+    if (sessionStorage.length > 0) {
+      const authEmail = sessionStorage.getItem('auth_email');
+      const authPassword = sessionStorage.getItem('auth_password');
+      if (authEmail && authPassword) {
+        const sessionUser = new User();
+        sessionUser.email = authEmail;
+        sessionUser.password = authPassword;
+        return sessionUser;
+      }
+    }
+    return undefined;
   }
 
   /**

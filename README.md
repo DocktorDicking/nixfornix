@@ -27,7 +27,9 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 ## TODO: 
-* Create something which handles routing (routing service) or adding the routing logic to the state service which kind off makes sense. 
-* Create an AuthGuard which keeps routes safe until authentication is successful. Also check the admin flag here. This will keep people out untill they are logged in.
-* Connect API to Angular app and be greeted by bugs :) 
-* Fix styling of hour form which breaks css when phone is in landscape. Probebly some divs or css classes that cause this. 
+* OPTIONAL: Create something which handles routing (routing service) or adding the routing logic to the state service which kind off makes sense. 
+* REQUIRED: Create an AuthGuard which keeps routes safe until authentication is successful. Also check the admin flag here. This will keep people out untill they are logged in.
+* REQUIRED: Connect API to Angular app and be greeted by bugs :) 
+* UI: Fix styling of hour form which breaks css when phone is in landscape. Probebly some divs or css classes that cause this.
+* SECURITY: For sessions and persistent sessions 'auth_password' needs to be changed to a secure token 'auth_token'. (JSON Web Tokens JWT)
+* OPTIONAL: Add a loadingspinner which shows when the app is loading.
