@@ -32,3 +32,5 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 * UI: Fix styling of hour form which breaks css when phone is in landscape. Probebly some divs or css classes that cause this.
 * SECURITY: For sessions and persistent sessions 'auth_password' needs to be changed to a secure token 'auth_token'. (JSON Web Tokens JWT)
 * OPTIONAL: Add a loadingspinner which shows when the app is loading.
+* OPTIONAL: Add devent error messages when user is blocked from a route by authGuard. 
+

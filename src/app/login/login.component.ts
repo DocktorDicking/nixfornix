@@ -32,11 +32,6 @@ export class LoginComponent implements OnInit {
    * Will submit data from login form and check if credentials exist and match.
    */
   onSubmit() {
-    // TODO: Delete for prod.
-    if (this.user.email === 'admin') {
-      this.user.admin = true;
-    }
-
     this.authenticated = this.authService.authenticate(this.user);
     if (this.authenticated) {
       if (this.persistentLogin) {
