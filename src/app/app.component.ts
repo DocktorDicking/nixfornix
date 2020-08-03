@@ -13,7 +13,7 @@ import { AuthGuard } from './shared/services/authGuard.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [ TimeService, StateService, SessionService, UserService, DatabaseService, AuthService, AuthGuard ]
+  providers: [ TimeService, StateService, SessionService, UserService, DatabaseService ]
 })
 export class AppComponent {
   title = 'nixfornix';

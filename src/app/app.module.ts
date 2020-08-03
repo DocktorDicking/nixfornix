@@ -20,6 +20,9 @@ import { HourUpdateComponent } from './web/modals/hour-update/hour-update.compon
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HourTableTotalComponent } from './web/hour-table-total/hour-table-total.component';
 import { ManageUsersComponent } from './web/manage-users/manage-users.component';
+import {AuthGuard} from './shared/services/authGuard.service';
+import {AuthService} from './shared/services/auth.service';
+import {SessionService} from './shared/services/session.service';
 
 @NgModule({
   declarations: [
@@ -44,7 +47,7 @@ import { ManageUsersComponent } from './web/manage-users/manage-users.component'
     HttpClientModule,
     FormsModule
   ],
-  providers: [AppRoutingModule],
+  providers: [AppRoutingModule, SessionService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

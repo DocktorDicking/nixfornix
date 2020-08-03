@@ -46,6 +46,9 @@ export class AuthService {
     return this.sessionService.havesSession(user);
   }
 
+  /**
+   * Returns session variables in a user Object. Will return undefined if there is no session.
+   */
   public getSession(): User {
     return this.sessionService.getSession();
   }

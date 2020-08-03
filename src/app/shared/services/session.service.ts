@@ -82,6 +82,10 @@ export class SessionService {
         const sessionUser = new User();
         sessionUser.email = authEmail;
         sessionUser.password = authPassword;
+        // TODO: Fetch admin details (prob. whole user) from db.
+        if (sessionUser.email === 'admin') {
+          sessionUser.admin = true;
+        }
         return sessionUser;
       }
     }

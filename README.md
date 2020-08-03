@@ -28,7 +28,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## TODO: 
 * OPTIONAL: Create something which handles routing (routing service) or adding the routing logic to the state service which kind off makes sense. 
-* REQUIRED: Create an AuthGuard which keeps routes safe until authentication is successful. Also check the admin flag here. This will keep people out untill they are logged in.
 * REQUIRED: Connect API to Angular app and be greeted by bugs :) 
 * UI: Fix styling of hour form which breaks css when phone is in landscape. Probebly some divs or css classes that cause this.
 * SECURITY: For sessions and persistent sessions 'auth_password' needs to be changed to a secure token 'auth_token'. (JSON Web Tokens JWT)
