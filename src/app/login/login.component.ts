@@ -16,6 +16,9 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private authService: AuthService) { }
 
+  /**
+   * will check for persistent login on Init.
+   */
   ngOnInit() {
     if (this.authService.havesPersistentSession()) {
       if (this.authService.authenticate(this.authService.getPersistentUser())) {

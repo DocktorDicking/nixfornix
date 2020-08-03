@@ -53,22 +53,28 @@ export class AuthService {
     return this.sessionService.getSession();
   }
 
+  /**
+   * Checks if there is a persistent session.
+   */
   public havesPersistentSession(): boolean {
     return this.sessionService.havesPersistentSession(this.sessionService.getPersistentUser());
   }
 
+  /**
+   * Returns a user object based on variables stored for persistent login.
+   */
   public getPersistentUser(): User {
     return this.sessionService.getPersistentUser();
   }
 
   /**
-   * Destroys the active session.
+   * Destroys the active session and persistent session.
    */
   public logout() {
     this.sessionService.destroySession();
     if (this.havesPersistentSession()) {
       this.sessionService.destroyPersistentSession();
     }
-    this.router.navigate(['./login']);
+    this.router.navigate(['login']);
   }
 }

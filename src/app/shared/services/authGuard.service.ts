@@ -9,6 +9,13 @@ export class AuthGuard implements CanActivate {
 
   }
 
+  /**
+   * authGuard will protec those routes.
+   * canActivate will check if user is authenticated. If not, user will be returned to login page.
+   * If a user is flagged as admin, he can only acces admin panel. If user is not flagged as admin, user can only access home (user) panel.
+   * @param route Route
+   * @param state State
+   */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const sessionUser = this.authService.getSession();
     if (sessionUser) {
