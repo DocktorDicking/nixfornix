@@ -40,10 +40,10 @@ export class UserService {
     let id = 1;
     for (let i = 0; i < this.firstnames.length - 1; i++) {
       const user = new User(id);
-      user.firstName = this.firstnames[i];
+      user.name = this.firstnames[i];
       user.lastName = this.lastnames[Math.floor(Math.random() * Math.floor(this.lastnames.length - 1))];
-      user.admin = (user.firstName === 'Nico' || user.firstName === 'Nick');
-      user.email = (user.firstName + user.lastName);
+      user.admin = (user.name === 'Nico' || user.name === 'Nick');
+      user.email = (user.name + user.lastName);
       user.password = 'welkom' + id;
       this.users.push(user);
       id++;
@@ -72,7 +72,7 @@ export class UserService {
     // TODO Check if user exists
     const user = this.getUser(formUser.id);
     if (user) {
-      user.firstName = formUser.firstName;
+      user.name = formUser.name;
       user.middleName = formUser.middleName;
       user.lastName = formUser.lastName;
       user.password = formUser.password;

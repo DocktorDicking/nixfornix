@@ -4,15 +4,7 @@
 
 export const environment = {
   production: false,
-  firebaseConfig: {
-    apiKey: "AIzaSyDH_acoxVGm4kxnLqATZuz0ajLQA68C06w",
-    authDomain: "nix4nix-cd6fa.firebaseapp.com",
-    databaseURL: "https://nix4nix-cd6fa.firebaseio.com",
-    projectId: "nix4nix-cd6fa",
-    storageBucket: "nix4nix-cd6fa.appspot.com",
-    messagingSenderId: "265201419451",
-    appId: "1:265201419451:web:5388af75a64798e0cf559e"
-  }
+  API_URL: 'http://127.0.0.1:8080'
 };
 
 /*

@@ -9,12 +9,8 @@ import { Router } from '@angular/router';
  */
 @Injectable()
 export class AuthService {
-  private DATA_SOURCE = { // TODO: remove when we can call api.
-    jim: 'welkom01',
-    nico: 'welkom02',
-    admin: 'admin',
-    john: 'welkom'
-  };
+  private token = undefined;
+  private error = undefined;
 
   constructor(private http: HttpClient, private sessionService: SessionService, private router: Router) {
   }
@@ -24,12 +20,29 @@ export class AuthService {
    * This method also checks for a persistent session.
    * @param user User
    */
-  public authenticate(user: User) {
-    if (user.email in this.DATA_SOURCE && this.DATA_SOURCE[user.email] === user.password) {
-      this.sessionService.addSession(user);
-      return true;
-    }
-    return false;
+  public authenticate(user: User, persistent: boolean) {
+    debugger; // TODO: WIP!! Fixed the CORS error and now for some reason username is not in request?? 24/10
+
+    this.http.post<any>('/authenticate',
+      {
+        username: user.username,
+        password: user.password,
+        persist: persistent
+      }).subscribe(data => {
+        this.token = data.jwt;
+    });
+
+    return !!this.token;
+
+    // if (user.email in this.DATA_SOURCE && this.DATA_SOURCE[user.email] === user.password) {
+    //   this.sessionService.addSession(user);
+    //   return true;
+    // }
+    // return false;
+  }
+
+  public getToken() {
+    return this.token;
   }
 
   /**

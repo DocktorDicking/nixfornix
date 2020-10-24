@@ -44,7 +44,7 @@ export class MenuComponent implements OnInit {
 
     for (let i = 0; i < numberOfUsers; i++) {
       const user = new User(i);
-      user.firstName = this.firstnames[randomNumber(this.firstnames.length - 1)];
+      user.name = this.firstnames[randomNumber(this.firstnames.length - 1)];
       user.lastName = this.lastnames[randomNumber(this.lastnames.length - 1)];
       this.users.push(user);
     }

@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 import {AuthService} from '../shared/services/auth.service';
+import {HttpClient} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',
@@ -9,45 +12,42 @@ import {AuthService} from '../shared/services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  authenticated: boolean;
+  token: boolean;
   message: string;
   user = new User(null);
   persistentLogin: boolean;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private http: HttpClient) { }
 
   /**
    * will check for persistent login on Init.
    */
   ngOnInit() {
-    if (this.authService.havesPersistentSession()) {
-      if (this.authService.authenticate(this.authService.getPersistentUser())) {
-        if (this.user.admin) {
-          this.router.navigate(['./admin']);
-        } else {
-          this.router.navigate(['./home']);
-        }
-      }
-    }
+    this.persistentLogin = false; // default value
+    // if (this.authService.havesPersistentSession()) {
+    //   if (this.authService.authenticate(this.authService.getPersistentUser())) {
+    //     if (this.user.admin) {
+    //       this.router.navigate(['./admin']);
+    //     } else {
+    //       this.router.navigate(['./home']);
+    //     }
+    //   }
+    // }
   }
 
   /**
    * Will submit data from login form and check if credentials exist and match.
    */
   onSubmit() {
-    this.authenticated = this.authService.authenticate(this.user);
-    if (this.authenticated) {
-      if (this.persistentLogin) {
-        this.authService.createPersistentSession(this.user);
-      }
-
+    this.token = this.authService.authenticate(this.user, this.persistentLogin);
+    if (this.token) {
       if (this.user.admin) {
         this.router.navigate(['./admin']);
       } else {
         this.router.navigate(['./home']);
       }
     } else {
-      this.setMessage('Gebruikersnaam of wachtwoord incorrect.');
+      this.setMessage('Gebruikersnaam of wachtwoord incorrect.'); // TODO: Add error msg from http
     }
   }
 

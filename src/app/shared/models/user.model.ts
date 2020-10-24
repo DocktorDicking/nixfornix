@@ -3,9 +3,10 @@
  */
 export class User {
   id: number;
-  firstName: string;
+  name: string;
   middleName: string;
   lastName: string;
+  username: string;
   email: string;
   password: string;
   admin: boolean;
@@ -16,9 +17,10 @@ export class User {
     }
     if (user) {
       this.id = user.id;
-      this.firstName = user.firstName;
+      this.name = user.name;
       this.middleName = user.middleName;
       this.lastName = user.lastName;
+      this.username = user.username;
       this.email = user.email;
       this.password = user.password;
       this.admin = user.admin;
@@ -34,6 +36,6 @@ export class User {
 
   get fullName() {
     const prepostition = this.middleName ? ' ' + this.middleName + ' ' : ' ';
-    return this.firstName + prepostition + this.lastName;
+    return this.name + prepostition + this.lastName;
   }
 }

@@ -34,7 +34,7 @@
         <form #userForm="ngForm" (ngSubmit)="onSave()">
           <div class="form-group">
             <label for="firstName" class="form-control-label">Voornaam</label>
-            <input [(ngModel)]="this.formUser.firstName" #firstName="ngModel" id="firstName" name="firstName" type="firstName" class="form-control">
+            <input [(ngModel)]="this.formUser.name" #firstName="ngModel" id="firstName" name="firstName" type="firstName" class="form-control">
             <!-- Error messages -->
             <div class="alert-text">
               <div *ngIf="firstName.invalid && firstName.touched" class="shakeIt">
