@@ -17,7 +17,7 @@
               <form #loginform="ngForm" (ngSubmit)="onSubmit()">
                 <div class="form-group">
                   <label for="username" class="label-material">Gebruikersnaam</label>
-                  <input [(ngModel)]="user.email" #username="ngModel" name="username" id="username" type="text" class="form-control input-material" required minlength="3" #spy>
+                  <input [(ngModel)]="user.username" #username="ngModel" name="username" id="username" type="text" class="form-control input-material" required minlength="3" #spy>
                   <!-- Error messages -->
                   <div class="alert-text">
                     <div *ngIf="username.invalid && username.touched" class="shakeIt">

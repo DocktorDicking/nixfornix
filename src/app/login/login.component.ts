@@ -3,8 +3,6 @@ import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 import {AuthService} from '../shared/services/auth.service';
 import {HttpClient} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-login',

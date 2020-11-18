@@ -19,9 +19,10 @@ export class AuthService {
    * Authenticates the user by checking credentials. If the user is legit a session will be created.
    * This method also checks for a persistent session.
    * @param user User
+   * @param persistent
    */
   public authenticate(user: User, persistent: boolean) {
-    debugger; // TODO: WIP!! Fixed the CORS error and now for some reason username is not in request?? 24/10
+    debugger; // TODO: WIP!!
 
     this.http.post<any>('/authenticate',
       {
