@@ -9,40 +9,44 @@ import { Router } from '@angular/router';
  */
 @Injectable()
 export class AuthService {
-  private token = undefined;
   private error = undefined;
 
   constructor(private http: HttpClient, private sessionService: SessionService, private router: Router) {
   }
 
-  /**
-   * Authenticates the user by checking credentials. If the user is legit a session will be created.
-   * This method also checks for a persistent session.
-   * @param user User
-   * @param persistent
+  /*
+  WIP
+  Retrieve user from db when auth is successful and return or save in authserv?
    */
   public authenticate(user: User, persistent: boolean) {
     debugger; // TODO: WIP!!
+    if (this.sessionService.havesPersistentSession()) {
+      // get user?
+    } else {
+      this.login(user, persistent);
+    }
+  }
 
+  private login(user: User, persistent: boolean) {
+    let token;
     this.http.post<any>('/authenticate',
       {
         username: user.username,
         password: user.password,
         persist: persistent
       }).subscribe(data => {
-        this.token = data.jwt;
+      token = data.jwt;
     });
 
-    return !!this.token;
-
-    // if (user.email in this.DATA_SOURCE && this.DATA_SOURCE[user.email] === user.password) {
-    //   this.sessionService.addSession(user);
-    //   return true;
-    // }
-    // return false;
+    if (token) {
+      this.sessionService.addSession(token);
+      return true;
+    }
+    return false;
   }
 
   public getToken() {
+    // Get token from session/local storage
     return this.token;
   }
 
@@ -50,35 +54,37 @@ export class AuthService {
    * Creates a new persistent login for the user.
    * @param user User
    */
-  public createPersistentSession(user: User) {
-    if (this.havesSession(user)) {
-      this.sessionService.createPersistentSession(user);
-    }
+  public createPersistentSession() {
+    // Save token to localstorage
+    this.sessionService.addPersistentSession()
   }
 
-  public havesSession(user: User): boolean {
-    return this.sessionService.havesSession(user);
+  public havesSession(): boolean {
+    // Check if a token is present and if the token is valid
+    return this.sessionService.havesSession();
   }
 
   /**
    * Returns session variables in a user Object. Will return undefined if there is no session.
    */
-  public getSession(): User {
-    return this.sessionService.getSession();
+  public getSession(): string {
+    return this.sessionService.getSessionToken();
   }
 
   /**
    * Checks if there is a persistent session.
    */
   public havesPersistentSession(): boolean {
-    return this.sessionService.havesPersistentSession(this.sessionService.getPersistentUser());
+    // Token is present in local storage and the token is valid.
+    return this.sessionService.havesPersistentSession(this.sessionService.getPersistentToken());
   }
 
   /**
    * Returns a user object based on variables stored for persistent login.
    */
   public getPersistentUser(): User {
-    return this.sessionService.getPersistentUser();
+    // Get persistent token?
+    return this.sessionService.getPersistentToken();
   }
 
   /**
