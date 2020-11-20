@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate {
    * @param state State
    */
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    const sessionUser = this.authService.getSession();
+    const sessionUser = this.authService.getSessionUser();
     if (sessionUser) {
       if (route.routeConfig.path === 'admin') {
         if (!sessionUser.admin) {

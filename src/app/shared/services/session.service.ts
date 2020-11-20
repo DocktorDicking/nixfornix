@@ -1,15 +1,16 @@
 // Service which holds all functionality for logging in.
 import {Injectable} from '@angular/core';
+import { User } from '../models/user.model';
 
 /**
  * Handles all session related logic.
  */
 @Injectable()
 export class SessionService {
+  private sessionUser: User;
 
   /**
    * Adds a string as token to the sessionStore
-   * @param token
    */
   public addSession(token: string) {
     sessionStorage.setItem('auth_token', token);
@@ -24,7 +25,6 @@ export class SessionService {
 
   /**
    * Adds a string as token to the localStore
-   * @param token
    */
   public addPersistentSession(token: string) {
     localStorage.setItem('auth_token', token);
@@ -81,5 +81,16 @@ export class SessionService {
       return localStorage.getItem('auth_token');
     }
     return null;
+  }
+
+  /**
+   * Set's the session user object.
+   */
+  public setSessionUser(user: User) {
+    this.sessionUser = new User(null, user);
+  }
+
+  public getSessionUser() {
+    return this.sessionUser;
   }
 }

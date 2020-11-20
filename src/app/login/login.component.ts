@@ -21,31 +21,35 @@ export class LoginComponent implements OnInit {
    * will check for persistent login on Init.
    */
   ngOnInit() {
+    // debugger;
     this.persistentLogin = false; // default value
-    // if (this.authService.havesPersistentSession()) {
-    //   if (this.authService.authenticate(this.authService.getPersistentUser())) {
-    //     if (this.user.admin) {
-    //       this.router.navigate(['./admin']);
-    //     } else {
-    //       this.router.navigate(['./home']);
-    //     }
-    //   }
-    // }
+    if (this.authService.loginPersistent()) {
+      this.user = this.authService.getSessionUser();
+      this.login();
+    }
   }
 
   /**
    * Will submit data from login form and check if credentials exist and match.
    */
   onSubmit() {
-    this.token = this.authService.authenticate(this.user, this.persistentLogin);
-    if (this.token) {
-      if (this.user.admin) {
-        this.router.navigate(['./admin']);
+    debugger;
+    if (typeof this.user.username !== 'undefined' && typeof this.user.password !== 'undefined') {
+      if (this.authService.login(this.user, this.persistentLogin)) {
+        this.user = this.authService.getSessionUser();
+        this.login();
       } else {
-        this.router.navigate(['./home']);
+        // this.setMessage('Gebruikersnaam of wachtwoord incorrect.'); // TODO: Add error msg from http
+        this.setMessage(this.authService.getError());
       }
+    }
+  }
+
+  private login() {
+    if (this.user.admin) {
+      this.router.navigate(['./admin']);
     } else {
-      this.setMessage('Gebruikersnaam of wachtwoord incorrect.'); // TODO: Add error msg from http
+      this.router.navigate(['./home']);
     }
   }
 
