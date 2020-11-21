@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class DatabaseService {
 
-  // TODO: Remove fireStore service whenever we have our own backend.
+  // TODO: Class for all data fetching and writing related operations with time and user.
   constructor() {
   }
 

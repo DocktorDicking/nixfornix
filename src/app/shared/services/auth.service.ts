@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
+import {Injectable, Input} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { User } from '../models/user.model';
 import { SessionService } from './session.service';
 import { Router } from '@angular/router';
-import {throwError} from 'rxjs';
 
 /**
  * Handles all authentication related logic. Dependent on sessionService for session handling.
@@ -12,9 +11,7 @@ import {throwError} from 'rxjs';
 export class AuthService {
   // TODO: FIX CORS problem with login. Create someting (interceptor?) to get api errors. sigh..
 
-  private error = undefined;
-
-  constructor(private http: HttpClient, private sessionService: SessionService, private router: Router) {
+  constructor( private http: HttpClient, private sessionService: SessionService, private router: Router) {
   }
 
   public login(user: User, persistent: boolean) {
@@ -34,12 +31,8 @@ export class AuthService {
           }
           return this.loginSessionUser(token);
         }
-      }, (error) => {
-          //create interceptor? :https://stackoverflow.com/questions/50944140/angular-handleerror-how-to-get-custom-api-error-messages/50944546
-        this.error = error.error;
-        return false;
       });
-    this.error = this.httpError.error;
+
     return false;
   }
 
@@ -66,23 +59,6 @@ export class AuthService {
       });
     return true; // TODO: return true, only when 200 OK.
   }
-
-  // private handleError(error: HttpErrorResponse) {
-  //   debugger;
-  //   if (error.error instanceof ErrorEvent) {
-  //     // A client-side or network error occurred. Handle it accordingly.
-  //     console.error('An error occurred:', error.error.message);
-  //   } else {
-  //     // The backend returned an unsuccessful response code.
-  //     // The response body may contain clues as to what went wrong.
-  //     console.error(
-  //       `Backend returned code ${error.status}, ` +
-  //       `body was: ${error.error}`);
-  //   }
-  //   // Return an observable with a user-facing error message.
-  //   return throwError(
-  //     'Something bad happened; please try again later.');
-  // }
 
   public getSessionUser() {
     return this.sessionService.getSessionUser();
@@ -111,10 +87,6 @@ export class AuthService {
   public havesPersistentSession(): boolean {
     // Token is present in local storage and the token is valid.
     return this.sessionService.havesPersistentSession();
-  }
-
-  public getError() {
-    return this.error;
   }
 
   /**

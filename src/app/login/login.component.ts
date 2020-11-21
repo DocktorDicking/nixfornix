@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 import {AuthService} from '../shared/services/auth.service';
-import {HttpClient} from '@angular/common/http';
+import {MessageService} from '../shared/services/message.service';
 
 @Component({
   selector: 'app-login',
@@ -10,21 +10,26 @@ import {HttpClient} from '@angular/common/http';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  token: boolean;
+  showMessage = false; // Template uses this var to know when to display message.
   message: string;
   user = new User(null);
   persistentLogin: boolean;
 
-  constructor(private router: Router, private authService: AuthService, private http: HttpClient) { }
+  constructor(private router: Router, private authService: AuthService, private messageService: MessageService) {
+    // Sub to the message service
+    this.messageService.currentMessage.subscribe(message => {
+      this.message = message;
+      this.messageTimeOut();
+    });
+  }
 
   /**
    * will check for persistent login on Init.
    */
   ngOnInit() {
-    // debugger;
     this.persistentLogin = false; // default value
     if (this.authService.loginPersistent()) {
-      this.user = this.authService.getSessionUser();
+      this.user = this.authService.getSessionUser(); // Needs to move to a service or get it after redirect
       this.login();
     }
   }
@@ -33,18 +38,17 @@ export class LoginComponent implements OnInit {
    * Will submit data from login form and check if credentials exist and match.
    */
   onSubmit() {
-    debugger;
     if (typeof this.user.username !== 'undefined' && typeof this.user.password !== 'undefined') {
       if (this.authService.login(this.user, this.persistentLogin)) {
         this.user = this.authService.getSessionUser();
         this.login();
-      } else {
-        // this.setMessage('Gebruikersnaam of wachtwoord incorrect.'); // TODO: Add error msg from http
-        this.setMessage(this.authService.getError());
       }
     }
   }
 
+  /**
+   * Will redirect user to the correct page.
+   */
   private login() {
     if (this.user.admin) {
       this.router.navigate(['./admin']);
@@ -53,10 +57,13 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private setMessage(message: string) {
-    this.message = message;
+  /**
+   * Controls how long a message is visible.
+   */
+  private messageTimeOut() {
+    this.showMessage = true;
     setTimeout(() => {
-      this.message = undefined;  // TODO: Add directive to error msges and fadeout after 4 seconds.
-    }, 5000);
+      this.messageService.clearMessage();
+    }, 7500);
   }
 }

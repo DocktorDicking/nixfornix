@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
-import {HttpErrorResponse} from '@angular/common/http';
 
 /** Declarations */
 import { AppRoutingModule } from './app-routing.module';
@@ -26,7 +25,9 @@ import {AuthService} from './shared/services/auth.service';
 import {SessionService} from './shared/services/session.service';
 import {TokenInterceptorService} from './shared/services/interceptors/TokenInterceptor.service';
 import {BaseUrlInterceptorService} from './shared/services/interceptors/BaseUrlInterceptor.service';
-import {Token} from '@angular/compiler';
+import {ErrorInterceptorService} from './shared/services/interceptors/ErrorInterceptor.service';
+import {MessageService} from './shared/services/message.service';
+
 
 @NgModule({
   declarations: [
@@ -51,9 +52,10 @@ import {Token} from '@angular/compiler';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AppRoutingModule, SessionService, AuthService, AuthGuard,
+  providers: [AppRoutingModule, SessionService, AuthService, AuthGuard, MessageService,
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true}],
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
