@@ -30,7 +30,6 @@ export class LoginComponent implements OnInit {
     this.persistentLogin = false; // default value
     if (this.authService.loginPersistent()) {
       this.user = this.authService.getSessionUser(); // Needs to move to a service or get it after redirect
-      this.login();
     }
   }
 
@@ -40,6 +39,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     if (typeof this.user.username !== 'undefined' && typeof this.user.password !== 'undefined') {
       if (this.authService.login(this.user, this.persistentLogin)) {
+        debugger;
         this.user = this.authService.getSessionUser();
         this.login();
       }
@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit {
    * Will redirect user to the correct page.
    */
   private login() {
+    debugger;
     if (this.user.admin) {
       this.router.navigate(['./admin']);
     } else {

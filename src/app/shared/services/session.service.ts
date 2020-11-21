@@ -40,7 +40,7 @@ export class SessionService {
   /**
    * Checks if there is a possible token in the sessionStore
    */
-  public havesSession(): boolean {
+  public havesSessionToken(): boolean {
     if (sessionStorage.length > 0) {
       const token = sessionStorage.getItem('auth_token');
       if (typeof token !== 'undefined') {
@@ -54,7 +54,7 @@ export class SessionService {
    * Tries to retrieve a token from the sessionStore. Returns null if there is no token.
    */
   public getSessionToken(): string {
-    if (this.havesSession()) {
+    if (this.havesSessionToken()) {
       return sessionStorage.getItem('auth_token');
     }
     return null;
@@ -86,11 +86,19 @@ export class SessionService {
   /**
    * Set's the session user object.
    */
-  public setSessionUser(user: User) {
-    this.sessionUser = new User(null, user);
+  public setSessionUser(data: any) {
+    const sessionUser = new User();
+    sessionUser.id = data.id;
+    sessionUser.name = data.name;
+    sessionUser.middleName = data.middleName;
+    sessionUser.lastName = data.lastName;
+    sessionUser.username = data.username;
+    sessionUser.email = data.email;
+    sessionUser.admin = data.admin;
+    this.sessionUser = new User(null, sessionUser);
   }
 
-  public getSessionUser() {
+  public getSessionUser(): User {
     return this.sessionUser;
   }
 }

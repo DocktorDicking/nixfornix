@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import { User } from '../models/user.model';
 import { SessionService } from './session.service';
 import { Router } from '@angular/router';
+import {stringify} from 'querystring';
 
 /**
  * Handles all authentication related logic. Dependent on sessionService for session handling.
@@ -14,25 +15,27 @@ export class AuthService {
   constructor( private http: HttpClient, private sessionService: SessionService, private router: Router) {
   }
 
+  // see: https://stackoverflow.com/questions/48119369/wait-for-http-request-to-complete-in-angular-4-service
   public login(user: User, persistent: boolean) {
-    let token;
-    this.http.post<any>('/authenticate',
+   this.http.post<any>('/authenticate',
       {
         username: user.username,
         password: user.password,
         persist: persistent
       })
-      .subscribe(
-        (data) => {
-        token = data.jwt;
-        if (token) {
-          if (persistent) {
-            this.sessionService.addPersistentSession(token);
-          }
-          return this.loginSessionUser(token);
+      .toPromise().then(data => {
+      const token = data.jwt;
+      if (token) {
+        this.sessionService.addSession(token);
+        if (persistent) {
+          this.sessionService.addPersistentSession(token);
         }
-      });
-
+      }
+    });
+debugger;
+     if (this.sessionService.havesSessionToken()) {
+      return this.loginSessionUser(this.sessionService.getSessionToken());
+    }
     return false;
   }
 
@@ -44,22 +47,27 @@ export class AuthService {
   }
 
   private loginSessionUser(token: string) {
+    debugger;
     this.sessionService.addSession(token);
-    this.http.get<any>('/whoami')
-      .subscribe(data => {
-        const sessionUser = new User();
-        sessionUser.id = data.id;
-        sessionUser.name = data.name;
-        sessionUser.middleName = data.middleName;
-        sessionUser.lastName = data.lastName;
-        sessionUser.username = data.username;
-        sessionUser.email = data.email;
-        sessionUser.admin = data.admin;
-        this.sessionService.setSessionUser(sessionUser);
-      });
-    return true; // TODO: return true, only when 200 OK.
+    this.http.get('/whoami').toPromise().then(data => {
+      sessionStorage.setItem('auth_user', JSON.stringify(data));
+    });
+    const userObj: Array<any> = JSON.parse(sessionStorage.getItem('auth_user'));
+    this.sessionService.setSessionUser(userObj);
+    console.log(this.sessionService.getSessionUser());
+    return true;
   }
 
+// .subscribe((data) => {
+// const sessionUser = new User();
+// sessionUser.id = data.id;
+// sessionUser.name = data.name;
+// sessionUser.middleName = data.middleName;
+// sessionUser.lastName = data.lastName;
+// sessionUser.username = data.username;
+// sessionUser.email = data.email;
+// sessionUser.admin = data.admin;
+// this.sessionService.setSessionUser(sessionUser);
   public getSessionUser() {
     return this.sessionService.getSessionUser();
   }
@@ -71,7 +79,7 @@ export class AuthService {
 
   public havesSession(): boolean {
     // Check if a token is present and if the token is valid
-    return this.sessionService.havesSession();
+    return this.sessionService.havesSessionToken();
   }
 
   /**
