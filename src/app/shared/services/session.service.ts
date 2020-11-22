@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 
 /**
  * Handles all session related logic.
+ * TODO: Maybe delete this whole thing because it feels like an extra step.
  */
 @Injectable()
 export class SessionService {

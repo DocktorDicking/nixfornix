@@ -10,7 +10,6 @@ import {stringify} from 'querystring';
  */
 @Injectable()
 export class AuthService {
-  // TODO: FIX CORS problem with login. Create someting (interceptor?) to get api errors. sigh..
 
   constructor( private http: HttpClient, private sessionService: SessionService, private router: Router) {
   }
