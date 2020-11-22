@@ -3,108 +3,53 @@ import {HttpClient} from '@angular/common/http';
 import { User } from '../models/user.model';
 import { SessionService } from './session.service';
 import { Router } from '@angular/router';
-import {stringify} from 'querystring';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 /**
  * Handles all authentication related logic. Dependent on sessionService for session handling.
  */
 @Injectable()
 export class AuthService {
+  // Check: https://jasonwatmore.com/post/2019/06/10/angular-8-user-registration-and-login-example-tutorial
+
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
+
+  private currentTokenSubject: BehaviorSubject<string>;
+  public currentToken: Observable<string>;
 
   constructor( private http: HttpClient, private sessionService: SessionService, private router: Router) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('auth_user')));
+    this.currentUser = this.currentUserSubject.asObservable();
+
+    this.currentTokenSubject = new BehaviorSubject<string>(JSON.parse(sessionStorage.getItem('auth_token')));
+    this.currentToken = this.currentTokenSubject.asObservable();
+  }
+
+  public get currentUserValue(): User {
+    return this.currentUserSubject.value;
   }
 
   // see: https://stackoverflow.com/questions/48119369/wait-for-http-request-to-complete-in-angular-4-service
-  public login(user: User, persistent: boolean) {
-   this.http.post<any>('/authenticate',
+  login(username: string, password: string, persist: boolean) {
+   return this.http.post<any>('/authenticate',
       {
-        username: user.username,
-        password: user.password,
-        persist: persistent
-      })
-      .toPromise().then(data => {
-      const token = data.jwt;
-      if (token) {
-        this.sessionService.addSession(token);
-        if (persistent) {
-          this.sessionService.addPersistentSession(token);
-        }
-      }
-    });
-debugger;
-     if (this.sessionService.havesSessionToken()) {
-      return this.loginSessionUser(this.sessionService.getSessionToken());
-    }
-    return false;
-  }
-
-  public loginPersistent() {
-    if (this.sessionService.havesPersistentSession()) {
-      return this.loginSessionUser(this.sessionService.getPersistentToken());
-    }
-    return false;
-  }
-
-  private loginSessionUser(token: string) {
-    debugger;
-    this.sessionService.addSession(token);
-    this.http.get('/whoami').toPromise().then(data => {
-      sessionStorage.setItem('auth_user', JSON.stringify(data));
-    });
-    const userObj: Array<any> = JSON.parse(sessionStorage.getItem('auth_user'));
-    this.sessionService.setSessionUser(userObj);
-    console.log(this.sessionService.getSessionUser());
-    return true;
-  }
-
-// .subscribe((data) => {
-// const sessionUser = new User();
-// sessionUser.id = data.id;
-// sessionUser.name = data.name;
-// sessionUser.middleName = data.middleName;
-// sessionUser.lastName = data.lastName;
-// sessionUser.username = data.username;
-// sessionUser.email = data.email;
-// sessionUser.admin = data.admin;
-// this.sessionService.setSessionUser(sessionUser);
-  public getSessionUser() {
-    return this.sessionService.getSessionUser();
-  }
-
-  public getToken() {
-    // Get token from session storage
-    return this.sessionService.getSessionToken();
-  }
-
-  public havesSession(): boolean {
-    // Check if a token is present and if the token is valid
-    return this.sessionService.havesSessionToken();
-  }
-
-  /**
-   * Returns session variables in a user Object. Will return undefined if there is no session.
-   */
-  public getSession(): string {
-    return this.sessionService.getSessionToken();
-  }
-
-  /**
-   * Checks if there is a persistent session.
-   */
-  public havesPersistentSession(): boolean {
-    // Token is present in local storage and the token is valid.
-    return this.sessionService.havesPersistentSession();
+        username,
+        password,
+        persist
+      }).pipe(map(data => {
+        sessionStorage.setItem('auth_token', JSON.stringify(data.jwt));
+        this.currentTokenSubject.next(data.jwt);
+        return data.jwt;
+   }));
   }
 
   /**
    * Destroys the active session and persistent session.
    */
   public logout() {
-    this.sessionService.setSessionUser(null);
-    this.sessionService.destroySession();
-    if (this.havesPersistentSession()) {
-      this.sessionService.destroyPersistentSession();
-    }
+    sessionStorage.re
     this.router.navigate(['login']);
   }
 }

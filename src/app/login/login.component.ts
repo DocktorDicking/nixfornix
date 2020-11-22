@@ -3,6 +3,9 @@ import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 import {AuthService} from '../shared/services/auth.service';
 import {MessageService} from '../shared/services/message.service';
+import {SessionService} from '../shared/services/session.service';
+import {DatabaseService} from '../shared/services/database.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +17,11 @@ export class LoginComponent implements OnInit {
   message: string;
   user = new User(null);
   persistentLogin: boolean;
+  token: string;
 
-  constructor(private router: Router, private authService: AuthService, private messageService: MessageService) {
+  constructor(private router: Router, private messageService: MessageService, private sessionService: SessionService, private databaseService: DatabaseService) {
     // Sub to the message service
+    this.persistentLogin = false;
     this.messageService.currentMessage.subscribe(message => {
       this.message = message;
       this.messageTimeOut();
@@ -27,9 +32,9 @@ export class LoginComponent implements OnInit {
    * will check for persistent login on Init.
    */
   ngOnInit() {
-    this.persistentLogin = false; // default value
-    if (this.authService.loginPersistent()) {
-      this.user = this.authService.getSessionUser(); // Needs to move to a service or get it after redirect
+    if (this.sessionService.havesPersistentSession()) {
+      // get user based on token
+      // auth that user?
     }
   }
 
@@ -37,12 +42,22 @@ export class LoginComponent implements OnInit {
    * Will submit data from login form and check if credentials exist and match.
    */
   onSubmit() {
-    if (typeof this.user.username !== 'undefined' && typeof this.user.password !== 'undefined') {
-      if (this.authService.login(this.user, this.persistentLogin)) {
+    debugger;
+    // Call auth
+    if (this.user.username && this.user.password) {
+      this.databaseService.authenticate(this.user, this.persistentLogin).toPromise();
+
+      this.databaseService.authenticate(this.user, this.persistentLogin).subscribe(value => {
         debugger;
-        this.user = this.authService.getSessionUser();
-        this.login();
-      }
+        this.token = value.jwt;
+        if (this.token) {
+          sessionStorage.setItem('auth_token', this.token);
+          if (this.persistentLogin) {
+            localStorage.setItem('auth_token', this.token);
+          }
+          this.login();
+        }
+      });
     }
   }
 
@@ -50,12 +65,14 @@ export class LoginComponent implements OnInit {
    * Will redirect user to the correct page.
    */
   private login() {
-    debugger;
-    if (this.user.admin) {
-      this.router.navigate(['./admin']);
-    } else {
-      this.router.navigate(['./home']);
-    }
+    console.log(this.token);
+    this.router.navigate(['./home']);
+
+    // if (this.user.admin) {
+    //   this.router.navigate(['./admin']);
+    // } else {
+    //   this.router.navigate(['./home']);
+    // }
   }
 
   /**

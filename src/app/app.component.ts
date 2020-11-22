@@ -7,8 +7,6 @@ import { UserService } from './shared/services/user.service';
 import { DatabaseService } from './shared/services/database.service';
 import { AuthService } from './shared/services/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { AuthGuard } from './shared/services/authGuard.service';
-import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',

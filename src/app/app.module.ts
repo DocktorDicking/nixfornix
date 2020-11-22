@@ -27,6 +27,7 @@ import {TokenInterceptorService} from './shared/services/interceptors/TokenInter
 import {BaseUrlInterceptorService} from './shared/services/interceptors/BaseUrlInterceptor.service';
 import {ErrorInterceptorService} from './shared/services/interceptors/ErrorInterceptor.service';
 import {MessageService} from './shared/services/message.service';
+import {DatabaseService} from './shared/services/database.service';
 
 
 @NgModule({
@@ -52,7 +53,7 @@ import {MessageService} from './shared/services/message.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AppRoutingModule, SessionService, AuthService, AuthGuard, MessageService,
+  providers: [AppRoutingModule, SessionService, AuthService, AuthGuard, MessageService, DatabaseService,
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true}],
