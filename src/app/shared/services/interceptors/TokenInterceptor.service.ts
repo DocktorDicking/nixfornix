@@ -13,7 +13,7 @@ export class TokenInterceptorService implements HttpInterceptor {
     console.log('TokenInterceptorService');
 
     // Get token if there is any
-    const token = this.authService.getToken();
+    const token = sessionStorage.getItem('auth_token');
     if (token) {
       let newHeaders = req.headers;
 

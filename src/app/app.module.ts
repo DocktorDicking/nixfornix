@@ -22,7 +22,6 @@ import { HourTableTotalComponent } from './web/hour-table-total/hour-table-total
 import { ManageUsersComponent } from './web/manage-users/manage-users.component';
 import {AuthGuard} from './shared/services/authGuard.service';
 import {AuthService} from './shared/services/auth.service';
-import {SessionService} from './shared/services/session.service';
 import {TokenInterceptorService} from './shared/services/interceptors/TokenInterceptor.service';
 import {BaseUrlInterceptorService} from './shared/services/interceptors/BaseUrlInterceptor.service';
 import {ErrorInterceptorService} from './shared/services/interceptors/ErrorInterceptor.service';
@@ -53,7 +52,7 @@ import {DatabaseService} from './shared/services/database.service';
     HttpClientModule,
     FormsModule
   ],
-  providers: [AppRoutingModule, SessionService, AuthService, AuthGuard, MessageService, DatabaseService,
+  providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatabaseService,
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true}],
