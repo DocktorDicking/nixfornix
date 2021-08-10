@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../shared/services/auth.service';
+import {User} from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +8,8 @@ import {AuthService} from '../../shared/services/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  private user: User;
 
   getCurrentDate() {
     const date = new Date();
@@ -21,7 +24,7 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-
+    this.user = new User(null, this.authService.currentUserValue);
   }
 
   logout() {

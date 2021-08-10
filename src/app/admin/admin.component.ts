@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StateService } from '../shared/services/state.service';
+import { AuthService } from '../shared/services/auth.service';
 
 @Component({
   selector: 'app-admin',
@@ -8,10 +9,10 @@ import { StateService } from '../shared/services/state.service';
 })
 export class AdminComponent implements OnInit {
   private state: string;
-  constructor(private stateService: StateService) { }
+  constructor(private stateService: StateService, private authService: AuthService) { }
 
   ngOnInit() {
-    this.stateService.setAdmin(true); // TODO: this is for testing, change whenever we have a db with users.
+    this.stateService.setAdmin(this.authService.currentUserValue.admin);
     this.stateService.currentState.subscribe(currentState => this.state = currentState);
   }
 }

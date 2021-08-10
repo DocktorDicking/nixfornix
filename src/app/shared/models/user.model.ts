@@ -27,13 +27,6 @@ export class User {
     }
   }
 
-  public hasCredentials(): boolean {
-    if (this.email && this.password) {
-      return true;
-    }
-    return false;
-  }
-
   get fullName() {
     const prepostition = this.middleName ? ' ' + this.middleName + ' ' : ' ';
     return this.name + prepostition + this.lastName;

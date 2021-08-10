@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {User} from '../models/user.model';
 import {TimeRow} from '../models/timeRow.model';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
 
 /**
  * File for our own database service. This will replace the fireStore service when we have our own backend.
@@ -11,25 +10,7 @@ import {Observable} from 'rxjs';
  */
 @Injectable()
 export class DatabaseService {
-  // TODO: GET METHODS NEED TO RETURN OBSERVALBES?
-
   constructor(private http: HttpClient) {
-  }
-
-  // AUTHENTICATION METHODS
-  authenticate(user: User, persistent: boolean): Observable<any> {
-    const url = '/authenticate';
-    return this.http.post<any>(url,
-      {
-        username: user.username,
-        password: user.password,
-        persist: persistent
-      });
-  }
-
-  whoami(token: string): User {
-    const url = '/whoami';
-    return null;
   }
 
   // USER METHODS

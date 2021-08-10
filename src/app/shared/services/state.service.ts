@@ -27,7 +27,7 @@ export class StateService {
   }
 
   // on component init, set userRole
-  public setAdmin(value: boolean): void { // TODO: This is for testing, base on retrieved user whenever we have db.
+  public setAdmin(value: boolean): void {
     this.isAdmin = value;
     this.initState();
   }
