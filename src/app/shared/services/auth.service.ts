@@ -86,8 +86,23 @@ export class AuthService {
    * Destroys the active session and persistent session.
    */
   public logout() {
-    sessionStorage.removeItem('auth_token');
-    sessionStorage.removeItem('auth_user');
+    sessionStorage.clear();
+    localStorage.clear();
+    this.currentUserSubject.next(null);
+    this.currentTokenSubject.next(null);
     this.router.navigate(['login']);
+  }
+
+  /**
+   * Check if the user already haves a token in localstorage (persistent login) and uses
+   * that token to login into their account.
+   */
+  public persistLogin() {
+    debugger;
+    const token = localStorage.getItem('auth_token');
+    if (token) {
+      sessionStorage.setItem('auth_token', token);
+    }
+    return this.whoami();
   }
 }

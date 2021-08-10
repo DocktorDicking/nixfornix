@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 import { AuthService } from '../shared/services/auth.service';
-import {MessageService} from '../shared/services/message.service';
-import {DatabaseService} from '../shared/services/database.service';
+import { MessageService } from '../shared/services/message.service';
+import { DatabaseService } from '../shared/services/database.service';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +30,11 @@ export class LoginComponent implements OnInit {
    * will check for persistent login on Init.
    */
   ngOnInit() {
-
+    this.authService.persistLogin().then(() => {
+      if (this.authService.currentUserValue) {
+        this.login();
+      }
+    });
   }
 
   /**
