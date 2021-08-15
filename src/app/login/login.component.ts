@@ -11,7 +11,8 @@ import { DatabaseService } from '../shared/services/database.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  showMessage = false; // Template uses this var to know when to display message.
+  // showMessage = false;
+  // Template uses this var to know when to display message.
   message: string;
   user = new User(null);
   persistentLogin: boolean;
@@ -66,7 +67,7 @@ export class LoginComponent implements OnInit {
    * Controls how long a message is visible.
    */
   private messageTimeOut() {
-    this.showMessage = true;
+    // this.showMessage = true;
     setTimeout(() => {
       this.messageService.clearMessage();
     }, 7500);

@@ -12,7 +12,7 @@ export class MessageService {
 
   // BehaviorSubject to synch between components.
   private messageSource = new BehaviorSubject('');
-  currentMessage = this.messageSource.asObservable();
+  public currentMessage = this.messageSource.asObservable();
 
   constructor() { }
 

@@ -27,8 +27,12 @@ export class ErrorInterceptorService implements HttpInterceptor {
    * Sets message in message service so it can be send to the component currently active.
    */
   private onError(response: HttpErrorResponse): void {
-    const message = response.error.message;
-    this.messageService.changeMessage(this.getMessage(message));
+    const apiMessage = response.error.message;
+    const message = this.getMessage(apiMessage);
+    if (message) {
+      this.messageService.changeMessage(message);
+    }
+
     // Push error to error service?
   }
 

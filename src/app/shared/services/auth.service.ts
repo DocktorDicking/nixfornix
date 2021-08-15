@@ -98,7 +98,6 @@ export class AuthService {
    * that token to login into their account.
    */
   public persistLogin() {
-    debugger;
     const token = localStorage.getItem('auth_token');
     if (token) {
       sessionStorage.setItem('auth_token', token);
