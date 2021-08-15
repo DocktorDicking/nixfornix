@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit {
     this.persistentLogin = false;
     this.messageService.currentMessage.subscribe(message => {
       this.message = message;
-      this.messageTimeOut();
+      // this.messageTimeOut();
     });
   }
 
@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     // Call auth
     if (this.user.username && this.user.password) {
+      this.messageService.clearMessage();
       this.authService.login(this.user.username, this.user.password, this.persistentLogin).then(() => {
         this.authService.whoami().then(() => this.login());
       });
@@ -61,15 +62,5 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['./home']);
       }
     }
-  }
-
-  /**
-   * Controls how long a message is visible.
-   */
-  private messageTimeOut() {
-    // this.showMessage = true;
-    setTimeout(() => {
-      this.messageService.clearMessage();
-    }, 7500);
   }
 }
