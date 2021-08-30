@@ -1,35 +1,48 @@
-import {TimeRow} from '../models/timeRow.model';
-import {EventEmitter} from '@angular/core';
-import {User} from '../models/user.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
+import { TimeRow } from '../models/timeRow.model';
+import { User } from '../models/user.model';
+import { AuthService } from './auth.service';
 
+@Injectable()
 export class TimeService {
   timesChanged = new EventEmitter<TimeRow[]>();
   private times: TimeRow[] = [];
   private DEFAULTBREAKTIME = 30; // TODO: Move to settings file or something alike.
   private DEFAULTLOCATION = 'Luca Catering'; // TODO: Change to numeric value
 
+  constructor(private http: HttpClient, private authService: AuthService) {
+  }
+
   /**
    * Registered a time row.
-   * TODO: Add logic to save to database.
-   * @param time
    */
-  onRegisterTime(time: TimeRow) {
-    const pushTime = new TimeRow();
-    let newId = 1;
-    const lastTimeRow = this.times[this.times.length - 1];
-
-    // TODO: change id assignment when db is available.
-    if (typeof lastTimeRow !== 'undefined') {
-      if (typeof lastTimeRow.id !== 'undefined') {
-        newId = lastTimeRow.id + 1;
+  onRegisterTime(timeRow: TimeRow) {
+    // add the user id to this time row.
+    let time = {
+      date: timeRow.date,
+      start: timeRow.start,
+      stop: timeRow.stop,
+      breaktime: timeRow.breaktime,
+      location: timeRow.location,
+      description: timeRow.description,
+      hour: timeRow.hour,
+      user: {
+        id: this.authService.currentUserValue.id
       }
-    }
-    pushTime.id = newId;
+    };
 
-    pushTime.cloneTimeRow(time);
-    this.calculateWorkedHours(pushTime);
-    this.times.push(pushTime);
-    this.timesChanged.emit(this.times);
+    return this.http.post<any>('/time/create',
+      time)
+      .toPromise()
+      .then( res => {
+        // something
+        debugger;
+      }).catch(err => {
+        // console.log(err);
+        debugger;
+        // Handled by HTTP interceptor: ErrorInterceptor
+      });
   }
 
   /**
@@ -37,7 +50,7 @@ export class TimeService {
    */
   newTimeObj(): TimeRow {
     const time = new TimeRow();
-    time.break = this.DEFAULTBREAKTIME;
+    time.breaktime = this.DEFAULTBREAKTIME;
     time.location = this.DEFAULTLOCATION;
     return time;
   }
@@ -60,7 +73,7 @@ export class TimeService {
     // @ts-ignore
     const diff = (end - start); // milliseconds
     let minutes = Math.floor(diff / 1000 / 60);
-    minutes = minutes - time.break;
+    minutes = minutes - time.breaktime;
     time.hour = Math.floor((minutes / 60) * 100) / 100;
   }
 

@@ -6,12 +6,14 @@ export class TimeRow {
   date: string;
   start: string;
   stop: string;
-  break: number;
+  breaktime: number;
   location: string;
   description: string;
   hour: number;
 
-  constructor() {}
+  constructor() {
+    this.description = '';
+  }
 
   /**
    * Clones data of parameter time into this object. This will delete all previous data in this TimeRow.
@@ -21,7 +23,7 @@ export class TimeRow {
     this.date = time.date;
     this.start = time.start;
     this.stop = time.stop;
-    this.break = time.break;
+    this.breaktime = time.breaktime;
     this.location = time.location;
     this.description = time.description;
   }

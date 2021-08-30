@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {TimeRow} from '../../shared/models/timeRow.model';
-import {TimeService} from '../../shared/services/time.service';
+import { Component, OnInit } from '@angular/core';
+import { TimeRow } from '../../shared/models/timeRow.model';
+import { TimeService } from '../../shared/services/time.service';
 
 @Component({
   selector: 'app-hour-form',
@@ -12,6 +12,13 @@ export class HourFormComponent implements OnInit {
   private time: TimeRow;
   breaktimes = [0, 15, 30, 45, 60];
   message: string;
+
+  constructor(private timeService: TimeService) {
+  }
+
+  ngOnInit() {
+    this.time = this.timeService.newTimeObj();
+  }
 
   submitTime() {
     if (this.timeFormValidation(this.time)) {
@@ -34,13 +41,15 @@ export class HourFormComponent implements OnInit {
 
   timeFormValidation(time: TimeRow): boolean {
     if (!time) {
-      this.message = 'Tijd object is leeg. Kan dit formulier niet opslaan.'; // TODO: Something more sensible for the user?
+      this.message = 'Foutmelding: Tijd object is leeg. ' +
+        'Probeer het nogmaals of neem contact op met de beheerder.'; // TODO: Something more sensible for the user?
       return false;
     }
 
+    // TODO Wot?!
     const date = new Date(time.date);
     if (!(date.getTime() === date.getTime())) {
-      this.message = 'Datum is niet valide of is leeg.';
+      this.message = 'Datum is niet valide of is leeg. Schrijf datum als: dag / maand / jaar.';
       return false;
     }
 
@@ -55,17 +64,16 @@ export class HourFormComponent implements OnInit {
     }
 
     if (time.start === time.stop) {
-      this.message = 'Pardon.. je heb 24 uur gewerkt?'; // TODO: Change to something nice
+      this.message = 'Ingevoerde werktijd, van/tot niet valide.';
       return false;
     }
+
+    this.timeService.calculateWorkedHours(time);
+    if (time.hour >= 22) {
+      this.message = 'Totale tijd overschrijdt het maximum.';
+      return false;
+    }
+
     return true;
   }
-
-  constructor(private timeService: TimeService) {
-  }
-
-  ngOnInit() {
-    this.time = this.timeService.newTimeObj();
-  }
-
 }

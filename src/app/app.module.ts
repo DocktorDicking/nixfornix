@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 /** Declarations */
 import { AppRoutingModule } from './app-routing.module';
@@ -20,14 +20,13 @@ import { HourUpdateComponent } from './web/modals/hour-update/hour-update.compon
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HourTableTotalComponent } from './web/hour-table-total/hour-table-total.component';
 import { ManageUsersComponent } from './web/manage-users/manage-users.component';
-import {AuthGuard} from './shared/services/authGuard.service';
-import {AuthService} from './shared/services/auth.service';
-import {TokenInterceptorService} from './shared/services/interceptors/TokenInterceptor.service';
-import {BaseUrlInterceptorService} from './shared/services/interceptors/BaseUrlInterceptor.service';
-import {ErrorInterceptorService} from './shared/services/interceptors/ErrorInterceptor.service';
-import {MessageService} from './shared/services/message.service';
-import {DatabaseService} from './shared/services/database.service';
-
+import { AuthGuard } from './shared/services/authGuard.service';
+import { AuthService } from './shared/services/auth.service';
+import { TokenInterceptorService } from './shared/services/interceptors/TokenInterceptor.service';
+import { BaseUrlInterceptorService } from './shared/services/interceptors/BaseUrlInterceptor.service';
+import { ErrorInterceptorService } from './shared/services/interceptors/ErrorInterceptor.service';
+import { MessageService } from './shared/services/message.service';
+import { DatabaseService } from './shared/services/database.service';
 
 @NgModule({
   declarations: [
