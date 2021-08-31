@@ -3,6 +3,7 @@ import { EventEmitter, Injectable } from '@angular/core';
 import { TimeRow } from '../models/timeRow.model';
 import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class TimeService {
@@ -11,7 +12,7 @@ export class TimeService {
   private DEFAULTBREAKTIME = 30; // TODO: Move to settings file or something alike.
   private DEFAULTLOCATION = 'Luca Catering'; // TODO: Change to numeric value
 
-  constructor(private http: HttpClient, private authService: AuthService) {
+  constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService) {
   }
 
   /**
@@ -36,8 +37,12 @@ export class TimeService {
       time)
       .toPromise()
       .then( res => {
-        // something
-        debugger;
+        if (res) {
+          this.toastr.success(time.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen');
+        } else {
+          this.toastr.error('Er is iets fout gegaan tijdens het opslaan van jou uren. ' +
+            'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: uren konden niet worden opgeslagen');
+        }
       }).catch(err => {
         // console.log(err);
         debugger;

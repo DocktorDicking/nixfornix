@@ -14,11 +14,11 @@ import { HttpClient } from '@angular/common/http';
   providers: [ TimeService, StateService, UserService, DatabaseService ]
 })
 export class AppComponent {
-  title = 'nixfornix';
+  title = 'nix4nix';
 
   // TODO: Check if TimeService actually need to be initialized in this constructor. Seems to me its bollocks.
   constructor(private titleService: Title, private meta: Meta, private http: HttpClient, private auth: AuthService) {
-    titleService.setTitle('NixforNix - Urenregistratie');
+    titleService.setTitle('Nix4Nix - Urenregistratie');
     meta.addTag({name: 'description', content: ''}, true);
     meta.addTag({name: 'viewport', content: 'width=device-width, initial-scale=1'}, true);
     meta.addTag({name: 'robots', content: 'all,follow'}, true);

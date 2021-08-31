@@ -7,6 +7,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 /** Declarations */
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CommonModule } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 import { LoginComponent } from './login/login.component';
 import { AdminComponent } from './admin/admin.component';
 import { HomeComponent } from './home/home.component';
@@ -43,13 +46,16 @@ import { DatabaseService } from './shared/services/database.service';
     HourUpdateComponent,
     NotFoundComponent,
     HourTableTotalComponent,
-    ManageUsersComponent,
+    ManageUsersComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    CommonModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatabaseService,
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true},
