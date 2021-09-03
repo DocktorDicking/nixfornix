@@ -10,7 +10,6 @@ export class TimeService {
   recentTimesChanged = new EventEmitter<TimeRow[]>();
   allTimesChanged = new EventEmitter<TimeRow[]>();
 
-
   private recentTimes: TimeRow[] = [];
   private allTimes: TimeRow[] = [];
 
