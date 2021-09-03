@@ -14,6 +14,7 @@ export class HourTableRecentComponent implements OnInit {
   constructor(private timeService: TimeService) { }
 
   ngOnInit() {
+    this.timeService.loadRecentTimes();
     this.timeService.timesChanged.subscribe(
       (newTimes: TimeRow[]) => {
         this.times = newTimes;

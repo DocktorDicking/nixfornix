@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { TimeRow } from '../models/timeRow.model';
 import { User } from '../models/user.model';
@@ -20,7 +20,7 @@ export class TimeService {
    */
   onRegisterTime(timeRow: TimeRow) {
     // add the user id to this time row.
-    let time = {
+    const time = {
       date: timeRow.date,
       start: timeRow.start,
       stop: timeRow.stop,
@@ -33,19 +33,19 @@ export class TimeService {
       }
     };
 
-    return this.http.post<any>('/time/create',
-      time)
+    return this.http.post<any>('/time/create', time)
       .toPromise()
       .then( res => {
         if (res) {
+          this.loadRecentTimes();
           this.toastr.success(time.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen');
         } else {
           this.toastr.error('Er is iets fout gegaan tijdens het opslaan van jou uren. ' +
             'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: uren konden niet worden opgeslagen');
         }
       }).catch(err => {
-        // console.log(err);
-        debugger;
+        this.toastr.error('Er is iets fout gegaan tijdens het opslaan van jou uren. ' +
+          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: uren konden niet worden opgeslagen');
         // Handled by HTTP interceptor: ErrorInterceptor
       });
   }
@@ -81,6 +81,16 @@ export class TimeService {
     minutes = minutes - time.breaktime;
     time.hour = Math.floor((minutes / 60) * 100) / 100;
   }
+  loadRecentTimes() {
+    // TODO load times and add to times array in this component. Finally emit the new event so the front-end will refresh.
+
+    this.http.get<TimeRow[]>('/time/get/recent?user_id=' + this.authService.currentUserValue.id)
+      .subscribe(data => {
+        this.times = data;
+        this.timesChanged.emit(this.times);
+        // debugger;
+      });
+  }
 
   /**
    * Will return all times of a user.
@@ -90,16 +100,7 @@ export class TimeService {
   }
 
   getOneTime(id: number): TimeRow {
-    const time = new TimeRow();
-    for (const timeRef of this.times) {
-      if (Number(timeRef.id) === id) {
-
-        return ;
-      }
-
-    }
-
-    return time;
+    return null;
   }
 
   updateTime(id: number): boolean {return null; }
