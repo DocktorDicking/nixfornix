@@ -11,7 +11,7 @@
   <div class="page-content">
 
     <!-- page header -->
-    <div class="page-header"> <!-- TODO: Move to separate component? -->
+    <div class="page-header">
       <div class="container-fluid">
         <h2 class="h5 no-margin-bottom">Home</h2>
       </div>
@@ -21,6 +21,7 @@
     <app-hour-table *ngIf="state == 'HOUR_FORM'"></app-hour-table>
 
     <app-hour-table *ngIf="state == 'HOUR_OVERVIEW'"></app-hour-table> <!-- reuse admin component? -->
+    <app-hour-table-total *ngIf="state == 'HOUR_OVERVIEW'"></app-hour-table-total>
 
     <app-footer></app-footer>
   </div>

@@ -7,8 +7,13 @@ import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class TimeService {
-  timesChanged = new EventEmitter<TimeRow[]>();
-  private times: TimeRow[] = [];
+  recentTimesChanged = new EventEmitter<TimeRow[]>();
+  allTimesChanged = new EventEmitter<TimeRow[]>();
+
+
+  private recentTimes: TimeRow[] = [];
+  private allTimes: TimeRow[] = [];
+
   private DEFAULTBREAKTIME = 30; // TODO: Move to settings file or something alike.
   private DEFAULTLOCATION = 'Luca Catering'; // TODO: Change to numeric value
 
@@ -81,14 +86,30 @@ export class TimeService {
     minutes = minutes - time.breaktime;
     time.hour = Math.floor((minutes / 60) * 100) / 100;
   }
-  loadRecentTimes() {
-    // TODO load times and add to times array in this component. Finally emit the new event so the front-end will refresh.
 
+  /**
+   * Loads recent times registered by the user. Api set's the max values of rows on 10.
+   */
+  loadRecentTimes() {
     this.http.get<TimeRow[]>('/time/get/recent?user_id=' + this.authService.currentUserValue.id)
       .subscribe(data => {
-        this.times = data;
-        this.timesChanged.emit(this.times);
-        // debugger;
+        if (data.length > 0) {
+          this.recentTimes = data;
+          this.recentTimesChanged.emit(this.recentTimes);
+        }
+      });
+  }
+
+  /**
+   * Loads recent times registered by the user. Api set's the max values of rows on 10.
+   */
+  loadAllTimes() {
+    this.http.get<TimeRow[]>('/time/list?user_id=' + this.authService.currentUserValue.id)
+      .subscribe(data => {
+        if (data.length > 0) {
+          this.allTimes = data;
+          this.allTimesChanged.emit(this.allTimes);
+        }
       });
   }
 
@@ -96,7 +117,7 @@ export class TimeService {
    * Will return all times of a user.
    */
   getAllTimes(user: User): Array<TimeRow> { // TODO: Make this fetch data from a database
-    return this.times.slice(); // Slice returns a copy, so the source data cannot be changed.
+    return this.recentTimes.slice(); // Slice returns a copy, so the source data cannot be changed.
   }
 
   getOneTime(id: number): TimeRow {
