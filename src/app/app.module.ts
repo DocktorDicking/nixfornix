@@ -30,6 +30,7 @@ import { BaseUrlInterceptorService } from './shared/services/interceptors/BaseUr
 import { ErrorInterceptorService } from './shared/services/interceptors/ErrorInterceptor.service';
 import { MessageService } from './shared/services/message.service';
 import { DatabaseService } from './shared/services/database.service';
+import {HourTableRecentAdminComponent} from './web/hour-table-recent-admin/hour-table-recent.component-admin';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { DatabaseService } from './shared/services/database.service';
     MenuComponent,
     HourFormComponent,
     HourTableRecentComponent,
+    HourTableRecentAdminComponent,
     HelpModalComponent,
     HourUpdateComponent,
     NotFoundComponent,

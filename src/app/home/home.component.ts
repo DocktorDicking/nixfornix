@@ -10,7 +10,7 @@ import {User} from '../shared/models/user.model';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  private state: string;
+  public state: string;
 
   constructor(private stateService: StateService, private authService: AuthService, private toastr: ToastrService) { }
 
