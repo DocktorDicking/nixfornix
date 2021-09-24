@@ -1,53 +1,29 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import { User } from '../models/user.model';
-import { DatabaseService } from './database.service';
+import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class UserService {
-
-  // private dbs = DatabaseService <- putting this in the constructor broke the project. Has something to do with the order of importing stuff.
-  constructor() {
-  }
-
-  private firstnames: string[] = [
-    'Jim',
-    'Anouk',
-    'Vic',
-    'Nico',
-    'Nick',
-    'Jolanda',
-    'Cees',
-    'Pip',
-    'Ozzy'
-  ];
-
-  private lastnames: string[] = [
-    'Wieringen',
-    'Kroon',
-    'Goldenberg',
-    'Heerikhuizen',
-    'Steenvoorden',
-    'Tolen'
-  ];
-
+  usersChanged = new EventEmitter<User[]>();
   public users: User[] = [];
+
+  constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService) {
+  }
 
   /**
    * Returns all users
    * @return User[]
    */
-  public generateUsers() {
-    let id = 1;
-    for (let i = 0; i < this.firstnames.length - 1; i++) {
-      const user = new User(id);
-      user.name = this.firstnames[i];
-      user.lastName = this.lastnames[Math.floor(Math.random() * Math.floor(this.lastnames.length - 1))];
-      user.admin = (user.name === 'Nico' || user.name === 'Nick');
-      user.email = (user.name + user.lastName);
-      user.password = 'welkom' + id;
-      this.users.push(user);
-      id++;
-    }
+  public getUsers() {
+    this.http.get<User[]>('/user/list')
+      .subscribe(data => {
+        if (data.length > 0) {
+          this.users = data;
+          this.usersChanged.emit(this.users);
+        }
+      });
   }
 
   /**

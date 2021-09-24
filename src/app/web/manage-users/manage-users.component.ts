@@ -14,13 +14,11 @@ export class ManageUsersComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit() {
-    if (this.userService.users.length === 0) {
-      this.userService.generateUsers();
-    }
+    this.userService.getUsers();
   }
 
   public onSave() {
-    this.userService.submit(this.formUser);
+    // this.userService.submit(this.formUser);
   }
 
   public onUserData(id: number) {

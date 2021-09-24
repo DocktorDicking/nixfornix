@@ -16,7 +16,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let user of this.userService.users" [class.table-row-selected]="user.id === this.formUser.id" class="htable htable-text" (click)="onUserData(user.id)">
-                    <td>{{user.fullName}}</td>
+                    <td>{{user.name}} {{user.middleName? user.middleName : ''}} {{user.lastName}}</td>
                     <td>{{user.admin ? 'Administrator' : 'Werknemer'}}</td>
                   </tr>
                 </tbody>
@@ -73,6 +73,17 @@
             <!-- Error messages -->
             <div class="alert-text">
               <div *ngIf="email.invalid && email.touched" class="shakeIt">
+                <!-- TODO -->
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="username" class="form-control-label">Gebruikersnaam</label>
+            <input [(ngModel)]="this.formUser.username" #username="ngModel" id="username" name="username" type="text" class="form-control">
+            <!-- Error messages -->
+            <div class="alert-text">
+              <div *ngIf="username.invalid && username.touched" class="shakeIt">
                 <!-- TODO -->
               </div>
             </div>
