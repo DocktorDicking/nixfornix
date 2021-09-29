@@ -107,11 +107,12 @@
             </div>
           </div>
 
-          <!-- TODO space buttons -->
           <!-- TODO do something with returned bool 'delete' -->
-          <button *ngIf="!this.userService.isEmpty(this.formUser)" type="submit" class="btn btn-primary">Opslaan</button>
-          <button *ngIf="!this.userService.isEmpty(this.formUser)" type="reset" class="btn btn-dark" data-toggle="modal" data-target="#resetConfirmation">Reset</button>
-          <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">Verwijderen</button>
+          <div class="btn-group">
+            <button *ngIf="!this.userService.isEmpty(this.formUser)" type="submit" class="btn btn-primary">Opslaan</button>
+            <button *ngIf="!this.userService.isEmpty(this.formUser)" type="button" class="btn btn-dark" data-toggle="modal" data-target="#resetConfirmation">Reset</button>
+            <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">Verwijderen</button>
+          </div>
         </form>
       </div>
     </div>
@@ -156,7 +157,7 @@
         </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="resetFormUser()">Resetten</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="this.resetFormUser()">Resetten</button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>
       </div>
     </div>

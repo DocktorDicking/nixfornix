@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StateService } from '../shared/services/state.service';
 import { AuthService } from '../shared/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import {User} from '../shared/models/user.model';
+import { User } from '../shared/models/user.model';
 
 @Component({
   selector: 'app-home',
@@ -20,6 +20,8 @@ export class HomeComponent implements OnInit {
 
     // Welcome message
     const currentUser: User = this.authService.currentUserValue;
-    this.toastr.info('Welkom terug ' + currentUser.fullName , 'Login succesvol');
+    const middleName = currentUser.middleName ? currentUser.middleName : '';
+    const fullName = currentUser.name + ' ' + middleName + currentUser.lastName;
+    this.toastr.info('Welkom terug ' + fullName , 'Login succesvol');
   }
 }
