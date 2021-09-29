@@ -74,24 +74,6 @@ export class UserService {
           'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden aangemaakt');
         // Handled by HTTP interceptor: ErrorInterceptor
       });
-
-
-
-
-    // TODO Check if user exists
-    const user = this.getUser(formUser.id);
-    if (user) {
-      user.name = formUser.name;
-      user.middleName = formUser.middleName;
-      user.lastName = formUser.lastName;
-      user.password = formUser.password;
-      user.email = formUser.email;
-      user.admin = formUser.admin;
-    } else {
-      formUser.id = (this.users.length + 1);
-      const data = JSON.stringify(formUser);
-      this.users.push(formUser);
-    }
   }
 
   public deleteUser(id: number): boolean {

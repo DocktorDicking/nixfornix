@@ -17,8 +17,12 @@ export class ManageUsersComponent implements OnInit {
     this.userService.getUsers();
   }
 
+  /*
+  TODO: make 2 methods for submit and update. Check is formUser exists in the list of users in userservice
+  if user exists call update, else call create!
+   */
   public onSave() {
-    // this.userService.submit(this.formUser);
+    this.userService.submit(this.formUser);
   }
 
   public onUserData(id: number) {
