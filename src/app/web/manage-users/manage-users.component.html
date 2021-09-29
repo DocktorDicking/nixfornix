@@ -100,6 +100,15 @@
             </div>
           </div>
 
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="this.formUser.active" #active="ngModel" id="active" name="active">
+            <label for="active" class="form-control-label">Actief</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" [(ngModel)]="this.formUser.admin" #admin="ngModel" id="admin" name="admin">
+            <label for="admin" class="form-control-label">Administrator</label>
+          </div>
+
           <!-- Error messages -->
           <div class="alert-text">
             <div *ngIf="this.message" class="shakeIt">

@@ -24,7 +24,7 @@ export class TimeService {
    */
   onRegisterTime(timeRow: TimeRow) {
     // add the user id to this time row.
-    const time = {
+    const timePayload = {
       date: timeRow.date,
       start: timeRow.start,
       stop: timeRow.stop,
@@ -37,12 +37,12 @@ export class TimeService {
       }
     };
 
-    return this.http.post<any>('/time/create', time)
+    return this.http.post<any>('/time/create', timePayload)
       .toPromise()
       .then( res => {
         if (res) {
           this.loadRecentTimes();
-          this.toastr.success(time.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen');
+          this.toastr.success(timePayload.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen!');
         } else {
           this.toastr.error('Er is iets fout gegaan tijdens het opslaan van jou uren. ' +
             'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: uren konden niet worden opgeslagen');

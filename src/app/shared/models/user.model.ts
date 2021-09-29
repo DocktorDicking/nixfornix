@@ -12,6 +12,7 @@ export class User {
   email: string;
   password: string;
   admin: boolean;
+  active: boolean;
 
   constructor(id?: number, user?: User) {
     if (id) {
@@ -26,6 +27,7 @@ export class User {
       this.email = user.email;
       this.password = user.password;
       this.admin = user.admin;
+      this.active = user.active;
     }
   }
 

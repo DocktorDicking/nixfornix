@@ -22,6 +22,8 @@ export class UserService {
         if (data.length > 0) {
           this.users = data;
           this.usersChanged.emit(this.users);
+        } else {
+          this.toastr.warning('Er zijn geen gebruikers gevonden in de database.', 'Geen gebruikers gevonden');
         }
       });
   }
@@ -45,6 +47,37 @@ export class UserService {
 
   // TODO: Rewrite this method when we have a working dbs.
   public submit(formUser: User) {
+    // add the user id to this time row.
+    const newUserPayload = {
+      name: formUser.name,
+      middleName: formUser.middleName,
+      lastName: formUser.lastName,
+      username: formUser.username,
+      email: formUser.email,
+      password: formUser.password,
+      admin: formUser.admin,
+      active: formUser.active
+    };
+
+    return this.http.post<any>('/user/create', newUserPayload)
+      .toPromise()
+      .then( res => {
+        if (res) {
+          this.getUsers();
+          this.toastr.success('Gebruiker: ' + newUserPayload.username + ' is succesvol aangemaakt.', 'Gebruiker aangemaakt');
+        } else {
+          this.toastr.error('De gebruiker kon niet worden aangemaakt.' +
+            'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden aangemaakt');
+        }
+      }).catch(err => {
+        this.toastr.error('De gebruiker kon niet worden aangemaakt.' +
+          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden aangemaakt');
+        // Handled by HTTP interceptor: ErrorInterceptor
+      });
+
+
+
+
     // TODO Check if user exists
     const user = this.getUser(formUser.id);
     if (user) {
