@@ -22,7 +22,14 @@ export class ManageUsersComponent implements OnInit {
   if user exists call update, else call create!
    */
   public onSave() {
-    this.userService.submit(this.formUser);
+    // if exist in userService (thus an excisting user, call update)
+    if (this.formUser.id !== 0 && this.formUser.id !== undefined
+      || this.userService.getUser(this.formUser.id) != null) {
+      debugger;
+      this.userService.update(this.formUser);
+    } else {
+      this.userService.submit(this.formUser);
+    }
   }
 
   public onUserData(id: number) {

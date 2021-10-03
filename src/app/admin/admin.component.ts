@@ -19,8 +19,8 @@ export class AdminComponent implements OnInit {
 
     // Welcome message
     const currentUser: User = this.authService.currentUserValue;
-    const middleName = currentUser.middleName ? currentUser.middleName : '';
-    const fullName = currentUser.name + ' ' + middleName + currentUser.lastName;
+    const middleName = currentUser.middleName ? ' ' + currentUser.middleName + ' ' : ' ';
+    const fullName = currentUser.name + middleName + currentUser.lastName;
     this.toastr.info('Welkom terug ' + fullName , 'Login succesvol');
   }
 }

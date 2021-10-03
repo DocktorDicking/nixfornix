@@ -45,9 +45,46 @@ export class UserService {
     return null;
   }
 
-  // TODO: Rewrite this method when we have a working dbs.
+  /**
+   * Method will try to update the given formUser.
+   * @param formUser
+   */
+  public update(formUser: User) {
+    // Create payload
+    const newUserPayload = {
+      id: formUser.id,
+      name: formUser.name,
+      middleName: formUser.middleName,
+      lastName: formUser.lastName,
+      username: formUser.username,
+      email: formUser.email,
+      password: formUser.password,
+      admin: formUser.admin,
+      active: formUser.active
+    };
+
+    return this.http.post<any>('/user/update', newUserPayload)
+      .toPromise()
+      .then( res => {
+        if (res.statusCode === 200) {
+          this.getUsers();
+          this.toastr.success('Gebruiker: ' + newUserPayload.username + ' is succesvol geüpdatet.', 'Gebruiker geüpdatet');
+        } else {
+          this.toastr.error('De gebruiker kon niet worden geüpdatet.' +
+            'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden geüpdatet');
+        }
+      }).catch(err => {
+        // Handled by HTTP interceptor: ErrorInterceptor
+      });
+  }
+
+  /**
+   * Tries to submit user data for a new user. Only call this method when dealing with a new user.
+   * Will send a post request to the api with the formUser data as payload.
+   * @param formUser User
+   */
   public submit(formUser: User) {
-    // add the user id to this time row.
+    // create payload
     const newUserPayload = {
       name: formUser.name,
       middleName: formUser.middleName,
@@ -62,7 +99,7 @@ export class UserService {
     return this.http.post<any>('/user/create', newUserPayload)
       .toPromise()
       .then( res => {
-        if (res) {
+        if (res.statusCode === 200) {
           this.getUsers();
           this.toastr.success('Gebruiker: ' + newUserPayload.username + ' is succesvol aangemaakt.', 'Gebruiker aangemaakt');
         } else {
@@ -70,8 +107,6 @@ export class UserService {
             'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden aangemaakt');
         }
       }).catch(err => {
-        this.toastr.error('De gebruiker kon niet worden aangemaakt.' +
-          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden aangemaakt');
         // Handled by HTTP interceptor: ErrorInterceptor
       });
   }

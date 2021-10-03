@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
    * will check for persistent login on Init.
    */
   ngOnInit() {
+    this.messageService.clearMessage();
     this.authService.persistLogin().then(() => {
       if (this.authService.currentUserValue) {
         this.login();
