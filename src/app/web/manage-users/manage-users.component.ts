@@ -17,28 +17,34 @@ export class ManageUsersComponent implements OnInit {
     this.userService.getUsers();
   }
 
-  /*
-  TODO: make 2 methods for submit and update. Check is formUser exists in the list of users in userservice
-  if user exists call update, else call create!
+  /**
+   * Will call for update when a user already exists in the userService user list which is fetched
+   * from the server.
+   *
+   * update will send a post to /update, create will send a post to /create
    */
   public onSave() {
     // if exist in userService (thus an excisting user, call update)
     if (this.formUser.id !== 0 && this.formUser.id !== undefined
       || this.userService.getUser(this.formUser.id) != null) {
-      debugger;
       this.userService.update(this.formUser);
     } else {
       this.userService.submit(this.formUser);
     }
   }
 
+  /**
+   * Set's the selected user as the formUser.
+   * formUser is bind to the add/update form.
+   * @param id userId
+   */
   public onUserData(id: number) {
-    // TODO add some way to throw an error when a user id does not exist
     const user = this.userService.getUser(id);
     if (user) {
       this.formUser = new User(null, user);
     }
   }
+
 
   public onDelete(id: number) {
     if (this.userService.deleteUser(id)) {

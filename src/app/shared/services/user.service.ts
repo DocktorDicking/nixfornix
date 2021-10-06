@@ -47,7 +47,7 @@ export class UserService {
 
   /**
    * Method will try to update the given formUser.
-   * @param formUser
+   * @param formUser User
    */
   public update(formUser: User) {
     // Create payload
@@ -121,6 +121,11 @@ export class UserService {
     return false;
   }
 
+  /**
+   * Used by the buttons on the form to determine if the button is shown or not.
+   * TODO: QOL improvement change html to show 'grayed out' buttons instead of removing them.
+   * @param user userId
+   */
   public isEmpty(user: User) {
     for (const key of Object.keys(user)) {
       if (key !== 'id') {

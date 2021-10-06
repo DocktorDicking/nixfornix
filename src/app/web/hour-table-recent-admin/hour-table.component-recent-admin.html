@@ -6,16 +6,16 @@
         <p *ngIf="this.times.length === 0 || this.times == null">
           Geen uren gevonden.
         </p>
-        <table class="table table-striped table-sm" *ngIf="this.times.length > 0">
+        <table *ngIf="this.times.length > 0" class="table table-striped table-sm">
           <thead>
-          <tr>
-            <th class="form-control-label">Gebruiker</th>
-            <th class="form-control-label">Datum</th>
-            <th class="form-control-label">Begintijd</th>
-            <th class="form-control-label">Eindtijd</th>
-            <th class="form-control-label">Pauze</th>
-            <th class="form-control-label">Uren</th>
-          </tr>
+            <tr>
+              <th class="form-control-label">Gebruiker</th>
+              <th class="form-control-label">Datum</th>
+              <th class="form-control-label">Begintijd</th>
+              <th class="form-control-label">Eindtijd</th>
+              <th class="form-control-label">Pauze</th>
+              <th class="form-control-label">Uren</th>
+            </tr>
           </thead>
           <tbody>
             <tr *ngFor="let time of this.times" class="htable-text">
@@ -27,6 +27,16 @@
               <td>{{time.hour}}</td>
             </tr>
           </tbody>
+          <tfoot>
+            <tr>
+              <th class="form-control-label">Gebruiker</th>
+              <th class="form-control-label">Datum</th>
+              <th class="form-control-label">Begintijd</th>
+              <th class="form-control-label">Eindtijd</th>
+              <th class="form-control-label">Pauze</th>
+              <th class="form-control-label">Uren</th>
+            </tr>
+          </tfoot>
         </table>
       </div>
     </div>
