@@ -22,6 +22,6 @@ export class HomeComponent implements OnInit {
     const currentUser: User = this.authService.currentUserValue;
     const middleName = currentUser.middleName ? ' ' + currentUser.middleName + ' ' : ' ';
     const fullName = currentUser.name + middleName + currentUser.lastName;
-    this.toastr.info('Welkom terug ' + fullName , 'Login succesvol');
+    this.toastr.success('Welkom terug ' + fullName , 'Login succesvol');
   }
 }

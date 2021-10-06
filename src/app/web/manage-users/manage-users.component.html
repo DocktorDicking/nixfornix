@@ -157,8 +157,9 @@
           Alle data in relatie tot deze gebruiker zal verwijderd worden en kan niet worden hersteld.
         </p>
       </div>
+      <!-- TODO: Maybe add checkbox "i understand" before user is able to click delete button -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="this.onDelete(this.formUser.id)">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="this.onDelete()">
           Verwijderen
         </button>
         <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>

@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { TimeService } from '../../shared/services/time.service';
 import { TimeRow } from '../../shared/models/timeRow.model';
+
 
 @Component({
   selector: 'app-hour-table-admin',
@@ -8,10 +9,11 @@ import { TimeRow } from '../../shared/models/timeRow.model';
   styleUrls: ['./hour-table-recent.component-admin.css'],
   providers: []
 })
-export class HourTableRecentAdminComponent implements OnInit {
+export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
+  autoIntId: number;
   @Input() times: TimeRow[] = [];
 
-  constructor(private timeService: TimeService) { }
+  constructor(private timeService: TimeService) {}
 
   ngOnInit() {
     this.timeService.loadRecentTimes();
@@ -20,6 +22,16 @@ export class HourTableRecentAdminComponent implements OnInit {
         this.times = newTimes;
       }
     );
+
+    // Auto refresh list.
+    this.autoIntId = setInterval(() => {
+      this.timeService.autoLoadRecentTimes();
+    }, 15000);
   }
 
+  ngOnDestroy() {
+    if (this.autoIntId) {
+      clearInterval(this.autoIntId);
+    }
+  }
 }

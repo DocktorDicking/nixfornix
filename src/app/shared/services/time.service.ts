@@ -99,6 +99,11 @@ export class TimeService {
       });
   }
 
+  autoLoadRecentTimes() {
+    this.loadRecentTimes();
+    this.toastr.info('Recent geregistreerde tijden zijn automatisch ververst', 'Automatische verversing');
+  }
+
   /**
    * Loads recent times registered by the user. Api set's the max values of rows on 10.
    */

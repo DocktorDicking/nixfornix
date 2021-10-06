@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import { User } from '../models/user.model';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { ToastrService } from 'ngx-toastr';
 
@@ -111,14 +111,34 @@ export class UserService {
       });
   }
 
-  public deleteUser(id: number): boolean {
-    for (const user of this.users) {
-      if (user.id === id) {
-        this.users.splice(this.users.indexOf(user), 1);
-        return true;
-      }
-    }
-    return false;
+  public deleteUser(formUser: User) {
+    // create payload
+    const deleteUserPayload = {
+      id: formUser.id,
+      name: formUser.name,
+      middleName: formUser.middleName,
+      lastName: formUser.lastName,
+      username: formUser.username,
+      email: formUser.email,
+      password: formUser.password,
+      admin: formUser.admin,
+      active: formUser.active
+    };
+
+    return this.http.post<any>('/user/delete', deleteUserPayload)
+      .toPromise()
+      .then( res => {
+        if (res.statusCode === 200) {
+          this.getUsers();
+          this.toastr.success('Gebruiker: ' + deleteUserPayload.username + ' en al zijn data, is succesvol verwijderd.',
+            'Gebruiker verwijderd.');
+        } else {
+          this.toastr.error('De gebruiker kon niet worden verwijderd.' +
+            'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden verwijderd');
+        }
+      }).catch(err => {
+        // Handled by HTTP interceptor: ErrorInterceptor
+      });
   }
 
   /**
