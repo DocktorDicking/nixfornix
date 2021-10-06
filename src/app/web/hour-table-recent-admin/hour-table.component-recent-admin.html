@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let time of this.times" class="htable-text">
+            <tr *ngFor="let time of this.times" (click)="openTime(time)" class="htable-text">
               <td>{{time.user.name}}</td>
               <td>{{time.date}}</td>
               <td>{{time.start}}</td>
