@@ -10,6 +10,9 @@ import { TimeRow } from '../../shared/models/timeRow.model';
 })
 export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
   autoIntId: number;
+  modelTime: TimeRow = new TimeRow();
+  loadModal = false;
+  breaktimes = [0, 15, 30, 45, 60]; // TODO: move to timeService
   @Input() times: TimeRow[] = [];
 
   constructor(private timeService: TimeService) {}
@@ -34,9 +37,22 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
     }
   }
 
-  // TODO: CONTINUE HERE find some way to open component modal
-  openTime(time: TimeRow) {
-    // TODO: EVENT EMITTER that sends a signal to the hour-update component. hour-update c should be subscribed ot this emmitter
-    alert('OPENTIME' + time.id);
+  // TODO: move to timeservice
+  getBreakName(num: number) {
+    if (num === 0) {
+      return 'Geen';
+    } else {
+      return String(num) + ' Minuten';
+    }
+  }
+
+  openTimeModal(time: TimeRow) {
+    this.modelTime = time;
+    this.loadModal = true;
+  }
+
+  closeTimeModel() {
+    this.loadModal = false;
+    this.modelTime = new TimeRow();
   }
 }

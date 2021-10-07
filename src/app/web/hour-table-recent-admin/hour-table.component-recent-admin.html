@@ -18,7 +18,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let time of this.times" (click)="openTime(time)" class="htable-text">
+            <tr *ngFor="let time of this.times" (click)="openTimeModal(time)" class="htable-text" data-toggle="modal" data-target="#timemodal">
               <td>{{time.user.name}}</td>
               <td>{{time.date}}</td>
               <td>{{time.start}}</td>
@@ -42,3 +42,67 @@
     </div>
   </div>
 </section>
+
+<div id="timemodal" class="modal fade" role="dialog">
+  <div *ngIf="loadModal" class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Tijd bewerken van {{modelTime.user.name}}</h4>
+      </div>
+      <div class="modal-body">
+        <p>Geregistreerd op: [[created_at]]</p>
+        <form>
+          <div class="form-group">
+            <label class="form-control-label">Datum</label>
+            <input [(ngModel)]="this.modelTime.date" name="date" type="date" placeholder="Datum" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">Begintijd</label>
+            <input [(ngModel)]="this.modelTime.start" name="startTime" type="time"  placeholder="Tijd" class="form-control">
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">Eindtijd</label>
+            <input [(ngModel)]="this.modelTime.stop" name="stopTime" type="time"  placeholder="Tijd" class="form-control" >
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 form-control-label">Pauze</label>
+            <div class="col-sm-9 select">
+              <select [(ngModel)]="this.modelTime.breaktime" name="break" class="form-control mb-3">
+                <option *ngFor="let breaktime of breaktimes" value="{{breaktime}}" [ngValue]="breaktime">{{getBreakName(breaktime)}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 form-control-label">Locatie</label>
+            <div class="col-sm-9 select">
+              <select [(ngModel)]="this.modelTime.location" name="location" class="form-control mb-3">
+                <option [ngValue]="'Luca Catering'">Luca catering</option>
+                <option [ngValue]="'DKA'">DKA</option>
+                <option [ngValue]="'Extern'">Extern (invullen bij omschrijving)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-control-label">Omschrijving</label>
+            <input [(ngModel)]="this.modelTime.description" type="text" name="description" placeholder="(optioneel)" class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+          <button type="submit"
+                  class="btn btn-primary">Opslaan
+          </button>
+          <button type="button"
+                  class="btn btn-danger"
+                  data-toggle="modal"
+                  data-target="#timemodal"
+                  (click)="closeTimeModel()">Sluiten
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
