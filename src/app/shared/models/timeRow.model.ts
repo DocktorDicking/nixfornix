@@ -1,6 +1,8 @@
 /**
  * Datamodel for timeRow. Used for hour registration and reading.
  */
+import {User} from './user.model';
+
 export class TimeRow {
   id: number;
   date: string;
@@ -10,9 +12,12 @@ export class TimeRow {
   location: string;
   description: string;
   hour: number;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
+
 
   // TODO add user object here? (API also haves this, might be handy dandy)
-
   constructor() {
     this.description = '';
   }
@@ -28,5 +33,8 @@ export class TimeRow {
     this.breaktime = time.breaktime;
     this.location = time.location;
     this.description = time.description;
+    this.createdAt = time.createdAt;
+    this.updatedAt = time.updatedAt;
+    this.user = time.user;
   }
 }

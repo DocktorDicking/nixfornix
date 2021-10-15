@@ -55,6 +55,46 @@ export class TimeService {
   }
 
   /**
+   * Updates a TimeRow.
+   */
+  onUpdateTime(timeRow: TimeRow) {
+    // add the user id to this time row.
+    const timePayload = {
+      id: timeRow.id,
+      date: timeRow.date,
+      start: timeRow.start,
+      stop: timeRow.stop,
+      breaktime: timeRow.breaktime,
+      location: timeRow.location,
+      description: timeRow.description,
+      hour: timeRow.hour,
+      user: {
+        id: this.authService.currentUserValue.id
+      }
+    };
+
+    return this.http.post<any>('/time/update', timePayload)
+      .toPromise()
+      .then( res => {
+        if (res) {
+          this.loadRecentTimes();
+          this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
+        } else {
+          this.toastr.error('Registratie kon niet worden geüpdatet.' +
+            'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
+        }
+      }).catch(err => {
+        this.toastr.error('Registratie kon niet worden geüpdatet.' +
+          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
+        // Handled by HTTP interceptor: ErrorInterceptor
+      });
+  }
+
+  onDeleteTime(time: TimeRow) {
+
+  }
+
+  /**
    * Returns a new time object.
    */
   newTimeObj(): TimeRow {
@@ -117,6 +157,19 @@ export class TimeService {
       });
   }
 
+  formatDate(date: string): string {
+    const dtFormat = new Intl.DateTimeFormat('en-US', {
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false
+    });
+    const d = new Date(date);
+    return dtFormat.format(d);
+  }
+
   /**
    * Will return all times of a user.
    */
@@ -127,10 +180,4 @@ export class TimeService {
   getOneTime(id: number): TimeRow {
     return null;
   }
-
-  updateTime(id: number): boolean {return null; }
-
-  deleteTime(id: number): boolean {return null; }
-
-
 }

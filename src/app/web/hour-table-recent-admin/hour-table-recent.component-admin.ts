@@ -10,7 +10,7 @@ import { TimeRow } from '../../shared/models/timeRow.model';
 })
 export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
   autoIntId: number;
-  modelTime: TimeRow = new TimeRow();
+  modalTime: TimeRow = new TimeRow();
   loadModal = false;
   breaktimes = [0, 15, 30, 45, 60]; // TODO: move to timeService
   @Input() times: TimeRow[] = [];
@@ -59,12 +59,12 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
   }
 
   openTimeModal(time: TimeRow) {
-    this.modelTime = time;
+    this.modalTime = time;
     this.loadModal = true;
   }
 
   closeTimeModel() {
     this.loadModal = false;
-    this.modelTime = new TimeRow();
+    this.modalTime = new TimeRow();
   }
 }
