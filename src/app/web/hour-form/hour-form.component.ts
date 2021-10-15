@@ -25,6 +25,7 @@ export class HourFormComponent implements OnInit {
       this.timeService.onRegisterTime(this.time);
       this.time = this.timeService.newTimeObj();
     } else {
+      // TODO: I think this can be deleted?
       setTimeout(() => {
         this.message = undefined;  // TODO: Add directive to error msges and fadeout after 4 seconds.
       }, 5000);

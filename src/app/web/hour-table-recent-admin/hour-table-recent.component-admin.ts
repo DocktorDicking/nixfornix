@@ -46,6 +46,18 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateTime(time: TimeRow) {
+    this.timeService.onUpdateTime(time);
+    this.timeService.loadRecentTimes();
+    this.closeTimeModel();
+  }
+
+  deleteTime(time: TimeRow) {
+    this.timeService.onDeleteTime(time);
+    this.timeService.loadRecentTimes();
+    this.closeTimeModel();
+  }
+
   openTimeModal(time: TimeRow) {
     this.modelTime = time;
     this.loadModal = true;

@@ -69,8 +69,8 @@
           <div class="form-group">
             <label class="col-sm-3 form-control-label">Pauze</label>
             <div class="col-sm-9 select">
-              <select [(ngModel)]="this.modelTime.breaktime" name="break" class="form-control mb-3">
-                <option *ngFor="let breaktime of breaktimes" value="{{breaktime}}" [ngValue]="breaktime">{{getBreakName(breaktime)}}</option>
+              <select [(ngModel)]="this.modelTime.breaktime" name="breaktime" class="form-control mb-3">
+                <option *ngFor="let breaktime of breaktimes" [ngValue]="breaktime">{{getBreakName(breaktime)}}</option>
               </select>
             </div>
           </div>
