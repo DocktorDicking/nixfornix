@@ -59,7 +59,7 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
   }
 
   openTimeModal(time: TimeRow) {
-    this.modalTime = time;
+    this.modalTime = Object.assign({}, time);
     this.loadModal = true;
   }
 

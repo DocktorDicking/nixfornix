@@ -93,7 +93,10 @@
       <div class="modal-footer">
         <div class="btn-group">
           <button type="submit"
-                  class="btn btn-primary">Opslaan
+                  class="btn btn-primary"
+                  data-toggle="modal"
+                  data-target="#timemodal"
+                  (click)="updateTime(this.modalTime)">Opslaan
           </button>
           <button type="button"
                   class="btn btn-danger"

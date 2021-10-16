@@ -40,7 +40,7 @@ export class TimeService {
     return this.http.post<any>('/time/create', timePayload)
       .toPromise()
       .then( res => {
-        if (res) {
+        if (res.statusCode === 200) {
           this.loadRecentTimes();
           this.toastr.success(timePayload.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen!');
         } else {
@@ -57,7 +57,7 @@ export class TimeService {
   /**
    * Updates a TimeRow.
    */
-  onUpdateTime(timeRow: TimeRow) {
+  onUpdateTime(timeRow: TimeRow) { // TODO: CONTINUE HERE>
     // add the user id to this time row.
     const timePayload = {
       id: timeRow.id,
@@ -68,15 +68,16 @@ export class TimeService {
       location: timeRow.location,
       description: timeRow.description,
       hour: timeRow.hour,
+      createdAt: timeRow.createdAt,
       user: {
-        id: this.authService.currentUserValue.id
+        id: timeRow.user.id
       }
     };
 
     return this.http.post<any>('/time/update', timePayload)
       .toPromise()
       .then( res => {
-        if (res) {
+        if (res.statusCode === 200) {
           this.loadRecentTimes();
           this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
         } else {

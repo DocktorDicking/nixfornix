@@ -21,20 +21,4 @@ export class TimeRow {
   constructor() {
     this.description = '';
   }
-
-  /**
-   * Clones data of parameter time into this object. This will delete all previous data in this TimeRow.
-   * @param time TimeRow
-   */
-  cloneTimeRow(time: TimeRow) {
-    this.date = time.date;
-    this.start = time.start;
-    this.stop = time.stop;
-    this.breaktime = time.breaktime;
-    this.location = time.location;
-    this.description = time.description;
-    this.createdAt = time.createdAt;
-    this.updatedAt = time.updatedAt;
-    this.user = time.user;
-  }
 }
