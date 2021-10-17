@@ -1,7 +1,7 @@
 /**
  * Datamodel for timeRow. Used for hour registration and reading.
  */
-import {User} from './user.model';
+import { User } from './user.model';
 
 export class TimeRow {
   id: number;
@@ -15,6 +15,7 @@ export class TimeRow {
   createdAt: string;
   updatedAt: string;
   user: User;
+  approved: boolean;
 
 
   // TODO add user object here? (API also haves this, might be handy dandy)

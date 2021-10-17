@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
-import { EventEmitter, Injectable } from '@angular/core';
-import { TimeRow } from '../models/timeRow.model';
-import { User } from '../models/user.model';
-import { AuthService } from './auth.service';
-import { ToastrService } from 'ngx-toastr';
+import {HttpClient} from '@angular/common/http';
+import {EventEmitter, Injectable} from '@angular/core';
+import {TimeRow} from '../models/timeRow.model';
+import {User} from '../models/user.model';
+import {AuthService} from './auth.service';
+import {ToastrService} from 'ngx-toastr';
 
 @Injectable()
 export class TimeService {
@@ -14,7 +14,7 @@ export class TimeService {
   private allTimes: TimeRow[] = [];
 
   private DEFAULTBREAKTIME = 30; // TODO: Move to settings file or something alike.
-  private DEFAULTLOCATION = 'Luca Catering'; // TODO: Change to numeric value
+  private DEFAULTLOCATION = 'Luca Catering'; // TODO: Change to numeric value and move to settingsfile
 
   constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService) {
   }
@@ -24,18 +24,8 @@ export class TimeService {
    */
   onRegisterTime(timeRow: TimeRow) {
     // add the user id to this time row.
-    const timePayload = {
-      date: timeRow.date,
-      start: timeRow.start,
-      stop: timeRow.stop,
-      breaktime: timeRow.breaktime,
-      location: timeRow.location,
-      description: timeRow.description,
-      hour: timeRow.hour,
-      user: {
-        id: this.authService.currentUserValue.id
-      }
-    };
+    timeRow.user = this.authService.currentUserValue;
+    const timePayload = this.getPayload(timeRow);
 
     return this.http.post<any>('/time/create', timePayload)
       .toPromise()
@@ -57,22 +47,8 @@ export class TimeService {
   /**
    * Updates a TimeRow.
    */
-  onUpdateTime(timeRow: TimeRow) { // TODO: CONTINUE HERE>
-    // add the user id to this time row.
-    const timePayload = {
-      id: timeRow.id,
-      date: timeRow.date,
-      start: timeRow.start,
-      stop: timeRow.stop,
-      breaktime: timeRow.breaktime,
-      location: timeRow.location,
-      description: timeRow.description,
-      hour: timeRow.hour,
-      createdAt: timeRow.createdAt,
-      user: {
-        id: timeRow.user.id
-      }
-    };
+  onUpdateTime(timeRow: TimeRow) {
+    const timePayload = this.getPayload(timeRow);
 
     return this.http.post<any>('/time/update', timePayload)
       .toPromise()
@@ -92,21 +68,7 @@ export class TimeService {
   }
 
   onDeleteTime(timeRow: TimeRow) {
-// add the user id to this time row.
-    const timePayload = {
-      id: timeRow.id,
-      date: timeRow.date,
-      start: timeRow.start,
-      stop: timeRow.stop,
-      breaktime: timeRow.breaktime,
-      location: timeRow.location,
-      description: timeRow.description,
-      hour: timeRow.hour,
-      createdAt: timeRow.createdAt,
-      user: {
-        id: timeRow.user.id
-      }
-    };
+    const timePayload = this.getPayload(timeRow);
 
     return this.http.post<any>('/time/delete', timePayload)
       .toPromise()
@@ -125,6 +87,24 @@ export class TimeService {
       });
   }
 
+  private getPayload(timeRow: TimeRow) {
+    return {
+      id: timeRow.id,
+      date: timeRow.date,
+      start: timeRow.start,
+      stop: timeRow.stop,
+      breaktime: timeRow.breaktime,
+      location: timeRow.location,
+      description: timeRow.description,
+      hour: timeRow.hour,
+      createdAt: timeRow.createdAt,
+      approved: timeRow.approved,
+      user: {
+        id: timeRow.user.id
+      }
+    };
+  }
+
   /**
    * Returns a new time object.
    */
@@ -135,6 +115,7 @@ export class TimeService {
     return time;
   }
 
+  // TODO: let server handle this or check everytime just to be sure.
   calculateWorkedHours(time: TimeRow) {
     const splitStart = time.start.split(':', 2);
     const splitStop = time.stop.split(':', 2);
