@@ -15,6 +15,7 @@
               <th class="form-control-label">Eindtijd</th>
               <th class="form-control-label">Pauze</th>
               <th class="form-control-label">Uren</th>
+              <th class="form-control-label"></th>
             </tr>
           </thead>
           <tbody>
@@ -25,18 +26,9 @@
               <td>{{time.stop}}</td>
               <td>{{time.breaktime}}</td>
               <td>{{time.hour}}</td>
+              <td><i class="fa fa-check-square-o"></i></td> <!-- TODO -->
             </tr>
           </tbody>
-          <tfoot>
-            <tr>
-              <th class="form-control-label">Gebruiker</th>
-              <th class="form-control-label">Datum</th>
-              <th class="form-control-label">Begintijd</th>
-              <th class="form-control-label">Eindtijd</th>
-              <th class="form-control-label">Pauze</th>
-              <th class="form-control-label">Uren</th>
-            </tr>
-          </tfoot>
         </table>
       </div>
     </div>
@@ -44,7 +36,7 @@
 </section>
 
 <div id="timemodal" class="modal fade" role="dialog">
-  <div *ngIf="loadModal" class="modal-dialog">
+  <div *ngIf="modalDataAvailable" class="modal-dialog">
 
     <!-- Pop-up content-->
     <div class="modal-content">
@@ -94,17 +86,62 @@
         <div class="btn-group">
           <button type="submit"
                   class="btn btn-primary"
+                  data-dismiss="modal"
                   data-toggle="modal"
                   data-target="#timemodal"
                   (click)="updateTime(this.modalTime)">Opslaan
           </button>
           <button type="button"
-                  class="btn btn-danger"
+                  class="btn btn-warning"
+                  data-dismiss="modal"
                   data-toggle="modal"
                   data-target="#timemodal"
                   (click)="closeTimeModel()">Sluiten
           </button>
+          <button type="button"
+                  class="btn btn-danger"
+                  data-dismiss="modal"
+                  data-toggle="modal"
+                  data-target="#deleteConfirmation">Verwijderen
+            <!-- TODO: try to open confirmation modal from typescrit instead of BS. Maybe that will not kill the css -->
+          </button>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modals -->
+<div id="deleteConfirmation" class="modal fade" role="dialog">
+  <div *ngIf="modalDataAvailable" class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Waarschuwing</h4>
+      </div>
+      <div class="modal-body">
+        <p>Weet u zeker dat u de tijd registratie van {{this.modalTime.user.fullName}} wilt verwijderen? <br/>
+          <br/>
+          Registratie datum: {{this.modalTime.date}}, Aantal uren: {{this.modalTime.hour}}
+        </p>
+      </div>
+      <!-- TODO: Maybe add checkbox "i understand" before user is able to click delete button -->
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-danger"
+                data-dismiss="modal"
+                data-toggle="modal"
+                data-target="#deleteConfirmation"
+                (click)="deleteTime(this.modalTime)">Verwijderen
+        </button>
+        <button type="button"
+                class="btn btn-dark"
+                data-dismiss="modal"
+                data-toggle="modal"
+                data-target="#deleteConfirmation"
+                (click)="this.closeTimeModel()">Annuleren
+        </button>
       </div>
     </div>
   </div>

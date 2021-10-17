@@ -91,8 +91,38 @@ export class TimeService {
       });
   }
 
-  onDeleteTime(time: TimeRow) {
+  onDeleteTime(timeRow: TimeRow) {
+// add the user id to this time row.
+    const timePayload = {
+      id: timeRow.id,
+      date: timeRow.date,
+      start: timeRow.start,
+      stop: timeRow.stop,
+      breaktime: timeRow.breaktime,
+      location: timeRow.location,
+      description: timeRow.description,
+      hour: timeRow.hour,
+      createdAt: timeRow.createdAt,
+      user: {
+        id: timeRow.user.id
+      }
+    };
 
+    return this.http.post<any>('/time/delete', timePayload)
+      .toPromise()
+      .then( res => {
+        if (res.statusCode === 200) {
+          this.loadRecentTimes();
+          this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol verwijderd.', 'Registratie verwijderd');
+        } else {
+          this.toastr.error('Registratie kon niet worden verwijderd.' +
+            'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden verwijderd');
+        }
+      }).catch(err => {
+        this.toastr.error('Registratie kon niet worden verwijderd.' +
+          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden verwijderd');
+        // Handled by HTTP interceptor: ErrorInterceptor
+      });
   }
 
   /**
