@@ -37,15 +37,6 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
     }
   }
 
-  // TODO: move to timeservice
-  getBreakName(num: number) {
-    if (num === 0) {
-      return 'Geen';
-    } else {
-      return String(num) + ' Minuten';
-    }
-  }
-
   updateTime(time: TimeRow) {
     this.timeService.onUpdateTime(time);
     this.timeService.loadRecentTimes();

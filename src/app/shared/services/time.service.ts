@@ -182,6 +182,14 @@ export class TimeService {
     return dtFormat.format(d);
   }
 
+  getBreakName(num: number) {
+    if (num === 0) {
+      return 'Geen';
+    } else {
+      return String(num) + ' Minuten';
+    }
+  }
+
   /**
    * Will return all times of a user.
    */
