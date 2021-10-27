@@ -15,6 +15,7 @@ export class TimeService {
 
   private DEFAULTBREAKTIME = 30; // TODO: Move to settings file or something alike.
   private DEFAULTLOCATION = 'Luca Catering'; // TODO: Change to numeric value and move to settingsfile
+  BREAKTIMES = [0, 15, 30, 45, 60];
 
   constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService) {
   }

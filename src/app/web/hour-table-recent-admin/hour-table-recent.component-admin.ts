@@ -12,7 +12,7 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
   autoIntId: number;
   modalDataAvailable = false;
   modalTime: TimeRow = new TimeRow();
-  breaktimes = [0, 15, 30, 45, 60]; // TODO: move to timeService
+   // TODO: move to timeService
   @Input() times: TimeRow[] = [];
 
   constructor(private timeService: TimeService) {}

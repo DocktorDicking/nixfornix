@@ -8,6 +8,8 @@ import { TimeService } from '../../shared/services/time.service';
   styleUrls: ['./hour-table-total.component.css']
 })
 export class HourTableTotalComponent implements OnInit {
+  modalDataAvailable = false;
+  modalTime: TimeRow = new TimeRow();
   @Input() times: TimeRow[] = [];
 
   constructor(private timeService: TimeService) { }
@@ -19,5 +21,21 @@ export class HourTableTotalComponent implements OnInit {
         this.times = newTimes;
       }
     );
+  }
+
+  updateTime(time: TimeRow) {
+    this.timeService.onUpdateTime(time);
+    this.timeService.loadAllTimes(); // TODO Fix this issue where time is not reloaded on update
+    this.closeTimeModel();
+  }
+
+  openTimeModal(time: TimeRow) {
+    this.modalTime = Object.assign({}, time);
+    this.modalDataAvailable = true;
+  }
+
+  closeTimeModel() {
+    this.modalTime = new TimeRow();
+    this.modalDataAvailable = false;
   }
 }
