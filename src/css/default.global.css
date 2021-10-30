@@ -2128,8 +2128,8 @@ STYLE SWITCHER FOR DEMO
 }
 
 .btn-primary.disabled, .btn-primary:disabled {
-  background-color: #429244;
-  border-color: #429244;
+  background-color: #4a4e4a;
+  border-color: #4a4e4a;
 }
 
 .btn-primary:not([disabled]):not(.disabled):active, .btn-primary:not([disabled]):not(.disabled).active,

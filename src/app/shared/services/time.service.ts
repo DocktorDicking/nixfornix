@@ -56,7 +56,11 @@ export class TimeService {
       .then( res => {
         if (res.statusCode === 200) {
           this.loadRecentTimes();
-          this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
+          if (this.authService.currentUserValue.admin) {
+            this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
+          } else {
+            this.toastr.success('De registratie is succesvol geüpdatet.', 'Registratie geüpdatet');
+          }
         } else {
           this.toastr.error('Registratie kon niet worden geüpdatet.' +
             'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');

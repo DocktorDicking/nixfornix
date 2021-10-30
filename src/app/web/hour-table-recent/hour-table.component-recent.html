@@ -14,6 +14,7 @@
             <th class="form-control-label">Eindtijd</th>
             <th class="form-control-label">Pauze</th>
             <th class="form-control-label">Uren</th>
+            <th class="form-control-label"></th>
           </tr>
           </thead>
           <tbody>
@@ -23,6 +24,7 @@
               <td>{{time.stop}}</td>
               <td>{{time.breaktime}}</td>
               <td>{{time.hour}}</td>
+              <td><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
             </tr>
           </tbody>
         </table>

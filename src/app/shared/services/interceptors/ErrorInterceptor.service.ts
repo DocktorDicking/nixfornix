@@ -54,7 +54,9 @@ export class ErrorInterceptorService implements HttpInterceptor {
       case 'User is disabled':
         return 'Inloggen is niet mogelijk. Dit account is niet actief.';
       case 'Unauthorized':
-        return 'Je heb geen authorisatie om deze handeling uit te voeren. Je bent uitgelogd. Probeer opnieuw in te loggen.';
+        return 'U heeft geen authorisatie om deze handeling uit te voeren. U bent uitgelogd. Probeer opnieuw in te loggen.';
+      case 'Approved time error':
+        return 'Tijd die geaccordeerd is mag niet worden aangepast.';
       default:
         return apiMessage;
     }
