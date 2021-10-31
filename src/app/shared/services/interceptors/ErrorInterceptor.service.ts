@@ -57,6 +57,8 @@ export class ErrorInterceptorService implements HttpInterceptor {
         return 'U heeft geen authorisatie om deze handeling uit te voeren. U bent uitgelogd. Probeer opnieuw in te loggen.';
       case 'Approved time error':
         return 'Tijd die geaccordeerd is mag niet worden aangepast.';
+      case 'IP blocked for 24h':
+        return 'Door meerdere mislukte inlog pogingen is dit IP adress geblokkeerd voor 24 uur.';
       default:
         return apiMessage;
     }
@@ -73,6 +75,10 @@ export class ErrorInterceptorService implements HttpInterceptor {
         return 'Account non-actief';
       case 'Unauthorized':
         return 'Geen authorisatie';
+      case 'Approved time error':
+        return 'Approved time error';
+      case 'IP blocked for 24h':
+        return 'IP is geblokkeerd.';
       default:
         return apiMessage;
     }
