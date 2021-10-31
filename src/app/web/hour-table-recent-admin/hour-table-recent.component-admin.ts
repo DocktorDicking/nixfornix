@@ -15,7 +15,7 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
    // TODO: move to timeService
   @Input() times: TimeRow[] = [];
 
-  constructor(private timeService: TimeService) {}
+  constructor(public timeService: TimeService) {}
 
   ngOnInit() {
     this.timeService.loadRecentTimes();

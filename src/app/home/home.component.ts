@@ -12,9 +12,7 @@ import { User } from '../shared/models/user.model';
 export class HomeComponent implements OnInit {
   public state: string;
 
-  constructor(private stateService: StateService, private authService: AuthService, private toastr: ToastrService) { }
-
-  // TODO: If a user is logged in and the account get's deleted. The user can still access a part of the application. We need to reauthenticate users on refresh somhow.
+  constructor(public stateService: StateService, public authService: AuthService, public toastr: ToastrService) { }
 
   ngOnInit() {
     this.stateService.setAdmin(this.authService.currentUserValue.admin);

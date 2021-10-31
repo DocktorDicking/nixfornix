@@ -19,7 +19,6 @@ import { MenuComponent } from './web/menu/menu.component';
 import { HourFormComponent } from './web/hour-form/hour-form.component';
 import { HourTableRecentComponent } from './web/hour-table-recent/hour-table-recent.component';
 import { HelpModalComponent } from './web/modals/help/help.modal.component';
-import { HourUpdateComponent } from './web/modals/hour-update/hour-update.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HourTableTotalComponent } from './web/hour-table-total/hour-table-total.component';
 import { ManageUsersComponent } from './web/manage-users/manage-users.component';
@@ -45,7 +44,6 @@ import {HourTableRecentAdminComponent} from './web/hour-table-recent-admin/hour-
     HourTableRecentComponent,
     HourTableRecentAdminComponent,
     HelpModalComponent,
-    HourUpdateComponent,
     NotFoundComponent,
     HourTableTotalComponent,
     ManageUsersComponent

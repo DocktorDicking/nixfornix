@@ -17,8 +17,8 @@ export class LoginComponent implements OnInit {
   user = new User(null);
   persistentLogin: boolean;
 
-  constructor(private router: Router, private messageService: MessageService,
-              private databaseService: DatabaseService, private authService: AuthService) {
+  constructor(private router: Router, public messageService: MessageService,
+              public databaseService: DatabaseService, public authService: AuthService) {
     // Sub to the message service
     this.persistentLogin = false;
     this.messageService.currentMessage.subscribe(message => {

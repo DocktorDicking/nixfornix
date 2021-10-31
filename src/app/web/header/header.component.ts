@@ -9,7 +9,7 @@ import {User} from '../../shared/models/user.model';
 })
 export class HeaderComponent implements OnInit {
 
-  private user: User;
+  public user: User;
 
   getCurrentDate() {
     const date = new Date();

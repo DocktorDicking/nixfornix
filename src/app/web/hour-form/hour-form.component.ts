@@ -9,7 +9,7 @@ import { TimeService } from '../../shared/services/time.service';
   providers: []
 })
 export class HourFormComponent implements OnInit {
-  private time: TimeRow;
+  public time: TimeRow;
   breaktimes = [0, 15, 30, 45, 60];
   message: string;
 

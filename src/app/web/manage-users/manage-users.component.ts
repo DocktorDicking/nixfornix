@@ -11,7 +11,7 @@ export class ManageUsersComponent implements OnInit {
   public formUser: User = new User(0);
   public message: string;
 
-  constructor(private userService: UserService) { }
+  constructor(public userService: UserService) { }
 
   ngOnInit() {
     this.userService.getUsers();

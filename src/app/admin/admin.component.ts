@@ -10,8 +10,8 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
-  private state: string;
-  constructor(private stateService: StateService, private authService: AuthService, private toastr: ToastrService) { }
+  public state: string;
+  constructor(public stateService: StateService, public authService: AuthService, public toastr: ToastrService) { }
 
   ngOnInit() {
     this.stateService.setAdmin(this.authService.currentUserValue.admin);

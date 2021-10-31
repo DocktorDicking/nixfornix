@@ -12,7 +12,7 @@ export class HourTableTotalComponent implements OnInit {
   modalTime: TimeRow = new TimeRow();
   @Input() times: TimeRow[] = [];
 
-  constructor(private timeService: TimeService) { }
+  constructor(public timeService: TimeService) { }
 
   ngOnInit() {
     this.timeService.loadAllTimes();
