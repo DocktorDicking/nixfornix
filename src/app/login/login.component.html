@@ -35,7 +35,8 @@
 
                 <div class="form-group">
                   <label for="password" class="label-material">Wachtwoord</label>
-                  <input [(ngModel)]="user.password" #password="ngModel" name="password" type="password" class="form-control input-material" id="password" required>
+                  <input [(ngModel)]="user.password" #password="ngModel" name="password" [type]="this.hidePw ? 'password' : 'text'" class="form-control input-material" id="password" required>
+                  <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="this.toggleShowPw()"></i></span>
 
                   <!-- Error messages -->
                   <div class="alert-text">

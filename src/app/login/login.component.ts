@@ -11,11 +11,10 @@ import { DatabaseService } from '../shared/services/database.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  // showMessage = false;
-  // Template uses this var to know when to display message.
-  message: string;
-  user = new User(null);
-  persistentLogin: boolean;
+  public message: string;
+  public user = new User(null);
+  public persistentLogin: boolean;
+  public hidePw = true;
 
   constructor(private router: Router, public messageService: MessageService,
               public databaseService: DatabaseService, public authService: AuthService) {
@@ -63,5 +62,9 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['./home']);
       }
     }
+  }
+
+  toggleShowPw() {
+    this.hidePw = !this.hidePw;
   }
 }

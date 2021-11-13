@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from '../../shared/models/user.model';
-import {UserService} from '../../shared/services/user.service';
+import { User } from '../../shared/models/user.model';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-manage-users',
@@ -10,6 +10,7 @@ import {UserService} from '../../shared/services/user.service';
 export class ManageUsersComponent implements OnInit {
   public formUser: User = new User(0);
   public message: string;
+  public hidePw = true;
 
   constructor(public userService: UserService) { }
 
@@ -52,5 +53,9 @@ export class ManageUsersComponent implements OnInit {
 
   public resetFormUser() {
     this.formUser = new User(0);
+  }
+
+  public toggleShowPw() {
+    this.hidePw = !this.hidePw;
   }
 }

@@ -97,8 +97,9 @@
 
           <div class="form-group">
             <label for="password" class="form-control-label">Wachtwoord</label>
-            <input [(ngModel)]="this.formUser.password" #password="ngModel" id="password" name="password"
-                   type="password" class="form-control">
+            <input [(ngModel)]="this.formUser.password" #password="ngModel" id="password" name="password" [type]="this.hidePw ? 'password' : 'text'" class="form-control">
+            <span class="float-right margin-bottom-sm"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="this.toggleShowPw()"></i></span>
+
             <!-- Error messages -->
             <div class="alert-text">
               <div *ngIf="password.invalid && password.touched" class="shakeIt">
@@ -107,7 +108,7 @@
             </div>
           </div>
 
-          <div class="form-check">
+          <div class="form-check margin-top-sm no-margin-bottom">
             <input class="form-check-input" type="checkbox" [(ngModel)]="this.formUser.active" #active="ngModel"
                    id="active" name="active">
             <label for="active" class="form-control-label">Actief</label>

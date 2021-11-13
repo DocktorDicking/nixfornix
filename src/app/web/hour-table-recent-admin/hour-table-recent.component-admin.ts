@@ -9,9 +9,9 @@ import { TimeRow } from '../../shared/models/timeRow.model';
   providers: []
 })
 export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
-  autoIntId: number;
-  modalDataAvailable = false;
-  modalTime: TimeRow = new TimeRow();
+  public autoIntId: number;
+  public modalDataAvailable = false;
+  public modalTime: TimeRow = new TimeRow();
    // TODO: move to timeService
   @Input() times: TimeRow[] = [];
 
@@ -28,7 +28,7 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
     // Auto refresh list.
     this.autoIntId = setInterval(() => {
       this.timeService.autoLoadRecentTimes();
-    }, 15000);
+    }, 300000);
   }
 
   ngOnDestroy() {

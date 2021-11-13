@@ -23,7 +23,6 @@ export class AuthService {
     this.currentTokenSubject = new BehaviorSubject<string>(sessionStorage.getItem('auth_token'));
     this.currentToken = this.currentTokenSubject.asObservable();
 
-    // TODO call whoami if there is a token present (persistent login?)
     this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(sessionStorage.getItem('auth_user')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
