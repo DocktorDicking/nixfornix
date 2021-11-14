@@ -25,7 +25,6 @@ export class HourTableTotalComponent implements OnInit {
 
   updateTime(time: TimeRow) {
     this.timeService.onUpdateTime(time);
-    this.timeService.loadAllTimes(); // TODO Fix this issue where time is not reloaded on update
     this.closeTimeModel();
   }
 

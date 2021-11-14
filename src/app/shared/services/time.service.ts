@@ -55,7 +55,14 @@ export class TimeService {
       .toPromise()
       .then( res => {
         if (res.statusCode === 200) {
-          this.loadRecentTimes();
+
+          // TODO: This is a tmp fix. We need to rewrite this anyway when sorting registration data on year/month/day
+          if (this.authService.currentUserValue.id === timeRow.user.id) {
+            this.loadAllTimes(); // user all table
+          } else {
+            this.loadRecentTimes(); // admin recent table
+          }
+
           if (this.authService.currentUserValue.admin) {
             this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
           } else {

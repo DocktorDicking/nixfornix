@@ -59,6 +59,8 @@ export class ErrorInterceptorService implements HttpInterceptor {
         return 'Tijd die geaccordeerd is mag niet worden aangepast.';
       case 'IP blocked for 24h':
         return 'Door meerdere mislukte inlog pogingen is dit IP adress geblokkeerd voor 24 uur.';
+      case 'No time found.':
+        return 'Er zijn (nog) geen registraties gevonden. Negeer deze melding als er nog geen tijden zijn geregistreerd.';
       default:
         return apiMessage;
     }
@@ -79,6 +81,8 @@ export class ErrorInterceptorService implements HttpInterceptor {
         return 'Approved time error';
       case 'IP blocked for 24h':
         return 'IP is geblokkeerd.';
+      case 'No time found.':
+        return 'Geen tijd registraties gevonden.';
       default:
         return apiMessage;
     }
