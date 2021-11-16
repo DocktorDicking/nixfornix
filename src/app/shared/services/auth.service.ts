@@ -52,6 +52,7 @@ export class AuthService {
           }
         }
       }).catch(err => {
+        this.logout();
         console.log(err);
         // Handled by HTTP interceptor: ErrorInterceptor
       });
@@ -76,6 +77,7 @@ export class AuthService {
           this.currentUserSubject.next(user);
         }
       }).catch(err => {
+        this.logout();
         console.log(err);
         // Handled by HTTP interceptor: ErrorInterceptor
       });

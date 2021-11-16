@@ -11,6 +11,11 @@ import {AuthService} from '../auth.service';
  */
 @Injectable()
 export class ErrorInterceptorService implements HttpInterceptor {
+  ERROR_BADCREDENTIALS = 'Unauthorized';
+  ERROR_BADJWT = 'JWT signature does not match locally computed signature. ' +
+    'JWT validity cannot be asserted and should not be trusted.';
+  ERROR_OLDJWT = 'JWT signature does not match locally computed signature. ' +
+    'JWT validity cannot be asserted and should not be trusted.';
 
   constructor(private messageService: MessageService, private toastr: ToastrService, private auth: AuthService) {}
 
@@ -29,18 +34,21 @@ export class ErrorInterceptorService implements HttpInterceptor {
    * Sets message in message service so it can be send to the component currently active.
    */
   private onError(response: HttpErrorResponse): void {
+    // TODO: We realy need to redo this whole error handling shite. API needs to send: code, message, and state (error/warning)
+
     // TODO we are going to change all messaging to toastr, so we need to replace the whole message service and nuke it.
-    if (response.error.error === 'Unauthorized') {
+    if (response.error.error === this.ERROR_BADCREDENTIALS) {
       this.auth.logout();
-      this.toastr.error(this.getMessage('Unauthorized'), this.getTitle('Unauthorized'));
+      this.toastr.error(this.getMessage(response.error.error), this.getTitle(response.error.error));
+    } else if (response.error.message === this.ERROR_BADJWT || response.error.message === this.ERROR_OLDJWT) {
+      this.auth.logout();
+      this.toastr.error(this.getMessage(response.error.message), this.getTitle(response.error.message));
     } else {
       const apiMessage = response.error.message;
       const message = this.getMessage(apiMessage);
       if (message) {
         this.toastr.error(message, this.getTitle(apiMessage));
       }
-
-      // this.messageService.changeMessage(message);
     }
   }
 
@@ -61,6 +69,8 @@ export class ErrorInterceptorService implements HttpInterceptor {
         return 'Door meerdere mislukte inlog pogingen is dit IP adress geblokkeerd voor 24 uur.';
       case 'No time found.':
         return 'Er zijn (nog) geen registraties gevonden. Negeer deze melding als er nog geen tijden zijn geregistreerd.';
+      case 'JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.':
+        return 'De eerder opgeslagen beveiligingssleutel is niet valide. De sleutel is verwijderd, probeer nogmaals in te loggen.';
       default:
         return apiMessage;
     }
@@ -83,6 +93,8 @@ export class ErrorInterceptorService implements HttpInterceptor {
         return 'IP is geblokkeerd.';
       case 'No time found.':
         return 'Geen tijd registraties gevonden.';
+      case 'JWT signature does not match locally computed signature. JWT validity cannot be asserted and should not be trusted.':
+        return 'Automatisch inloggen mislukt.';
       default:
         return apiMessage;
     }

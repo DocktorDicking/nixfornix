@@ -1,7 +1,7 @@
-import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {AuthService} from '../auth.service';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Injectable()
 export class TokenInterceptorService implements HttpInterceptor {
@@ -10,7 +10,6 @@ export class TokenInterceptorService implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     // All HTTP requests are going to go through this method
-    console.log('TokenInterceptorService');
 
     // Get token if there is any
     const token = sessionStorage.getItem('auth_token');
