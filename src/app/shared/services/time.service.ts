@@ -26,6 +26,7 @@ export class TimeService {
   onRegisterTime(timeRow: TimeRow) {
     // add the user id to this time row.
     timeRow.user = this.authService.currentUserValue;
+    this.calculateWorkedHours(timeRow);
     const timePayload = this.getPayload(timeRow);
 
     return this.http.post<any>('/time/create', timePayload)
@@ -49,6 +50,7 @@ export class TimeService {
    * Updates a TimeRow.
    */
   onUpdateTime(timeRow: TimeRow) {
+    this.calculateWorkedHours(timeRow);
     const timePayload = this.getPayload(timeRow);
 
     return this.http.post<any>('/time/update', timePayload)
