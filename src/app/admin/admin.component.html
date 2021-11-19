@@ -7,7 +7,6 @@
     <app-menu></app-menu>
   </nav>
 
-
   <!-- content -->
   <div class="page-content">
     <!-- page header -->
@@ -17,7 +16,8 @@
       </div>
     </div>
 
-    <app-hour-table-admin *ngIf="state == 'OVERVIEW'"></app-hour-table-admin>
+    <app-hour-recent-table-admin *ngIf="state == 'OVERVIEW_RECENT'"></app-hour-recent-table-admin>
+    <app-hour-all-table-admin *ngIf="state == 'OVERVIEW_ALL'"></app-hour-all-table-admin>
     <app-manage-users *ngIf="state == 'MANAGE_USERS'"></app-manage-users>
 
     <app-footer></app-footer>

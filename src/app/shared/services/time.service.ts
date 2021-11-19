@@ -63,6 +63,7 @@ export class TimeService {
             this.loadAllTimes(); // user all table
           } else {
             this.loadRecentTimes(); // admin recent table
+            this.loadAllTimes(); // admin all table
           }
 
           if (this.authService.currentUserValue.admin) {
@@ -88,7 +89,9 @@ export class TimeService {
       .toPromise()
       .then( res => {
         if (res.statusCode === 200) {
+          // No need to check for admin because only admins can delete.
           this.loadRecentTimes();
+          this.loadAllTimes();
           this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol verwijderd.', 'Registratie verwijderd');
         } else {
           this.toastr.error('Registratie kon niet worden verwijderd.' +
@@ -174,7 +177,7 @@ export class TimeService {
    * Loads recent times registered by the user. Api set's the max values of rows on 10.
    */
   loadAllTimes() {
-    this.http.get<TimeRow[]>('/time/list?user_id=' + this.authService.currentUserValue.id)
+    this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id)
       .subscribe(data => {
         if (data.length > 0) {
           this.allTimes = data;
@@ -202,16 +205,5 @@ export class TimeService {
     } else {
       return String(num) + ' Minuten';
     }
-  }
-
-  /**
-   * Will return all times of a user.
-   */
-  getAllTimes(user: User): Array<TimeRow> { // TODO: Make this fetch data from a database
-    return this.recentTimes.slice(); // Slice returns a copy, so the source data cannot be changed.
-  }
-
-  getOneTime(id: number): TimeRow {
-    return null;
   }
 }

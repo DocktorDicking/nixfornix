@@ -1,15 +1,14 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TimeService } from '../../shared/services/time.service';
 import { TimeRow } from '../../shared/models/timeRow.model';
 
 @Component({
-  selector: 'app-hour-recent-table-admin',
-  templateUrl: './hour-table.component-recent-admin.html',
-  styleUrls: ['./hour-table-recent.component-admin.css'],
+  selector: 'app-hour-all-table-admin',
+  templateUrl: './hour-table.component-all-admin.html',
+  styleUrls: ['./hour-table-all.component-admin.css'],
   providers: []
 })
-export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
-  public autoIntId: number;
+export class HourTableAllAdminComponent implements OnInit {
   public modalDataAvailable = false;
   public modalTime: TimeRow = new TimeRow();
    // TODO: move to timeService
@@ -18,23 +17,12 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
   constructor(public timeService: TimeService) {}
 
   ngOnInit() {
-    this.timeService.loadRecentTimes();
-    this.timeService.recentTimesChanged.subscribe(
+    this.timeService.loadAllTimes();
+    this.timeService.allTimesChanged.subscribe(
       (newTimes: TimeRow[]) => {
         this.times = newTimes;
       }
     );
-
-    // Auto refresh list.
-    this.autoIntId = setInterval(() => {
-      this.timeService.autoLoadRecentTimes();
-    }, 300000);
-  }
-
-  ngOnDestroy() {
-    if (this.autoIntId) {
-      clearInterval(this.autoIntId);
-    }
   }
 
   updateTime(time: TimeRow) {

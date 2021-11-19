@@ -11,8 +11,9 @@
   <span class="heading">Menu</span>
   <ul class="list-unstyled">
     <!-- admin menu items -->
-    <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW')"> <i class="fa fa-bar-chart"></i>Overzicht </a></li>
-    <li *ngIf="stateService.getAdmin()"><a (click)="setState('MANAGE_USERS')"> <i class="icon-controls"></i>Beheer gebruikers </a></li>
+    <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW_RECENT')"><i class="fa fa-bar-chart"></i>Recente registraties</a></li>
+    <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW_ALL')"><i class="fa fa-bar-chart"></i>Alle registraties </a></li>
+    <li *ngIf="stateService.getAdmin()"><a (click)="setState('MANAGE_USERS')"><i class="icon-controls"></i>Beheer gebruikers </a></li>
 
     <!-- User menu items -->
     <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_FORM')"><i class="fa fa-pencil"></i>Registreren</a></li>

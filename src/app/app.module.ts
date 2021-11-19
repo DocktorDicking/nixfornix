@@ -29,7 +29,8 @@ import { BaseUrlInterceptorService } from './shared/services/interceptors/BaseUr
 import { ErrorInterceptorService } from './shared/services/interceptors/ErrorInterceptor.service';
 import { MessageService } from './shared/services/message.service';
 import { DatabaseService } from './shared/services/database.service';
-import {HourTableRecentAdminComponent} from './web/hour-table-recent-admin/hour-table-recent.component-admin';
+import { HourTableRecentAdminComponent } from './web/hour-table-recent-admin/hour-table-recent.component-admin';
+import { HourTableAllAdminComponent } from './web/hour-table-all-admin/hour-table-all.component-admin';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {HourTableRecentAdminComponent} from './web/hour-table-recent-admin/hour-
     HelpModalComponent,
     NotFoundComponent,
     HourTableTotalComponent,
+    HourTableAllAdminComponent,
     ManageUsersComponent
   ],
   imports: [

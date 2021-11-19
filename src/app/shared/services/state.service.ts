@@ -14,12 +14,12 @@ export class StateService {
   private isAdmin: boolean;
 
   // Allowed states to access
-  private adminStates = ['OVERVIEW', 'MANAGE_USERS'];
+  private adminStates = ['OVERVIEW_RECENT', 'OVERVIEW_ALL', 'MANAGE_USERS'];
   private userStates = ['HOUR_FORM', 'HOUR_OVERVIEW'];
 
   private initState(): void {
     if (this.isAdmin) {
-      this.currentState.next('OVERVIEW');
+      this.currentState.next('OVERVIEW_RECENT');
     }
     if (!this.isAdmin) {
       this.currentState.next('HOUR_FORM');
