@@ -180,7 +180,7 @@ pre {
   background: #22252a;
   min-height: 100vh;
   width: calc(100% - 280px);
-  padding: 0;
+  padding-top: 30px; /* need this without page header */
   padding-bottom: 70px;
 }
 

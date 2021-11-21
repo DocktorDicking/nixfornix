@@ -12,6 +12,7 @@
               <tr>
                 <th class="form-control-label">Naam</th>
                 <th class="form-control-label">Rol</th>
+                <th class="form-control-label">Actief</th>
               </tr>
               </thead>
               <tbody>
@@ -19,6 +20,8 @@
                   class="htable htable-text" (click)="onUserData(user.id)">
                 <td>{{user.name}} {{user.middleName ? user.middleName : ''}} {{user.lastName}}</td>
                 <td>{{user.admin ? 'Administrator' : 'Werknemer'}}</td>
+                <td *ngIf="user.active"><i style="color: #429244;" class="fa fa-lightbulb-o"></i></td>
+                <td *ngIf="!user.active"><i style="color: darkred;" class="fa fa-lightbulb-o"></i></td>
               </tr>
               </tbody>
             </table>

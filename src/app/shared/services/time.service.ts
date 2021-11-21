@@ -1,7 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {EventEmitter, Injectable} from '@angular/core';
 import {TimeRow} from '../models/timeRow.model';
-import {User} from '../models/user.model';
 import {AuthService} from './auth.service';
 import {ToastrService} from 'ngx-toastr';
 
@@ -161,7 +160,7 @@ export class TimeService {
   loadRecentTimes() {
     this.http.get<TimeRow[]>('/time/get/recent?user_id=' + this.authService.currentUserValue.id)
       .subscribe(data => {
-        if (data.length > 0) {
+        if (data.length >= 0) {
           this.recentTimes = data;
           this.recentTimesChanged.emit(this.recentTimes);
         }
@@ -179,7 +178,7 @@ export class TimeService {
   loadAllTimes() {
     this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id)
       .subscribe(data => {
-        if (data.length > 0) {
+        if (data.length >= 0) {
           this.allTimes = data;
           this.allTimesChanged.emit(this.allTimes);
         }
