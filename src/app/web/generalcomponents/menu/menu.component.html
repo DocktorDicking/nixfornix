@@ -13,18 +13,18 @@
     <!-- admin menu items -->
     <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW_RECENT')"><i class="fa fa-bar-chart"></i>Recente registraties</a></li>
     <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW_ALL')"><i class="fa fa-bar-chart"></i>Alle registraties</a></li>
-    <li *ngIf="stateService.getAdmin()"><a (click)="setState('MANAGE_USERS')"><i class="icon-controls"></i>Beheer werknemers</a></li>
+    <li *ngIf="stateService.getAdmin()"><a (click)="setState('MANAGE_USERS')"><i class="fa fa-users"></i>Beheer werknemers</a></li>
 
     <!-- User menu items -->
     <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_FORM')"><i class="fa fa-pencil"></i>Registreren</a></li>
-    <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_OVERVIEW')"><i class="icon-controls"></i>Mijn uren</a></li>
+    <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_OVERVIEW')"><i class="fa fa-bar-chart"></i>Mijn uren</a></li>
     <li *ngIf="!stateService.getAdmin()"><a (click)="setState('USER_PROFILE')"><i class="fa fa-user"></i>Mijn profiel</a></li>
-    <li><a (click)="logout()" ><i class="icon-logout"></i> Uitloggen </a></li>
+    <li><a (click)="logout()" ><i class="fa fa-arrow-circle-o-left"></i> Uitloggen </a></li>
   </ul>
   <span class="heading">Overig</span>
   <ul class="list-unstyled">
-    <li><a href="#" data-toggle="modal" data-target="#about"> <i class="icon-info"></i>Over deze applicatie </a></li>
-    <li><a href="#" data-toggle="modal" data-target="#contactSupport"><i class="icon-paper-and-pencil"></i>Help</a></li>
+    <li><a href="#" data-toggle="modal" data-target="#about"> <i class="fa fa-info"></i>Over deze applicatie </a></li>
+    <li><a href="#" data-toggle="modal" data-target="#contactSupport"><i class="fa fa-exclamation-triangle"></i>Help</a></li>
   </ul>
 <!-- Sidebar modals-->
 <app-modals></app-modals>
