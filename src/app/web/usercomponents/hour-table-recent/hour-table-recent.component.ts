@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TimeService} from '../../shared/services/time.service';
-import {TimeRow} from '../../shared/models/timeRow.model';
+import {TimeService} from '../../../shared/services/time.service';
+import {TimeRow} from '../../../shared/models/timeRow.model';
 
 @Component({
   selector: 'app-hour-table',

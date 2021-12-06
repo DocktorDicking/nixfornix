@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { StateService } from '../../shared/services/state.service';
-import { AuthService } from '../../shared/services/auth.service';
+import { StateService } from '../../../shared/services/state.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import $ from 'jquery';
 
 @Component({
