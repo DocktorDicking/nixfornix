@@ -1,1 +1,48 @@
-<p>profile works!</p>
+<div class="col-lg-6 centerCol6">
+  <div class="block">
+    <div class="title"><strong class="d-block">Mijn Profiel</strong><span class="d-block"></span></div>
+    <div class="block-body">
+
+      <form (ngSubmit)="submitProfile()">
+        <div class="form-group">
+          <label for="username" class="form-control-label">Gebruikersnaam</label>
+          <input [(ngModel)]="this.user.username" #username="ngModel" type="text" id="username" name="username" class="form-control" placeholder="- invullen indien wijzigen wenselijk is -">
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-control-label">Email</label>
+          <input [(ngModel)]="this.user.email" #email="ngModel" type="text" id="email" name="email" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="name" class="form-control-label">Voornaam</label>
+          <input [(ngModel)]="this.user.name" #name="ngModel" type="text" id="name" name="name" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="middleName" class="form-control-label">Tussenvoegsel</label>
+          <input [(ngModel)]="this.user.middleName" #middleName="ngModel" type="text" id="middleName" name="middleName" class="form-control">
+        </div>
+
+        <div class="form-group">
+          <label for="lastName" class="form-control-label">Achternaam</label>
+          <input [(ngModel)]="this.user.lastName" #lastName="ngModel" type="text" id="lastName" name="lastName" class="form-control">
+        </div>
+
+<!--        <div class="form-group">-->
+<!--          <label for="password" class="form-control-label">Wachtwoord</label>-->
+<!--          <input [(ngModel)]="this.user.password" #password="ngModel" [type]="this.hidePw ? 'password' : 'text'" id="password" name="password" class="form-control">-->
+<!--          <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="this.toggleShowPw()"></i></span>-->
+<!--        </div>-->
+
+        <div class="form-footer">
+          <div class="btn-group">
+            <button class="btn btn-primary" type="submit">Opslaan</button>
+            <button class="btn btn-secondary">Wachtwoord wijzigen</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
