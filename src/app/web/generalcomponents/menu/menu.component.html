@@ -18,6 +18,7 @@
     <!-- User menu items -->
     <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_FORM')"><i class="fa fa-pencil"></i>Registreren</a></li>
     <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_OVERVIEW')"><i class="icon-controls"></i>Mijn uren</a></li>
+    <li *ngIf="!stateService.getAdmin()"><a (click)="setState('USER_PROFILE')"><i class="fa fa-user"></i>Mijn profiel</a></li>
     <li><a (click)="logout()" ><i class="icon-logout"></i> Uitloggen </a></li>
   </ul>
   <span class="heading">Overig</span>

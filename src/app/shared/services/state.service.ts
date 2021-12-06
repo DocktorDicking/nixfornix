@@ -15,7 +15,7 @@ export class StateService {
 
   // Allowed states to access
   private adminStates = ['OVERVIEW_RECENT', 'OVERVIEW_ALL', 'MANAGE_USERS'];
-  private userStates = ['HOUR_FORM', 'HOUR_OVERVIEW'];
+  private userStates = ['HOUR_FORM', 'HOUR_OVERVIEW', 'USER_PROFILE'];
 
   private initState(): void {
     if (this.isAdmin) {

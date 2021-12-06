@@ -31,6 +31,7 @@ import { MessageService } from './shared/services/message.service';
 import { DatabaseService } from './shared/services/database.service';
 import { HourTableRecentAdminComponent } from './web/admincomponents/hour-table-recent-admin/hour-table-recent.component-admin';
 import { HourTableAllAdminComponent } from './web/admincomponents/hour-table-all-admin/hour-table-all.component-admin';
+import { ProfileComponent } from './web/usercomponents/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { HourTableAllAdminComponent } from './web/admincomponents/hour-table-all
     NotFoundComponent,
     HourTableTotalComponent,
     HourTableAllAdminComponent,
-    ManageUsersComponent
+    ManageUsersComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
