@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {User} from '../../../shared/models/user.model';
 import {AuthService} from '../../../shared/services/auth.service';
+import {UserService} from '../../../shared/services/user.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -8,24 +9,34 @@ import {AuthService} from '../../../shared/services/auth.service';
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
-  public user: User;
-  public hidePw = true;
+  public formUser: User;
+  public newPassword: string;
+  public hidePw = false;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, public userService: UserService) { }
 
   ngOnInit() {
-    this.user = this.authService.currentUserValue;
+    this.formUser = this.authService.currentUserValue;
+    this.newPassword = '';
   }
 
   toggleShowPw() {
     this.hidePw = !this.hidePw;
   }
 
+  // TODO change both submits to new endpoint specifically designed for submitting profiles.
   submitProfile() {
-    // TODO update call
+    this.userService.update(this.formUser);
   }
 
   changePassword() {
     // TODO update password
+    const tempUser: User = this.authService.currentUserValue;
+    tempUser.password = this.newPassword;
+    this.userService.update(tempUser);
+  }
+
+  setGeneratedPassword() {
+    this.newPassword = this.authService.getGeneratedPassword();
   }
 }

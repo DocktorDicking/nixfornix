@@ -105,4 +105,12 @@ export class AuthService {
     }
     return this.whoami();
   }
+
+  /**
+   * generates a random password.
+   */
+  public getGeneratedPassword(length = 10): string {
+    const charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    return Array(length).fill(length).map(() => charset.charAt(Math.random() * 62)).join('');
+  }
 }

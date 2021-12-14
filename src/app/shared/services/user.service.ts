@@ -67,8 +67,12 @@ export class UserService {
       .toPromise()
       .then( res => {
         if (res.statusCode === 200) {
-          this.getUsers();
-          this.toastr.success('Gebruiker: ' + newUserPayload.username + ' is succesvol geüpdatet.', 'Gebruiker geüpdatet');
+          if (this.authService.currentUserValue.admin) {
+            this.getUsers();
+            this.toastr.success('Gebruiker: ' + newUserPayload.username + ' is succesvol geüpdatet.', 'Gebruiker geüpdatet');
+          } else {
+            this.toastr.success('Jouw account is succesvol geüpdatet.', 'Account geüpdatet');
+          }
         } else {
           this.toastr.error('De gebruiker kon niet worden geüpdatet.' +
             'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden geüpdatet');
