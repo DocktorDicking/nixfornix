@@ -30,7 +30,6 @@ export class ProfileComponent implements OnInit {
   }
 
   changePassword() {
-    // TODO update password
     const tempUser: User = this.authService.currentUserValue;
     tempUser.password = this.newPassword;
     this.userService.update(tempUser);

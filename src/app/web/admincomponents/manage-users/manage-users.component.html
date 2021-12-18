@@ -1,6 +1,5 @@
 <section class="no-padding-bottom">
-  <div class="row">
-    <div class="col-md-6">
+    <div class="col-lg-12">
       <div class="block">
         <div class="title">
           <strong>Geregistreerde gebruikers</strong>
@@ -11,6 +10,7 @@
               <thead>
               <tr>
                 <th class="form-control-label">Naam</th>
+                <th class="form-control-label">Email</th>
                 <th class="form-control-label">Rol</th>
                 <th class="form-control-label">Actief</th>
               </tr>
@@ -19,6 +19,7 @@
               <tr *ngFor="let user of this.userService.users" [class.table-row-selected]="user.id === this.formUser.id"
                   class="htable htable-text" (click)="onUserData(user.id)">
                 <td>{{user.name}} {{user.middleName ? user.middleName : ''}} {{user.lastName}}</td>
+                <td>{{user.email}}</td>
                 <td>{{user.admin ? 'Administrator' : 'Werknemer'}}</td>
                 <td *ngIf="user.active"><i style="color: #429244;" class="fa fa-lightbulb-o"></i></td>
                 <td *ngIf="!user.active"><i style="color: darkred;" class="fa fa-lightbulb-o"></i></td>
@@ -30,12 +31,200 @@
         <div *ngIf="this.userService.users.length < 1">
           Er zijn geen gebruikers gevonden.
         </div>
+        <div class="table-footer">
+          <div class="btn-group">
+            <button (click)="this.resetFormUser()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#cuUserModal">+</button>
+            <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#changePasswordModal">Wachtwoord wijzigen</button>
+            <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#cuUserModal">Bewerken</button>
+            <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">-</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="block">
-        <div class="title"><strong>Toevoegen/Aanpassen</strong></div>
-        <form #userForm="ngForm" (ngSubmit)="onSave()">
+</section>
+
+<!--<div class="col-md-6">-->
+<!--  <div class="block">-->
+<!--    <div class="title"><strong>Toevoegen/Aanpassen</strong></div>-->
+<!--    <form #userForm="ngForm" (ngSubmit)="onSave()">-->
+<!--      <div class="form-group">-->
+<!--        <label for="firstName" class="form-control-label">Voornaam</label>-->
+<!--        <input [(ngModel)]="this.formUser.name" #firstName="ngModel" id="firstName" name="firstName"-->
+<!--               type="firstName" class="form-control">-->
+<!--        &lt;!&ndash; Error messages &ndash;&gt;-->
+<!--        <div class="alert-text">-->
+<!--          <div *ngIf="firstName.invalid && firstName.touched" class="shakeIt">-->
+<!--            <div *ngIf="firstName.errors.required">-->
+<!--              Dit veld mag niet leeg zijn.-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group">-->
+<!--        <label for="middleName" class="form-control-label">Tussenvoegsel</label>-->
+<!--        <input [(ngModel)]="this.formUser.middleName" #middleName="ngModel" id="middleName" name="middleName"-->
+<!--               type="text" class="form-control">-->
+<!--        &lt;!&ndash; Error messages &ndash;&gt;-->
+<!--        <div class="alert-text">-->
+<!--          <div *ngIf="middleName.invalid && middleName.touched" class="shakeIt">-->
+<!--            &lt;!&ndash; TODO &ndash;&gt;-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group">-->
+<!--        <label for="lastName" class="form-control-label">Achternaam</label>-->
+<!--        <input [(ngModel)]="this.formUser.lastName" #lastName="ngModel" id="lastName" name="lastName" type="text"-->
+<!--               class="form-control">-->
+<!--        &lt;!&ndash; Error messages &ndash;&gt;-->
+<!--        <div class="alert-text">-->
+<!--          <div *ngIf="lastName.invalid && lastName.touched" class="shakeIt">-->
+<!--            &lt;!&ndash; TODO &ndash;&gt;-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group">-->
+<!--        <label for="email" class="form-control-label">Email</label>-->
+<!--        <input [(ngModel)]="this.formUser.email" #email="ngModel" id="email" name="email" type="email"-->
+<!--               class="form-control">-->
+<!--        &lt;!&ndash; Error messages &ndash;&gt;-->
+<!--        <div class="alert-text">-->
+<!--          <div *ngIf="email.invalid && email.touched" class="shakeIt">-->
+<!--            &lt;!&ndash; TODO &ndash;&gt;-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-group">-->
+<!--        <label for="username" class="form-control-label">Gebruikersnaam</label>-->
+<!--        <input [(ngModel)]="this.formUser.username" #username="ngModel" id="username" name="username" type="text"-->
+<!--               class="form-control">-->
+<!--        &lt;!&ndash; Error messages &ndash;&gt;-->
+<!--        <div class="alert-text">-->
+<!--          <div *ngIf="username.invalid && username.touched" class="shakeIt">-->
+<!--            &lt;!&ndash; TODO &ndash;&gt;-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="form-check margin-top-sm no-margin-bottom">-->
+<!--        <input class="form-check-input" type="checkbox" [(ngModel)]="this.formUser.active" #active="ngModel"-->
+<!--               id="active" name="active">-->
+<!--        <label for="active" class="form-control-label">Actief</label>-->
+<!--      </div>-->
+<!--      <div class="form-check">-->
+<!--        <input class="form-check-input" type="checkbox" [(ngModel)]="this.formUser.admin" #admin="ngModel"-->
+<!--               id="admin" name="admin">-->
+<!--        <label for="admin" class="form-control-label">Administrator</label>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; Error messages &ndash;&gt;-->
+<!--      <div class="alert-text">-->
+<!--        <div *ngIf="this.message" class="shakeIt">-->
+<!--          <p [textContent]="this.message"></p>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      &lt;!&ndash; TODO do something with returned bool 'delete' &ndash;&gt;-->
+<!--      <div class="btn-group">-->
+<!--        <button *ngIf="!this.userService.isEmpty(this.formUser)" type="submit" class="btn btn-primary">Opslaan-->
+<!--        </button>-->
+<!--        <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#changePasswordModal">Wachtwoord wijzigen</button>-->
+<!--        <button *ngIf="!this.userService.isEmpty(this.formUser)" type="button" class="btn btn-dark"-->
+<!--                data-toggle="modal" data-target="#resetConfirmation">Formulier resetten-->
+<!--        </button>-->
+<!--        <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger"-->
+<!--                data-toggle="modal" data-target="#deleteConfirmation">Verwijderen-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </form>-->
+<!--  </div>-->
+<!--</div>-->
+
+<!-- MODALS START HERE -->
+
+<!-- delete modal -->
+<div id="deleteConfirmation" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Waarschuwing</h4>
+      </div>
+      <div class="modal-body">
+        <p>Weet u zeker dat u gebruiker {{this.formUser.fullName}} wilt verwijderen? <br/>
+          <br/>
+          Alle data in relatie tot deze gebruiker zal verwijderd worden en kan niet worden hersteld.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="this.onDelete()">
+          Verwijderen
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- change pw modal -->
+<div id="changePasswordModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Wachtwoord wijzigen</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="password" class="form-control-label">Wachtwoord</label>
+            <input [(ngModel)]="this.newPassword" #password="ngModel" [type]="this.hidePw ? 'password' : 'text'" id="password" name="password" class="form-control">
+            <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="this.toggleShowPw()"></i></span>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+          <button type="button"
+                  class="btn btn-primary"
+                  data-dismiss="modal"
+                  data-toggle="modal"
+                  data-target="#changePasswordModal"
+                  (click)="this.changePassword()">Opslaan
+          </button>
+          <button type="button"
+                  class="btn btn-secondary"
+                  (click)="this.setGeneratedPassword()">Willekeurig wachtwoord
+          </button>
+          <button type="button"
+                  class="btn btn-warning"
+                  data-dismiss="modal"
+                  data-toggle="modal"
+                  data-target="#changePasswordModal">Sluiten
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- create/update form modal -->
+<div id="cuUserModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 *ngIf="this.isNewUser()" class="modal-title">Werknemer toevoegen</h4>
+        <h4 *ngIf="!this.isNewUser()" class="modal-title">Werknemer bewerken</h4>
+      </div>
+      <div class="modal-body">
+        <form>
           <div class="form-group">
             <label for="firstName" class="form-control-label">Voornaam</label>
             <input [(ngModel)]="this.formUser.name" #firstName="ngModel" id="firstName" name="firstName"
@@ -98,17 +287,10 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div *ngIf="this.isNewUser()" class="form-group">
             <label for="password" class="form-control-label">Wachtwoord</label>
-            <input [(ngModel)]="this.formUser.password" #password="ngModel" id="password" name="password" [type]="this.hidePw ? 'password' : 'text'" class="form-control">
-            <span class="float-right margin-bottom-sm"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="this.toggleShowPw()"></i></span>
-
-            <!-- Error messages -->
-            <div class="alert-text">
-              <div *ngIf="password.invalid && password.touched" class="shakeIt">
-                <!-- TODO -->
-              </div>
-            </div>
+            <input [(ngModel)]="this.formUser.password" #password="ngModel" [type]="this.hidePw ? 'password' : 'text'" id="password" name="password" class="form-control">
+            <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="this.toggleShowPw()"></i></span>
           </div>
 
           <div class="form-check margin-top-sm no-margin-bottom">
@@ -128,68 +310,28 @@
               <p [textContent]="this.message"></p>
             </div>
           </div>
-
-          <!-- TODO do something with returned bool 'delete' -->
-          <div class="btn-group">
-            <button *ngIf="!this.userService.isEmpty(this.formUser)" type="submit" class="btn btn-primary">Opslaan
-            </button>
-            <button *ngIf="!this.userService.isEmpty(this.formUser)" type="button" class="btn btn-dark"
-                    data-toggle="modal" data-target="#resetConfirmation">Formulier resetten
-            </button>
-            <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger"
-                    data-toggle="modal" data-target="#deleteConfirmation">Verwijderen
-            </button>
-          </div>
         </form>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- modals -->
-<div id="deleteConfirmation" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Pop-up content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Waarschuwing</h4>
-      </div>
-      <div class="modal-body">
-        <p>Weet u zeker dat u gebruiker {{this.formUser.fullName}} wilt verwijderen? <br/>
-          <br/>
-          Alle data in relatie tot deze gebruiker zal verwijderd worden en kan niet worden hersteld.
-        </p>
-      </div>
-      <!-- TODO: Maybe add checkbox "i understand" before user is able to click delete button -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="this.onDelete()">
-          Verwijderen
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div id="resetConfirmation" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Pop-up content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Waarschuwing</h4>
-      </div>
-      <div class="modal-body">
-        <p>Weet u zeker dat u het formulier wilt resetten? <br/>
-          <br/>
-          Alle wijzigingen die u nog niet heeft opgeslagen gaan verloren.
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="this.resetFormUser()">Resetten
-        </button>
-        <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>
+        <div class="btn-group">
+          <button type="button"
+                  class="btn btn-primary"
+                  data-dismiss="modal"
+                  data-toggle="modal"
+                  data-target="#cuUserModal"
+                  (click)="this.onSave()">Opslaan
+          </button>
+          <button *ngIf="this.isNewUser()" type="button"
+                  class="btn btn-secondary"
+                  (click)="this.setGeneratedPassword(true)">Willekeurig wachtwoord
+          </button>
+          <button type="button"
+                  class="btn btn-warning"
+                  data-dismiss="modal"
+                  data-toggle="modal"
+                  data-target="#cuUserModal">Sluiten
+          </button>
+        </div>
       </div>
     </div>
   </div>

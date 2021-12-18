@@ -74,6 +74,14 @@ a {
   border-top: 1px solid #3d4148;
 }
 
+.table-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1rem;
+  border-top: 1px solid #3d4148;
+}
+
 .btn-secondary {
   background-color: #6a6c70;
   border-color: #6a6c70;
