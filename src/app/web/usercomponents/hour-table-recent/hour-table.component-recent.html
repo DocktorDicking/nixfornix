@@ -19,7 +19,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let time of this.times" class="htable-text"><!-- TODO: Change CSS so rows do now look like their are clickable -->
-              <td>{{time.date}}</td>
+              <td>{{time.date | date:'dd-MM-yyyy'}}</td>
               <td>{{time.start}}</td>
               <td>{{time.stop}}</td>
               <td>{{time.breaktime}}</td>

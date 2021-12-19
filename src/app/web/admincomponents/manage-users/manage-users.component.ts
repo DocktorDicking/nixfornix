@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../../shared/models/user.model';
 import { UserService } from '../../../shared/services/user.service';
-import {AuthService} from '../../../shared/services/auth.service';
+import { AuthService } from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-manage-users',
@@ -37,7 +37,6 @@ export class ManageUsersComponent implements OnInit {
       this.userService.submit(this.formUser);
     }
   }
-
 
   /**
    * Set's the selected user as the formUser.
