@@ -6,6 +6,7 @@
         <p *ngIf="this.times.length === 0 || this.times == null">
           Geen uren gevonden.
         </p>
+        <!-- TODO: Check this, maybe we can use this for data tables https://swimlane.gitbook.io/ngx-datatable/ -->
         <table *ngIf="this.times.length > 0" class="table table-striped table-sm">
           <thead>
             <tr>
