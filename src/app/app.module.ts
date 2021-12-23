@@ -32,6 +32,8 @@ import { DatabaseService } from './shared/services/database.service';
 import { HourTableRecentAdminComponent } from './web/admincomponents/hour-table-recent-admin/hour-table-recent.component-admin';
 import { HourTableAllAdminComponent } from './web/admincomponents/hour-table-all-admin/hour-table-all.component-admin';
 import { ProfileComponent } from './web/usercomponents/profile/profile.component';
+import { DataTablesModule } from 'angular-datatables';
+import {DatelessShortTime} from './shared/pipes/DatelessShortTime';
 
 @NgModule({
   declarations: [
@@ -50,7 +52,8 @@ import { ProfileComponent } from './web/usercomponents/profile/profile.component
     HourTableTotalComponent,
     HourTableAllAdminComponent,
     ManageUsersComponent,
-    ProfileComponent
+    ProfileComponent,
+    DatelessShortTime
   ],
   imports: [
     BrowserModule,
@@ -59,9 +62,10 @@ import { ProfileComponent } from './web/usercomponents/profile/profile.component
     FormsModule,
     CommonModule,
     BrowserAnimationsModule,
+    DataTablesModule,
     ToastrModule.forRoot()
   ],
-  providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatabaseService,
+  providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatabaseService, DatelessShortTime,
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true}],

@@ -22,8 +22,8 @@
             <tr *ngFor="let time of this.times" (click)="openTimeModal(time)" class="htable-text" data-toggle="modal" data-target="#timemodal">
               <td>{{time.user.name}} {{time.user.middleName ? time.user.middleName : ''}} {{time.user.lastName}}</td>
               <td>{{time.date}}</td>
-              <td>{{time.start}}</td>
-              <td>{{time.stop}}</td>
+              <td>{{time.start | dlessShortTime}}</td>
+              <td>{{time.stop | dlessShortTime}}</td>
               <td>{{time.breaktime}}</td>
               <td>{{time.hour}}</td>
               <td><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
@@ -52,11 +52,11 @@
           </div>
           <div class="form-group">
             <label class="form-control-label">Begintijd</label>
-            <input [(ngModel)]="this.modalTime.start" name="startTime" type="time" placeholder="Tijd" class="form-control">
+            <input [ngModel]="this.modalTime.start | dlessShortTime" (ngModelChange)="this.modalTime.start = $event" name="startTime" type="time" placeholder="Tijd" class="form-control">
           </div>
           <div class="form-group">
             <label class="form-control-label">Eindtijd</label>
-            <input [(ngModel)]="this.modalTime.stop" name="stopTime" type="time" placeholder="Tijd" class="form-control" >
+            <input [ngModel]="this.modalTime.stop | dlessShortTime" (ngModelChange)="this.modalTime.stop = $event" name="stopTime" type="time" placeholder="Tijd" class="form-control" >
           </div>
           <div class="form-group">
             <label class="col-sm-3 form-control-label">Pauze</label>

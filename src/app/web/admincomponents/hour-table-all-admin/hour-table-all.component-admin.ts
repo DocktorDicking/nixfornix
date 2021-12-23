@@ -9,14 +9,43 @@ import { TimeRow } from '../../../shared/models/timeRow.model';
   providers: []
 })
 export class HourTableAllAdminComponent implements OnInit {
+  public dtTablesDutch = { // TODO: Move this to a language class.
+    processing: 'Laden...',
+    search: 'Zoeken:',
+    lengthMenu: '_MENU_ Items per pagina',
+    info: '_START_ tot _END_ items zichtbaar op deze pagina van _TOTAL_ items.',
+    infoEmpty: 'Mostrando ningún elemento.',
+    infoFiltered: '(filtrado _MAX_ elementos total)',
+    infoPostFix: '',
+    loadingRecords: 'Data laden...',
+    zeroRecords: 'No se encontraron registros',
+    emptyTable: 'Er zijn geen registraties gevonden...',
+    paginate: {
+      first: 'Eerste pagina',
+      previous: 'Vorige pagina',
+      next: 'Volgende pagina',
+      last: 'Laatste pagina'
+    },
+    aria: {
+      sortAscending: ': Sorteren oplopend',
+      sortDescending: ': Sorteren aflopend'
+    }
+  };
+
+  constructor(public timeService: TimeService) {}
+
+  public dtOptions: DataTables.Settings = {}; // Data table settings
   public modalDataAvailable = false;
   public modalTime: TimeRow = new TimeRow();
    // TODO: move to timeService
   @Input() times: TimeRow[] = [];
 
-  constructor(public timeService: TimeService) {}
-
   ngOnInit() {
+    // Init options here according to DT docs.
+    this.dtOptions = {
+      language: this.dtTablesDutch
+    };
+
     this.timeService.loadAllTimes();
     this.timeService.allTimesChanged.subscribe(
       (newTimes: TimeRow[]) => {

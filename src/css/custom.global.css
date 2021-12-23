@@ -90,5 +90,61 @@ a {
 /*  background: #429244;*/
 /*}*/
 
+/*  DATATABLE CUSTOM CSS */
+.dataTables_wrapper .dataTables_length, .dataTables_wrapper .dataTables_filter, .dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_processing, .dataTables_wrapper .dataTables_paginate {
+  color: #8a8d93;
+}
+
+.dataTables_wrapper .dataTables_length select {
+  color: #8a8d93;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  color: #8a8d93;
+}
+
+table.dataTable tbody th, table.dataTable tbody td {
+  padding: 0.3rem;
+}
+
+table.dataTable th, table.dataTable td {
+  box-sizing: border-box;
+}
+
+table.dataTable tbody tr {
+  background-color: #2d3035;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  color: #8a8d93;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
+  color: #8a8d93;
+}
+
+.paginate_button {
+  color: #8a8d93;
+  background-color: dimgray;
+  border-color: #429244;
+
+  font-weight: 400;
+  border: 1px solid;
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  -webkit-transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+
+.paginate_button:hover {
+  color: #8a8d93;
+  background-color: #429244;
+  border-color: #429244;
+}
+
 
 
