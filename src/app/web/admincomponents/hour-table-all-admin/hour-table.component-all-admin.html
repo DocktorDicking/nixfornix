@@ -44,7 +44,7 @@
         <h4 class="modal-title">Tijd bewerken van {{modalTime.user.name}}</h4>
       </div>
       <div class="modal-body">
-        <p>Laatst bijgewerkt op: {{this.timeService.formatDate(this.modalTime.updatedAt)}}</p>
+        <p>Laatst bijgewerkt op: {{this.timeService.formatDate(this.modalTime.updatedAt)}}</p> <!-- TODO: use pipe -->
         <form>
           <div class="form-group">
             <label class="form-control-label">Datum</label>

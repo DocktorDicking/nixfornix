@@ -8,14 +8,11 @@ import {Observable, Subscription} from 'rxjs';
 @Injectable()
 export class TimeService {
   public recentTimesChanged = new EventEmitter<TimeRow[]>();
-  public allTimesChanged = new EventEmitter<TimeRow[]>();
-
   private recentTimes: TimeRow[] = [];
-  private allTimes: TimeRow[] = [];
 
-  private DEFAULTBREAKTIME = 30; // TODO: Move to settings file or something alike.
-  private DEFAULTLOCATION = 'Luca Catering'; // TODO: Change to numeric value and move to settingsfile
-  BREAKTIMES = [0, 15, 30, 45, 60];
+  private readonly DEFAULTBREAKTIME = 30; // TODO: Move to settings file or something alike.
+  private readonly DEFAULTLOCATION = 'Luca Catering'; // TODO: Change to numeric value and move to settingsfile
+  public readonly BREAKTIMES = [0, 15, 30, 45, 60]; // TODO: Move to settingsfile
 
   constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService) {}
 
@@ -28,21 +25,7 @@ export class TimeService {
     this.calculateWorkedHours(timeRow);
     const timePayload = this.getPayload(timeRow);
 
-    return this.http.post<any>('/time/create', timePayload)
-      .toPromise()
-      .then( res => {
-        if (res.statusCode === 200) {
-          this.loadRecentTimes();
-          this.toastr.success(timePayload.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen!');
-        } else {
-          this.toastr.error('Er is iets fout gegaan tijdens het opslaan van jou uren. ' +
-            'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: uren konden niet worden opgeslagen');
-        }
-      }).catch(err => {
-        this.toastr.error('Er is iets fout gegaan tijdens het opslaan van jou uren. ' +
-          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: uren konden niet worden opgeslagen');
-        // Handled by HTTP interceptor: ErrorInterceptor
-      });
+    return this.http.post<any>('/time/create', timePayload).toPromise();
   }
 
   /**
@@ -81,10 +64,9 @@ export class TimeService {
       // });
   }
 
-  onDeleteTime(timeRow: TimeRow) {
+  public onDeleteTime(timeRow: TimeRow) {
     const timePayload = this.getPayload(timeRow);
-    return this.http.post<any>('/time/delete', timePayload)
-      .toPromise();
+    return this.http.post<any>('/time/delete', timePayload).toPromise();
   }
 
   private getPayload(timeRow: TimeRow) {
@@ -108,7 +90,7 @@ export class TimeService {
   /**
    * Returns a new time object.
    */
-  newTimeObj(): TimeRow {
+  public newTimeObj(): TimeRow {
     const time = new TimeRow();
     time.breaktime = this.DEFAULTBREAKTIME;
     time.location = this.DEFAULTLOCATION;
@@ -116,7 +98,7 @@ export class TimeService {
   }
 
   // TODO: let server handle this or check everytime just to be sure.
-  calculateWorkedHours(time: TimeRow) {
+  public calculateWorkedHours(time: TimeRow) {
     const splitStart = time.start.split(':', 2);
     const splitStop = time.stop.split(':', 2);
 
@@ -141,7 +123,7 @@ export class TimeService {
   /**
    * Loads recent times registered by the user. Api set's the max values of rows on 10.
    */
-  loadRecentTimes(): Subscription {
+  public loadRecentTimes(): Subscription {
     return this.http.get<TimeRow[]>('/time/get/recent?user_id=' + this.authService.currentUserValue.id)
       .subscribe(data => {
         if (data.length >= 0) {
@@ -151,7 +133,7 @@ export class TimeService {
       });
   }
 
-  autoLoadRecentTimes() {
+  public autoLoadRecentTimes() {
     this.loadRecentTimes();
     this.toastr.info('Recent geregistreerde tijden zijn automatisch ververst', 'Automatische verversing');
   }
@@ -159,7 +141,7 @@ export class TimeService {
   /**
    * Loads recent times registered by the user. Api set's the max values of rows on 10.
    */
-  loadAllTimes(): Observable<TimeRow[]> {
+  public loadAllTimes(): Observable<TimeRow[]> {
     // return this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id)
     //   .subscribe(data => {
     //     if (data.length >= 0) {
@@ -171,7 +153,7 @@ export class TimeService {
     return this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id);
   }
 
-  formatDate(date: string): string {
+  public formatDate(date: string): string {
     const dtFormat = new Intl.DateTimeFormat('en-US', {
       day: 'numeric',
       month: 'numeric',
