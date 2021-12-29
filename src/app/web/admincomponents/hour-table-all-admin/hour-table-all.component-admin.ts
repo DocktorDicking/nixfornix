@@ -1,6 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren} from '@angular/core';
 import { TimeService } from '../../../shared/services/time.service';
 import { TimeRow } from '../../../shared/models/timeRow.model';
+import { DataTableDirective } from 'angular-datatables';
+import {Subject} from 'rxjs';
+import {data} from 'jquery';
+import {ToastrService} from 'ngx-toastr';
+import {catchError} from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-hour-all-table-admin',
@@ -8,17 +14,17 @@ import { TimeRow } from '../../../shared/models/timeRow.model';
   styleUrls: ['./hour-table-all.component-admin.css'],
   providers: []
 })
-export class HourTableAllAdminComponent implements OnInit {
+export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDestroy {
   public dtTablesDutch = { // TODO: Move this to a language class.
     processing: 'Laden...',
     search: 'Zoeken:',
     lengthMenu: '_MENU_ Items per pagina',
     info: '_START_ tot _END_ items zichtbaar op deze pagina van _TOTAL_ items.',
-    infoEmpty: 'Mostrando ningún elemento.',
-    infoFiltered: '(filtrado _MAX_ elementos total)',
+    infoEmpty: 'Geen items gevonden.',
+    infoFiltered: '(Totaal _MAX_ items gefilterd)',
     infoPostFix: '',
     loadingRecords: 'Data laden...',
-    zeroRecords: 'No se encontraron registros',
+    zeroRecords: 'Geen items gevonden',
     emptyTable: 'Er zijn geen registraties gevonden...',
     paginate: {
       first: 'Eerste pagina',
@@ -31,37 +37,101 @@ export class HourTableAllAdminComponent implements OnInit {
       sortDescending: ': Sorteren aflopend'
     }
   };
+  private loading = true; // TODO: create loading screen component
 
-  constructor(public timeService: TimeService) {}
+  constructor(public timeService: TimeService, private toastr: ToastrService) {}
 
-  public dtOptions: DataTables.Settings = {}; // Data table settings
+  // Datatable variables
+  @ViewChild(DataTableDirective, {static: false}) dtDirective: DataTableDirective;
+  public dtOptions: DataTables.Settings = {}; // Data-table settings, this is bound in the HTML on the <table> tag
+  public dtTrigger: Subject<TimeRow> = new Subject<TimeRow>(); // Data-table object to control the renderer of the table
+
+  // Modal variables
   public modalDataAvailable = false;
   public modalTime: TimeRow = new TimeRow();
-   // TODO: move to timeService
+
+   // TODO: change this to just an Array?
   @Input() times: TimeRow[] = [];
 
   ngOnInit() {
     // Init options here according to DT docs.
-    this.dtOptions = {
-      language: this.dtTablesDutch
+    this.dtOptions = { // TODO: Make table sort on date
+      pagingType: 'full_numbers',
+      destroy: true,
+      language: this.dtTablesDutch,
     };
+    this.loadTimeData();
+  }
 
-    this.timeService.loadAllTimes();
-    this.timeService.allTimesChanged.subscribe(
-      (newTimes: TimeRow[]) => {
-        this.times = newTimes;
-      }
-    );
+  ngAfterViewInit() {
+    this.dtTrigger.next();
+    this.rerender();
+  }
+
+  ngOnDestroy(): void {
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
+  }
+
+  rerender(): void {
+    this.dtDirective.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      this.dtTrigger.next();
+    });
+  }
+
+  thereAreTimes(): boolean {
+    return this.times.length > 0;
   }
 
   updateTime(time: TimeRow) {
-    this.timeService.onUpdateTime(time);
-    this.closeTimeModel();
+    this.loading = true;
+    this.timeService.onUpdateTime(time).then(res => {
+      if (res.statusCode === 200) {
+        this.loadTimeData();
+        this.toastr.success('De registratie van ' + time.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
+        this.closeTimeModel();
+      } else {
+        this.toastr.error('Registratie kon niet worden geüpdatet.' +
+          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
+      }
+    }).catch(err => {
+      // Handled by HTTP interceptor.
+      this.closeTimeModel();
+      this.loading = false;
+      this.toastr.error('Registratie kon niet worden geüpdatet.' +
+        'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
+    });
+  }
+
+  loadTimeData() {
+    this.timeService.loadAllTimes().toPromise().then((timeData: TimeRow[]) => {
+      this.times = timeData;
+      this.rerender();
+      this.loading = false;
+    });
   }
 
   deleteTime(time: TimeRow) {
-    this.timeService.onDeleteTime(time);
-    this.closeTimeModel();
+    this.loading = true;
+    this.timeService.onDeleteTime(time).then( res => {
+      if (res.statusCode === 200) {
+        this.loadTimeData();
+        this.closeTimeModel();
+        this.toastr.success('De registratie van ' + time.user.name + ' is succesvol verwijderd.', 'Registratie verwijderd');
+      } else {
+        this.toastr.error('Registratie kon niet worden verwijderd.' +
+          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden verwijderd');
+      }
+    }).catch(err => {
+      this.closeTimeModel();
+      this.loading = false;
+      this.toastr.error('Registratie kon niet worden verwijderd.' +
+        'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden verwijderd');
+      // Handled by HTTP interceptor: ErrorInterceptor
+    });
   }
 
   openTimeModal(time: TimeRow) {

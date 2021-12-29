@@ -3,11 +3,12 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {TimeRow} from '../models/timeRow.model';
 import {AuthService} from './auth.service';
 import {ToastrService} from 'ngx-toastr';
+import {Observable, Subscription} from 'rxjs';
 
 @Injectable()
 export class TimeService {
-  recentTimesChanged = new EventEmitter<TimeRow[]>();
-  allTimesChanged = new EventEmitter<TimeRow[]>();
+  public recentTimesChanged = new EventEmitter<TimeRow[]>();
+  public allTimesChanged = new EventEmitter<TimeRow[]>();
 
   private recentTimes: TimeRow[] = [];
   private allTimes: TimeRow[] = [];
@@ -52,54 +53,38 @@ export class TimeService {
     const timePayload = this.getPayload(timeRow);
 
     return this.http.post<any>('/time/update', timePayload)
-      .toPromise()
-      .then( res => {
-        if (res.statusCode === 200) {
-
-          // TODO: This is a tmp fix. We need to rewrite this anyway when sorting registration data on year/month/day
-          if (this.authService.currentUserValue.id === timeRow.user.id) {
-            this.loadAllTimes(); // user all table
-          } else {
-            this.loadRecentTimes(); // admin recent table
-            this.loadAllTimes(); // admin all table
-          }
-
-          if (this.authService.currentUserValue.admin) {
-            this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
-          } else {
-            this.toastr.success('De registratie is succesvol geüpdatet.', 'Registratie geüpdatet');
-          }
-        } else {
-          this.toastr.error('Registratie kon niet worden geüpdatet.' +
-            'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
-        }
-      }).catch(err => {
-        this.toastr.error('Registratie kon niet worden geüpdatet.' +
-          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
-        // Handled by HTTP interceptor: ErrorInterceptor
-      });
+      .toPromise();
+      // .then( res => {
+      //   if (res.statusCode === 200) {
+      //
+      //     // TODO: This is a tmp fix. We need to rewrite this anyway when sorting registration data on year/month/day
+      //     // if (this.authService.currentUserValue.id === timeRow.user.id) {
+      //     //   this.loadAllTimes(); // user all table
+      //     // } else {
+      //     //   this.loadRecentTimes(); // admin recent table
+      //     //   this.loadAllTimes(); // admin all table
+      //     // }
+      //
+      //     if (this.authService.currentUserValue.admin) {
+      //       this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
+      //     } else {
+      //       this.toastr.success('De registratie is succesvol geüpdatet.', 'Registratie geüpdatet');
+      //     }
+      //   } else {
+      //     this.toastr.error('Registratie kon niet worden geüpdatet.' +
+      //       'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
+      //   }
+      // }).catch(err => {
+      //   this.toastr.error('Registratie kon niet worden geüpdatet.' +
+      //     'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
+      //   // Handled by HTTP interceptor: ErrorInterceptor
+      // });
   }
 
   onDeleteTime(timeRow: TimeRow) {
     const timePayload = this.getPayload(timeRow);
-
     return this.http.post<any>('/time/delete', timePayload)
-      .toPromise()
-      .then( res => {
-        if (res.statusCode === 200) {
-          // No need to check for admin because only admins can delete.
-          this.loadRecentTimes();
-          this.loadAllTimes();
-          this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol verwijderd.', 'Registratie verwijderd');
-        } else {
-          this.toastr.error('Registratie kon niet worden verwijderd.' +
-            'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden verwijderd');
-        }
-      }).catch(err => {
-        this.toastr.error('Registratie kon niet worden verwijderd.' +
-          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden verwijderd');
-        // Handled by HTTP interceptor: ErrorInterceptor
-      });
+      .toPromise();
   }
 
   private getPayload(timeRow: TimeRow) {
@@ -156,8 +141,8 @@ export class TimeService {
   /**
    * Loads recent times registered by the user. Api set's the max values of rows on 10.
    */
-  loadRecentTimes() {
-    this.http.get<TimeRow[]>('/time/get/recent?user_id=' + this.authService.currentUserValue.id)
+  loadRecentTimes(): Subscription {
+    return this.http.get<TimeRow[]>('/time/get/recent?user_id=' + this.authService.currentUserValue.id)
       .subscribe(data => {
         if (data.length >= 0) {
           this.recentTimes = data;
@@ -174,14 +159,16 @@ export class TimeService {
   /**
    * Loads recent times registered by the user. Api set's the max values of rows on 10.
    */
-  loadAllTimes() {
-    this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id)
-      .subscribe(data => {
-        if (data.length >= 0) {
-          this.allTimes = data;
-          this.allTimesChanged.emit(this.allTimes);
-        }
-      });
+  loadAllTimes(): Observable<TimeRow[]> {
+    // return this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id)
+    //   .subscribe(data => {
+    //     if (data.length >= 0) {
+    //       this.allTimes = data;
+    //       this.allTimesChanged.emit(this.allTimes);
+    //     }
+    //   });
+
+    return this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id);
   }
 
   formatDate(date: string): string {
