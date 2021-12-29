@@ -1,6 +1,7 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TimeService} from '../../../shared/services/time.service';
 import {TimeRow} from '../../../shared/models/timeRow.model';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-hour-recent-table-admin',
@@ -15,7 +16,7 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
   // TODO: move to timeService
   @Input() times: TimeRow[] = [];
 
-  constructor(public timeService: TimeService) {
+  constructor(public timeService: TimeService, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -39,8 +40,20 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
   }
 
   updateTime(time: TimeRow) {
-    this.timeService.onUpdateTime(time);
-    this.closeTimeModel();
+    this.timeService.onUpdateTime(time).then(res => {
+      if (res.statusCode === 200) {
+        this.timeService.loadRecentTimes();
+        this.closeTimeModel();
+        this.toastr.success('De registratie van ' + time.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
+      } else {
+        this.toastr.error('Registratie kon niet worden geüpdatet.' +
+          'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
+      }
+    }).catch(err => {
+      this.toastr.error('Registratie kon niet worden geüpdatet.' +
+        'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
+      // Handled by HTTP interceptor: ErrorInterceptor
+    });
   }
 
   deleteTime(time: TimeRow) {
