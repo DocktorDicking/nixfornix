@@ -19,7 +19,7 @@ export class TimeService {
   /**
    * Registered a time row.
    */
-  onRegisterTime(timeRow: TimeRow) {
+  public onRegisterTime(timeRow: TimeRow): Promise<any> {
     // add the user id to this time row.
     timeRow.user = this.authService.currentUserValue;
     this.calculateWorkedHours(timeRow);
@@ -31,40 +31,14 @@ export class TimeService {
   /**
    * Updates a TimeRow.
    */
-  onUpdateTime(timeRow: TimeRow) {
+  public onUpdateTime(timeRow: TimeRow): Promise<any> {
     this.calculateWorkedHours(timeRow);
     const timePayload = this.getPayload(timeRow);
 
-    return this.http.post<any>('/time/update', timePayload)
-      .toPromise();
-      // .then( res => {
-      //   if (res.statusCode === 200) {
-      //
-      //     // TODO: This is a tmp fix. We need to rewrite this anyway when sorting registration data on year/month/day
-      //     // if (this.authService.currentUserValue.id === timeRow.user.id) {
-      //     //   this.loadAllTimes(); // user all table
-      //     // } else {
-      //     //   this.loadRecentTimes(); // admin recent table
-      //     //   this.loadAllTimes(); // admin all table
-      //     // }
-      //
-      //     if (this.authService.currentUserValue.admin) {
-      //       this.toastr.success('De registratie van ' + timeRow.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
-      //     } else {
-      //       this.toastr.success('De registratie is succesvol geüpdatet.', 'Registratie geüpdatet');
-      //     }
-      //   } else {
-      //     this.toastr.error('Registratie kon niet worden geüpdatet.' +
-      //       'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
-      //   }
-      // }).catch(err => {
-      //   this.toastr.error('Registratie kon niet worden geüpdatet.' +
-      //     'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
-      //   // Handled by HTTP interceptor: ErrorInterceptor
-      // });
+    return this.http.post<any>('/time/update', timePayload).toPromise();
   }
 
-  public onDeleteTime(timeRow: TimeRow) {
+  public onDeleteTime(timeRow: TimeRow): Promise<any> {
     const timePayload = this.getPayload(timeRow);
     return this.http.post<any>('/time/delete', timePayload).toPromise();
   }
