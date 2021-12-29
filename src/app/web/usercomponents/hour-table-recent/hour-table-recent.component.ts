@@ -11,7 +11,8 @@ import {TimeRow} from '../../../shared/models/timeRow.model';
 export class HourTableRecentComponent implements OnInit {
   @Input() times: TimeRow[] = [];
 
-  constructor(private timeService: TimeService) { }
+  constructor(private timeService: TimeService) {
+  }
 
   ngOnInit() {
     this.timeService.loadRecentTimes();

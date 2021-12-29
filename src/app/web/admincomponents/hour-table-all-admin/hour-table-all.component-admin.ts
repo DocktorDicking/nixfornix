@@ -1,12 +1,9 @@
-import {Component, Input, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewChildren} from '@angular/core';
-import { TimeService } from '../../../shared/services/time.service';
-import { TimeRow } from '../../../shared/models/timeRow.model';
-import { DataTableDirective } from 'angular-datatables';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {TimeService} from '../../../shared/services/time.service';
+import {TimeRow} from '../../../shared/models/timeRow.model';
+import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
-import {data} from 'jquery';
 import {ToastrService} from 'ngx-toastr';
-import {catchError} from 'rxjs/operators';
-
 
 @Component({
   selector: 'app-hour-all-table-admin',
@@ -39,7 +36,8 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   };
   private loading = true; // TODO: create loading screen component
 
-  constructor(public timeService: TimeService, private toastr: ToastrService) {}
+  constructor(public timeService: TimeService, private toastr: ToastrService) {
+  }
 
   // Datatable variables
   @ViewChild(DataTableDirective, {static: false}) dtDirective: DataTableDirective;
@@ -50,7 +48,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   public modalDataAvailable = false;
   public modalTime: TimeRow = new TimeRow();
 
-   // TODO: change this to just an Array?
+  // TODO: change this to just an Array?
   @Input() times: TimeRow[] = [];
 
   ngOnInit() {
@@ -116,7 +114,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
 
   deleteTime(time: TimeRow) {
     this.loading = true;
-    this.timeService.onDeleteTime(time).then( res => {
+    this.timeService.onDeleteTime(time).then(res => {
       if (res.statusCode === 200) {
         this.loadTimeData();
         this.closeTimeModel();

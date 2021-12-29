@@ -18,14 +18,15 @@
           </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let time of this.times" class="htable-text"><!-- TODO: Change CSS so rows do now look like their are clickable -->
-              <td>{{time.date | date:'dd-MM-yyyy'}}</td>
-              <td>{{time.start | dlessShortTime}}</td>
-              <td>{{time.stop | dlessShortTime}}</td>
-              <td>{{time.breaktime}}</td>
-              <td>{{time.hour}}</td>
-              <td><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
-            </tr>
+          <tr *ngFor="let time of this.times" class="htable-text">
+            <!-- TODO: Change CSS so rows do now look like their are clickable -->
+            <td>{{time.date | date:'dd-MM-yyyy'}}</td>
+            <td>{{time.start | dlessShortTime}}</td>
+            <td>{{time.stop | dlessShortTime}}</td>
+            <td>{{time.breaktime}}</td>
+            <td>{{time.hour}}</td>
+            <td><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
+          </tr>
           </tbody>
         </table>
       </div>

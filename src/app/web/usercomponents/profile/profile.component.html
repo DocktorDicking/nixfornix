@@ -6,33 +6,40 @@
       <form (ngSubmit)="submitProfile()">
         <div class="form-group">
           <label for="username" class="form-control-label">Gebruikersnaam</label>
-          <input [(ngModel)]="this.formUser.username" #username="ngModel" type="text" id="username" name="username" class="form-control" placeholder="- invullen indien wijzigen wenselijk is -">
+          <input [(ngModel)]="this.formUser.username" #username="ngModel" type="text" id="username" name="username"
+                 class="form-control" placeholder="- invullen indien wijzigen wenselijk is -">
         </div>
 
         <div class="form-group">
           <label for="email" class="form-control-label">Email</label>
-          <input [(ngModel)]="this.formUser.email" #email="ngModel" type="text" id="email" name="email" class="form-control">
+          <input [(ngModel)]="this.formUser.email" #email="ngModel" type="text" id="email" name="email"
+                 class="form-control">
         </div>
 
         <div class="form-group">
           <label for="name" class="form-control-label">Voornaam</label>
-          <input [(ngModel)]="this.formUser.name" #name="ngModel" type="text" id="name" name="name" class="form-control">
+          <input [(ngModel)]="this.formUser.name" #name="ngModel" type="text" id="name" name="name"
+                 class="form-control">
         </div>
 
         <div class="form-group">
           <label for="middleName" class="form-control-label">Tussenvoegsel</label>
-          <input [(ngModel)]="this.formUser.middleName" #middleName="ngModel" type="text" id="middleName" name="middleName" class="form-control">
+          <input [(ngModel)]="this.formUser.middleName" #middleName="ngModel" type="text" id="middleName"
+                 name="middleName" class="form-control">
         </div>
 
         <div class="form-group">
           <label for="lastName" class="form-control-label">Achternaam</label>
-          <input [(ngModel)]="this.formUser.lastName" #lastName="ngModel" type="text" id="lastName" name="lastName" class="form-control">
+          <input [(ngModel)]="this.formUser.lastName" #lastName="ngModel" type="text" id="lastName" name="lastName"
+                 class="form-control">
         </div>
 
         <div class="form-footer">
           <div class="btn-group">
             <button class="btn btn-primary" type="submit">Opslaan</button>
-            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#changePasswordModal">Wachtwoord wijzigen</button>
+            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#changePasswordModal">
+              Wachtwoord wijzigen
+            </button>
           </div>
         </div>
       </form>
@@ -52,8 +59,10 @@
         <form>
           <div class="form-group">
             <label for="password" class="form-control-label">Wachtwoord</label>
-            <input [(ngModel)]="this.newPassword" #password="ngModel" [type]="this.hidePw ? 'password' : 'text'" id="password" name="password" class="form-control">
-            <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="this.toggleShowPw()"></i></span>
+            <input [(ngModel)]="this.newPassword" #password="ngModel" [type]="this.hidePw ? 'password' : 'text'"
+                   id="password" name="password" class="form-control">
+            <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"
+                                         (click)="this.toggleShowPw()"></i></span>
           </div>
         </form>
       </div>

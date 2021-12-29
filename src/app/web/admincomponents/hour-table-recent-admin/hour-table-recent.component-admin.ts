@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { TimeService } from '../../../shared/services/time.service';
-import { TimeRow } from '../../../shared/models/timeRow.model';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {TimeService} from '../../../shared/services/time.service';
+import {TimeRow} from '../../../shared/models/timeRow.model';
 
 @Component({
   selector: 'app-hour-recent-table-admin',
@@ -12,10 +12,11 @@ export class HourTableRecentAdminComponent implements OnInit, OnDestroy {
   public autoIntId: number;
   public modalDataAvailable = false;
   public modalTime: TimeRow = new TimeRow();
-   // TODO: move to timeService
+  // TODO: move to timeService
   @Input() times: TimeRow[] = [];
 
-  constructor(public timeService: TimeService) {}
+  constructor(public timeService: TimeService) {
+  }
 
   ngOnInit() {
     this.timeService.loadRecentTimes();

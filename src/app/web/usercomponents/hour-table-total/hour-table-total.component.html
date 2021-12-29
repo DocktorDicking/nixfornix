@@ -18,7 +18,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let time of this.times" (click)="openTimeModal(time)" class="htable-text" data-toggle="modal" data-target="#timemodal">
+          <tr *ngFor="let time of this.times" (click)="openTimeModal(time)" class="htable-text" data-toggle="modal"
+              data-target="#timemodal">
             <td>{{time.date | date:'dd-MM-yyyy'}}</td>
             <td>{{time.start | dlessShortTime}}</td>
             <td>{{time.stop | dlessShortTime}}</td>
@@ -50,17 +51,20 @@
           </div>
           <div class="form-group">
             <label class="form-control-label">Begintijd</label>
-            <input [ngModel]="this.modalTime.start | dlessShortTime" (ngModelChange)="this.modalTime.start = $event" name="startTime" type="time" placeholder="Tijd" class="form-control">
+            <input [ngModel]="this.modalTime.start | dlessShortTime" (ngModelChange)="this.modalTime.start = $event"
+                   name="startTime" type="time" placeholder="Tijd" class="form-control">
           </div>
           <div class="form-group">
             <label class="form-control-label">Eindtijd</label>
-            <input [ngModel]="this.modalTime.stop | dlessShortTime" (ngModelChange)="this.modalTime.stop = $event" name="stopTime" type="time" placeholder="Tijd" class="form-control" >
+            <input [ngModel]="this.modalTime.stop | dlessShortTime" (ngModelChange)="this.modalTime.stop = $event"
+                   name="stopTime" type="time" placeholder="Tijd" class="form-control">
           </div>
           <div class="form-group">
             <label class="col-sm-3 form-control-label">Pauze</label>
             <div class="col-sm-9 select">
               <select [(ngModel)]="this.modalTime.breaktime" name="breaktime" class="form-control mb-3">
-                <option *ngFor="let breaktime of this.timeService.BREAKTIMES" [ngValue]="breaktime">{{this.timeService.getBreakName(breaktime)}}</option>
+                <option *ngFor="let breaktime of this.timeService.BREAKTIMES"
+                        [ngValue]="breaktime">{{this.timeService.getBreakName(breaktime)}}</option>
               </select>
             </div>
           </div>
@@ -76,7 +80,8 @@
           </div>
           <div class="form-group">
             <label class="form-control-label">Omschrijving</label>
-            <input [(ngModel)]="this.modalTime.description" type="text" name="description" placeholder="(optioneel)" class="form-control">
+            <input [(ngModel)]="this.modalTime.description" type="text" name="description" placeholder="(optioneel)"
+                   class="form-control">
           </div>
         </form>
       </div>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { TimeRow } from '../../../shared/models/timeRow.model';
-import { TimeService } from '../../../shared/services/time.service';
+import {Component, OnInit} from '@angular/core';
+import {TimeRow} from '../../../shared/models/timeRow.model';
+import {TimeService} from '../../../shared/services/time.service';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({
@@ -24,7 +24,7 @@ export class HourFormComponent implements OnInit {
 
   submitTime() {
     if (this.timeFormValidation(this.time)) {
-      this.timeService.onRegisterTime(this.time).then( res => {
+      this.timeService.onRegisterTime(this.time).then(res => {
         if (res.statusCode === 200) {
           this.timeService.loadRecentTimes();
           this.toastr.success(this.time.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen!');

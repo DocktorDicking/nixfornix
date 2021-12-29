@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {User} from '../../../shared/models/user.model';
 import {AuthService} from '../../../shared/services/auth.service';
 import {UserService} from '../../../shared/services/user.service';
@@ -13,7 +13,8 @@ export class ProfileComponent implements OnInit {
   public newPassword: string;
   public hidePw = false;
 
-  constructor(private authService: AuthService, public userService: UserService) { }
+  constructor(private authService: AuthService, public userService: UserService) {
+  }
 
   ngOnInit() {
     this.formUser = this.authService.currentUserValue;

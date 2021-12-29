@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from '../../../shared/services/auth.service';
 import {User} from '../../../shared/models/user.model';
 
@@ -21,7 +21,8 @@ export class HeaderComponent implements OnInit {
     return dateString;
   }
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.user = new User(null, this.authService.currentUserValue);

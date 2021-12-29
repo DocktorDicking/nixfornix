@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../../shared/models/user.model';
-import { UserService } from '../../../shared/services/user.service';
-import { AuthService } from '../../../shared/services/auth.service';
+import {Component, OnInit} from '@angular/core';
+import {User} from '../../../shared/models/user.model';
+import {UserService} from '../../../shared/services/user.service';
+import {AuthService} from '../../../shared/services/auth.service';
 
 @Component({
   selector: 'app-manage-users',
@@ -16,7 +16,8 @@ export class ManageUsersComponent implements OnInit {
   public hidePw = false;
   public newPassword: string;
 
-  constructor(public userService: UserService, private authService: AuthService) { }
+  constructor(public userService: UserService, private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.userService.getUsers();

@@ -1,46 +1,54 @@
 <section class="no-padding-bottom">
-    <div class="col-lg-12">
-      <div class="block">
-        <div class="title">
-          <strong>Geregistreerde gebruikers</strong>
+  <div class="col-lg-12">
+    <div class="block">
+      <div class="title">
+        <strong>Geregistreerde gebruikers</strong>
+      </div>
+      <div *ngIf="this.userService.users.length > 0">
+        <div class="table-responsive">
+          <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+              <th class="form-control-label">Naam</th>
+              <th class="form-control-label">Email</th>
+              <th class="form-control-label">Rol</th>
+              <th class="form-control-label">Actief</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of this.userService.users" [class.table-row-selected]="user.id === this.formUser.id"
+                class="htable htable-text" (click)="onUserData(user.id)">
+              <td>{{user.name}} {{user.middleName ? user.middleName : ''}} {{user.lastName}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.admin ? 'Administrator' : 'Werknemer'}}</td>
+              <td *ngIf="user.active"><i style="color: #429244;" class="fa fa-lightbulb-o"></i></td>
+              <td *ngIf="!user.active"><i style="color: darkred;" class="fa fa-lightbulb-o"></i></td>
+            </tr>
+            </tbody>
+          </table>
         </div>
-        <div *ngIf="this.userService.users.length > 0">
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
-              <thead>
-              <tr>
-                <th class="form-control-label">Naam</th>
-                <th class="form-control-label">Email</th>
-                <th class="form-control-label">Rol</th>
-                <th class="form-control-label">Actief</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr *ngFor="let user of this.userService.users" [class.table-row-selected]="user.id === this.formUser.id"
-                  class="htable htable-text" (click)="onUserData(user.id)">
-                <td>{{user.name}} {{user.middleName ? user.middleName : ''}} {{user.lastName}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.admin ? 'Administrator' : 'Werknemer'}}</td>
-                <td *ngIf="user.active"><i style="color: #429244;" class="fa fa-lightbulb-o"></i></td>
-                <td *ngIf="!user.active"><i style="color: darkred;" class="fa fa-lightbulb-o"></i></td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div *ngIf="this.userService.users.length < 1">
-          Er zijn geen gebruikers gevonden.
-        </div>
-        <div class="table-footer">
-          <div class="btn-group">
-            <button (click)="this.resetFormUser()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#cuUserModal">+</button>
-            <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#changePasswordModal">Wachtwoord wijzigen</button>
-            <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-secondary" data-toggle="modal" data-target="#cuUserModal">Bewerken</button>
-            <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteConfirmation">-</button>
-          </div>
+      </div>
+      <div *ngIf="this.userService.users.length < 1">
+        Er zijn geen gebruikers gevonden.
+      </div>
+      <div class="table-footer">
+        <div class="btn-group">
+          <button (click)="this.resetFormUser()" type="button" class="btn btn-primary" data-toggle="modal"
+                  data-target="#cuUserModal">+
+          </button>
+          <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-secondary"
+                  data-toggle="modal" data-target="#changePasswordModal">Wachtwoord wijzigen
+          </button>
+          <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-secondary"
+                  data-toggle="modal" data-target="#cuUserModal">Bewerken
+          </button>
+          <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger"
+                  data-toggle="modal" data-target="#deleteConfirmation">-
+          </button>
         </div>
       </div>
     </div>
+  </div>
 </section>
 
 <!--<div class="col-md-6">-->
@@ -183,8 +191,10 @@
         <form>
           <div class="form-group">
             <label for="password" class="form-control-label">Wachtwoord</label>
-            <input [(ngModel)]="this.newPassword" #password="ngModel" [type]="this.hidePw ? 'password' : 'text'" id="password" name="password" class="form-control">
-            <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="this.toggleShowPw()"></i></span>
+            <input [(ngModel)]="this.newPassword" #password="ngModel" [type]="this.hidePw ? 'password' : 'text'"
+                   id="password" name="password" class="form-control">
+            <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"
+                                         (click)="this.toggleShowPw()"></i></span>
           </div>
         </form>
       </div>
@@ -289,8 +299,10 @@
 
           <div *ngIf="this.isNewUser()" class="form-group">
             <label for="password" class="form-control-label">Wachtwoord</label>
-            <input [(ngModel)]="this.formUser.password" #password="ngModel" [type]="this.hidePw ? 'password' : 'text'" id="password" name="password" class="form-control">
-            <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true" (click)="this.toggleShowPw()"></i></span>
+            <input [(ngModel)]="this.formUser.password" #password="ngModel" [type]="this.hidePw ? 'password' : 'text'"
+                   id="password" name="password" class="form-control">
+            <span class="float-right"><i [class]="this.hidePw ? 'fa fa-eye-slash' : 'fa fa-eye'" aria-hidden="true"
+                                         (click)="this.toggleShowPw()"></i></span>
           </div>
 
           <div class="form-check margin-top-sm no-margin-bottom">
