@@ -57,6 +57,9 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       pagingType: 'full_numbers',
       destroy: true,
       language: this.dtTablesDutch,
+      order: [[1, 'desc']],
+      stateSave: true,
+      autoWidth: false
     };
     this.loadTimeData();
   }
