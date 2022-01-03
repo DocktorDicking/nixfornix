@@ -53,7 +53,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
 
   ngOnInit() {
     // Init options here according to DT docs.
-    this.dtOptions = { // TODO: Make table sort on date
+    this.dtOptions = {
       pagingType: 'full_numbers',
       destroy: true,
       language: this.dtTablesDutch,
@@ -65,7 +65,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngAfterViewInit() {
-    this.dtTrigger.next();
+    this.dtTrigger.next(); // Inits the table do that dtDirective is a thing.
     this.rerender();
   }
 
@@ -74,6 +74,9 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
     this.dtTrigger.unsubscribe();
   }
 
+  /**
+   * Reloads the table and renders it to the DOM. Got this from the datatables docs.
+   */
   rerender(): void {
     this.dtDirective.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
