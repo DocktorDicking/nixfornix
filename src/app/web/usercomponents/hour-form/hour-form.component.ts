@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {TimeRow} from '../../../shared/models/timeRow.model';
 import {TimeService} from '../../../shared/services/time.service';
 import {ToastrService} from 'ngx-toastr';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-hour-form',
@@ -14,7 +15,7 @@ export class HourFormComponent implements OnInit {
   public breaktimes = [];
   message: string;
 
-  constructor(private timeService: TimeService, private toastr: ToastrService) {
+  constructor(private timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
@@ -23,22 +24,27 @@ export class HourFormComponent implements OnInit {
   }
 
   submitTime() {
+    this.spinner.show();
     if (this.timeFormValidation(this.time)) {
       this.timeService.onRegisterTime(this.time).then(res => {
         if (res.statusCode === 200) {
           this.timeService.loadRecentTimes();
-          this.toastr.success(this.time.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen!');
           this.time = this.timeService.newTimeObj();
+          this.spinner.hide();
+          this.toastr.success(this.time.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen!');
         } else {
+          this.spinner.hide();
           this.toastr.error('Er is iets fout gegaan tijdens het opslaan van jou uren. ' +
             'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: uren konden niet worden opgeslagen');
         }
       }).catch(err => {
+        this.spinner.hide();
         this.toastr.error('Er is iets fout gegaan tijdens het opslaan van jou uren. ' +
           'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: uren konden niet worden opgeslagen');
         // Handled by HTTP interceptor: ErrorInterceptor
       });
     } else {
+      this.spinner.hide();
       setTimeout(() => {
         this.message = undefined;  // TODO: Add directive to error msges and fadeout after 4 seconds.
       }, 5000);

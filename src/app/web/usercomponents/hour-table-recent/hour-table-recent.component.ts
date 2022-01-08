@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {TimeService} from '../../../shared/services/time.service';
 import {TimeRow} from '../../../shared/models/timeRow.model';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-hour-table',
@@ -11,13 +12,15 @@ import {TimeRow} from '../../../shared/models/timeRow.model';
 export class HourTableRecentComponent implements OnInit {
   @Input() times: TimeRow[] = [];
 
-  constructor(private timeService: TimeService) {
+  constructor(private timeService: TimeService, private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.timeService.loadRecentTimes();
     this.timeService.recentTimesChanged.subscribe(
       (newTimes: TimeRow[]) => {
+        this.spinner.hide();
         this.times = newTimes;
       }
     );
