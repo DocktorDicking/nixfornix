@@ -4,6 +4,7 @@ import { User } from '../shared/models/user.model';
 import { AuthService } from '../shared/services/auth.service';
 import { MessageService } from '../shared/services/message.service';
 import { DatabaseService } from '../shared/services/database.service';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent implements OnInit {
   public hidePw = true;
 
   constructor(private router: Router, public messageService: MessageService,
-              public databaseService: DatabaseService, public authService: AuthService) {
+              public authService: AuthService, private spinner: NgxSpinnerService) {
     // Sub to the message service
     this.persistentLogin = false;
     this.messageService.currentMessage.subscribe(message => {
@@ -30,6 +31,11 @@ export class LoginComponent implements OnInit {
    * will check for persistent login on Init.
    */
   ngOnInit() {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 500);
+
     this.messageService.clearMessage();
     this.authService.persistLogin().then(() => {
       if (this.authService.currentUserValue) {
@@ -43,10 +49,12 @@ export class LoginComponent implements OnInit {
    */
   onSubmit() {
     // Call auth
+    this.spinner.show();
     if (this.user.username && this.user.password) {
       this.messageService.clearMessage();
       this.authService.login(this.user.username, this.user.password, this.persistentLogin).then(() => {
         this.authService.whoami().then(() => this.login());
+        this.spinner.hide();
       });
     }
   }

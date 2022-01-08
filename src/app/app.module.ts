@@ -33,6 +33,7 @@ import {HourTableRecentAdminComponent} from './web/admincomponents/hour-table-re
 import {HourTableAllAdminComponent} from './web/admincomponents/hour-table-all-admin/hour-table-all.component-admin';
 import {ProfileComponent} from './web/usercomponents/profile/profile.component';
 import {DataTablesModule} from 'angular-datatables';
+import { NgxSpinnerModule } from 'ngx-spinner';
 import {DatelessShortTime} from './shared/pipes/DatelessShortTime';
 
 @NgModule({
@@ -63,6 +64,7 @@ import {DatelessShortTime} from './shared/pipes/DatelessShortTime';
     CommonModule,
     BrowserAnimationsModule,
     DataTablesModule,
+    NgxSpinnerModule,
     ToastrModule.forRoot()
   ],
   providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatabaseService, DatelessShortTime,

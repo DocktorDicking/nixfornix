@@ -3,13 +3,17 @@ import { User } from '../models/user.model';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { ToastrService } from 'ngx-toastr';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Injectable()
 export class UserService {
   usersChanged = new EventEmitter<User[]>();
   public users: User[] = [];
 
-  constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService) {
+  // TODO: Rewrite this shite like the timeservice. Where the logic is on the component.
+
+  constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService,
+              private spinner: NgxSpinnerService) {
   }
 
   /**
@@ -17,12 +21,15 @@ export class UserService {
    * @return User[]
    */
   public getUsers() {
+    this.spinner.show();
     this.http.get<User[]>('/user/list')
       .subscribe(data => {
         if (data.length > 0) {
           this.users = data;
           this.usersChanged.emit(this.users);
+          this.spinner.hide();
         } else {
+          this.spinner.hide();
           this.toastr.warning('Er zijn geen gebruikers gevonden in de database.', 'Geen gebruikers gevonden');
         }
       });
@@ -63,21 +70,26 @@ export class UserService {
       active: formUser.active
     };
 
+    this.spinner.show();
     return this.http.post<any>('/user/update', newUserPayload)
       .toPromise()
       .then( res => {
         if (res.statusCode === 200) {
           if (this.authService.currentUserValue.admin) {
             this.getUsers();
+            this.spinner.hide();
             this.toastr.success('Gebruiker: ' + newUserPayload.username + ' is succesvol geüpdatet.', 'Gebruiker geüpdatet');
           } else {
+            this.spinner.hide();
             this.toastr.success('Jouw account is succesvol geüpdatet.', 'Account geüpdatet');
           }
         } else {
+          this.spinner.hide();
           this.toastr.error('De gebruiker kon niet worden geüpdatet.' +
             'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden geüpdatet');
         }
       }).catch(err => {
+        this.spinner.hide();
         // Handled by HTTP interceptor: ErrorInterceptor
       });
   }
@@ -129,18 +141,22 @@ export class UserService {
       active: formUser.active
     };
 
+    this.spinner.show();
     return this.http.post<any>('/user/delete', deleteUserPayload)
       .toPromise()
       .then( res => {
         if (res.statusCode === 200) {
           this.getUsers();
+          this.spinner.hide();
           this.toastr.success('Gebruiker: ' + deleteUserPayload.username + ' en al zijn data, is succesvol verwijderd.',
             'Gebruiker verwijderd.');
         } else {
+          this.spinner.hide();
           this.toastr.error('De gebruiker kon niet worden verwijderd.' +
             'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: Gebruiker kon niet worden verwijderd');
         }
       }).catch(err => {
+        this.spinner.hide();
         // Handled by HTTP interceptor: ErrorInterceptor
       });
   }

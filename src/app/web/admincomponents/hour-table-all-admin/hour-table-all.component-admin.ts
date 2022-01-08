@@ -4,6 +4,7 @@ import {TimeRow} from '../../../shared/models/timeRow.model';
 import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-hour-all-table-admin',
@@ -34,9 +35,8 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       sortDescending: ': Sorteren aflopend'
     }
   };
-  private loading = true; // TODO: create loading screen component
 
-  constructor(public timeService: TimeService, private toastr: ToastrService) {
+  constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService) {
   }
 
   // Datatable variables
@@ -91,47 +91,52 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   }
 
   updateTime(time: TimeRow) {
-    this.loading = true;
+    this.spinner.show();
     this.timeService.onUpdateTime(time).then(res => {
       if (res.statusCode === 200) {
         this.loadTimeData();
-        this.toastr.success('De registratie van ' + time.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
         this.closeTimeModel();
+        this.spinner.hide();
+        this.toastr.success('De registratie van ' + time.user.name + ' is succesvol geüpdatet.', 'Registratie geüpdatet');
       } else {
+        this.spinner.hide();
         this.toastr.error('Registratie kon niet worden geüpdatet.' +
           'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
       }
     }).catch(err => {
       // Handled by HTTP interceptor.
       this.closeTimeModel();
-      this.loading = false;
+      this.spinner.hide();
       this.toastr.error('Registratie kon niet worden geüpdatet.' +
         'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
     });
   }
 
   loadTimeData() {
+    this.spinner.show();
     this.timeService.loadAllTimes().toPromise().then((timeData: TimeRow[]) => {
       this.times = timeData;
       this.rerender();
-      this.loading = false;
+      this.spinner.hide();
     });
   }
 
   deleteTime(time: TimeRow) {
-    this.loading = true;
+    this.spinner.show();
     this.timeService.onDeleteTime(time).then(res => {
       if (res.statusCode === 200) {
         this.loadTimeData();
         this.closeTimeModel();
+        this.spinner.hide();
         this.toastr.success('De registratie van ' + time.user.name + ' is succesvol verwijderd.', 'Registratie verwijderd');
       } else {
+        this.spinner.hide();
         this.toastr.error('Registratie kon niet worden verwijderd.' +
           'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden verwijderd');
       }
     }).catch(err => {
       this.closeTimeModel();
-      this.loading = false;
+      this.spinner.hide();
       this.toastr.error('Registratie kon niet worden verwijderd.' +
         'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden verwijderd');
       // Handled by HTTP interceptor: ErrorInterceptor
