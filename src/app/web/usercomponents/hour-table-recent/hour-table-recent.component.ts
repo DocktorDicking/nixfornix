@@ -20,10 +20,14 @@ export class HourTableRecentComponent implements OnInit {
     this.timeService.loadRecentTimes();
     this.timeService.recentTimesChanged.subscribe(
       (newTimes: TimeRow[]) => {
-        this.spinner.hide();
         this.times = newTimes;
       }
     );
+
+    // TODO: TMP dirty adhesive bandage. Rewrite the loadrecent times so we get a promise here.
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 500);
   }
 
 }

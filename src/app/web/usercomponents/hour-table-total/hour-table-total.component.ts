@@ -52,10 +52,13 @@ export class HourTableTotalComponent implements OnInit {
     this.modalDataAvailable = false;
   }
 
+  // TODO: see if we can change this to res == 200 yada yada
   private loadTimeData() {
     this.spinner.show();
     this.timeService.loadAllTimes().toPromise().then((timeData: TimeRow[]) => {
       this.times = timeData;
+      this.spinner.hide();
+    }).catch(err => {
       this.spinner.hide();
     });
   }
