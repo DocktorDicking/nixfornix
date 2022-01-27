@@ -113,18 +113,28 @@ export class TimeService {
   }
 
   /**
+   * Admin
    * Loads recent times registered by the user. Api set's the max values of rows on 10.
    */
   public loadAllTimes(): Observable<TimeRow[]> {
-    // return this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id)
-    //   .subscribe(data => {
-    //     if (data.length >= 0) {
-    //       this.allTimes = data;
-    //       this.allTimesChanged.emit(this.allTimes);
-    //     }
-    //   });
-
     return this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id);
+  }
+
+  /**
+   * User
+   * ... TODO doc
+   * @param year
+   */
+  public loadAllTimesForYear(year: number): Observable<TimeRow[]> {
+    return this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id + '&year=' + year);
+  }
+
+  /**
+   * User
+   * ... TODO doc
+   */
+  public loadRegistrationYears(): Observable<any> {
+    return this.http.get<number[]>('/time/get/years?user_id=' + this.authService.currentUserValue.id);
   }
 
   public formatDate(date: string): string {

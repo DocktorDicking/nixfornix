@@ -146,5 +146,9 @@ table.dataTable tbody tr {
   border-color: #429244;
 }
 
+.nav-tabs {
+  border-bottom: none;
+}
+
 
 
