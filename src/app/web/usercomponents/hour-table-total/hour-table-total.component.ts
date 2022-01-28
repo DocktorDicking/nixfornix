@@ -26,6 +26,8 @@ export class HourTableTotalComponent implements OnInit {
       this.activeYear = yearData[0];
       this.loadTimeData(this.activeYear);
       this.registrationYears = yearData;
+    }).catch(err => {
+      // Handled by HTTP interceptor: ErrorInterceptor
     });
   }
 
@@ -50,6 +52,11 @@ export class HourTableTotalComponent implements OnInit {
     });
   }
 
+  /**
+   * Changes active year so that the UI can change based on this event, This method also triggers
+   * loadTimeData to reload data based on the new given year.
+   * @param year number
+   */
   public onYearChange(year: number) {
     this.activeYear = year;
     this.loadTimeData(year);
@@ -66,6 +73,11 @@ export class HourTableTotalComponent implements OnInit {
   }
 
   // TODO: see if we can change this to res == 200 yada yada
+  /**
+   * Method to fire wanted data reload behavior. This will fetch the user's registrations
+   * based on the given year.
+   * @param year number
+   */
   private loadTimeData(year: number) {
     this.spinner.show();
     this.timeService.loadAllTimesForYear(year).toPromise().then((timeData: TimeRow[]) => {

@@ -38,11 +38,19 @@ export class TimeService {
     return this.http.post<any>('/time/update', timePayload).toPromise();
   }
 
+  /**
+   * Method for onClick listener to delete a registration.
+   * @param timeRow TimeRow
+   */
   public onDeleteTime(timeRow: TimeRow): Promise<any> {
     const timePayload = this.getPayload(timeRow);
     return this.http.post<any>('/time/delete', timePayload).toPromise();
   }
 
+  /**
+   * Returns the given TimeRow object as a javascript object so that we can inject it into the http request.
+   * @param timeRow TimeRow
+   */
   private getPayload(timeRow: TimeRow) {
     return {
       id: timeRow.id,
@@ -71,7 +79,11 @@ export class TimeService {
     return time;
   }
 
-  // TODO: let server handle this or check everytime just to be sure.
+  /**
+   * Calculates the worked hours based on the start time and the stop time.
+   * TODO: This needs to be checked on the server side.
+   * @param time TimeRow
+   */
   public calculateWorkedHours(time: TimeRow) {
     const splitStart = time.start.split(':', 2);
     const splitStop = time.stop.split(':', 2);
