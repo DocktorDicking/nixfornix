@@ -3,7 +3,6 @@ import {Meta, Title} from '@angular/platform-browser';
 import {TimeService} from './shared/services/time.service';
 import {StateService} from './shared/services/state.service';
 import {UserService} from './shared/services/user.service';
-import {DatabaseService} from './shared/services/database.service';
 import {AuthService} from './shared/services/auth.service';
 import {HttpClient} from '@angular/common/http';
 
@@ -11,7 +10,7 @@ import {HttpClient} from '@angular/common/http';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TimeService, StateService, UserService, DatabaseService]
+  providers: [TimeService, StateService, UserService]
 })
 export class AppComponent {
   title = 'nix4nix';

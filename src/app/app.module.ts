@@ -28,7 +28,6 @@ import {TokenInterceptorService} from './shared/services/interceptors/TokenInter
 import {BaseUrlInterceptorService} from './shared/services/interceptors/BaseUrlInterceptor.service';
 import {ErrorInterceptorService} from './shared/services/interceptors/ErrorInterceptor.service';
 import {MessageService} from './shared/services/message.service';
-import {DatabaseService} from './shared/services/database.service';
 import {HourTableRecentAdminComponent} from './web/admincomponents/hour-table-recent-admin/hour-table-recent.component-admin';
 import {HourTableAllAdminComponent} from './web/admincomponents/hour-table-all-admin/hour-table-all.component-admin';
 import {ProfileComponent} from './web/usercomponents/profile/profile.component';
@@ -67,7 +66,7 @@ import {DatelessShortTime} from './shared/pipes/DatelessShortTime';
     NgxSpinnerModule,
     ToastrModule.forRoot()
   ],
-  providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatabaseService, DatelessShortTime,
+  providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatelessShortTime,
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true}],

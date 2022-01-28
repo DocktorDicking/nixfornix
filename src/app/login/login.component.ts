@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { User } from '../shared/models/user.model';
 import { AuthService } from '../shared/services/auth.service';
 import { MessageService } from '../shared/services/message.service';
-import { DatabaseService } from '../shared/services/database.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
