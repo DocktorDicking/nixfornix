@@ -116,6 +116,8 @@ export class TimeService {
           this.recentTimes = data;
           this.recentTimesChanged.emit(this.recentTimes);
         }
+      }, error => {
+        // Handled by HTTP interceptor: ErrorInterceptor
       });
   }
 
