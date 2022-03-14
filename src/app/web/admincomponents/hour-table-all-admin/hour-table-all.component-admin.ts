@@ -65,7 +65,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngAfterViewInit() {
-    this.dtTrigger.next(); // Inits the table do that dtDirective is a thing.
+    this.dtTrigger.next(); // Inits the table so that dtDirective is a thing.
     this.rerender();
   }
 
@@ -152,4 +152,33 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
     this.modalTime = new TimeRow();
     this.modalDataAvailable = false;
   }
+
+  /**
+   * Extracts the dataset currently presented in the datatable (after search).
+   * TODO: Extracts the set from the datatable itself and will present the user with an Excel document to download.
+   */
+  dtExportData() {
+    this.spinner.show('Exporteren...');
+
+    // the data we want is inside this dtInstance
+    this.dtDirective.dtInstance.then((dtInstance: DataTables.Api) => {
+
+      // get the complete dataset[[*]] with the search applied.
+      const dataObject = dtInstance.rows( { search: 'applied' } ).data();
+      const asArray = Object.entries(dataObject);
+
+      // filter the dataset[[]], so we only have the rows that contain registration data, and not application data.
+      const filtered = asArray
+        .filter(([key]) => !isNaN(Number(key)))
+        .map((array) => array[1]);
+      filtered.forEach(array => array.pop());
+
+      // TODO: Create Excel workbook, add configs and insert dataset into workbook. Make it possible for the user to download the file.
+
+
+      this.spinner.hide();
+    });
+  }
+
+
 }
