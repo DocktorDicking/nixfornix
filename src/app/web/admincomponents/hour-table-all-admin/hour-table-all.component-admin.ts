@@ -6,8 +6,6 @@ import {Subject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ExcelService} from '../../../shared/services/excel.service';
-import {element} from 'protractor';
-
 
 @Component({
   selector: 'app-hour-all-table-admin',
@@ -39,7 +37,8 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
     }
   };
 
-  constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService, private xlsxService: ExcelService) {
+  constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService,
+              private xlsxService: ExcelService) {
   }
 
   // Datatable variables
@@ -62,7 +61,8 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       language: this.dtTablesDutch,
       order: [[1, 'desc']],
       stateSave: true,
-      autoWidth: false
+      autoWidth: false,
+      lengthMenu: [15, 30, 60, 120]
     };
     this.loadTimeData();
   }
