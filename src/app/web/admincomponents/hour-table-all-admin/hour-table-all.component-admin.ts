@@ -6,7 +6,8 @@ import {Subject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ExcelService} from '../../../shared/services/excel.service';
-import {data} from 'jquery';
+import {element} from 'protractor';
+
 
 @Component({
   selector: 'app-hour-all-table-admin',
@@ -174,6 +175,10 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
         .filter(([key]) => !isNaN(Number(key)))
         .map((array) => array[1]);
       filtered.forEach(array => array.pop());
+
+      let totalHours = 0;
+      filtered.forEach(array => totalHours += +array[5]);
+      filtered.push(['Totaal', totalHours]);
 
       // Service will create the excel doc with the filtered data.
       this.xlsxService.generateExcel(filtered);
