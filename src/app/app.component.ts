@@ -5,12 +5,13 @@ import {StateService} from './shared/services/state.service';
 import {UserService} from './shared/services/user.service';
 import {AuthService} from './shared/services/auth.service';
 import {HttpClient} from '@angular/common/http';
+import {ExcelService} from './shared/services/excel.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TimeService, StateService, UserService]
+  providers: [TimeService, StateService, UserService, ExcelService]
 })
 export class AppComponent {
   title = 'nix4nix';
