@@ -5,6 +5,8 @@ import {DataTableDirective} from 'angular-datatables';
 import {Subject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {ExcelService} from '../../../shared/services/excel.service';
+import {data} from 'jquery';
 
 @Component({
   selector: 'app-hour-all-table-admin',
@@ -36,7 +38,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
     }
   };
 
-  constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService) {
+  constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService, private xlsxService: ExcelService) {
   }
 
   // Datatable variables
@@ -173,8 +175,8 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
         .map((array) => array[1]);
       filtered.forEach(array => array.pop());
 
-      // TODO: Create Excel workbook, add configs and insert dataset into workbook. Make it possible for the user to download the file.
-
+      // Service will create the excel doc with the filtered data.
+      this.xlsxService.generateExcel(filtered);
 
       this.spinner.hide();
     });
