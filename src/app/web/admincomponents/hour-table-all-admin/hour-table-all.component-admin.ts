@@ -179,7 +179,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       // check last element for app data which needs to contain '<!--bindings...'
       filtered.forEach(array => {
         if (typeof array[array.length - 1] === 'string') {
-          array[array.length - 1].includes('<!--bindings') && array.pop();
+          array[array.length - 1].includes('<!--') && array.pop();
         }
       });
 
