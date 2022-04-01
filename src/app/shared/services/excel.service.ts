@@ -46,6 +46,15 @@ export class ExcelService {
       cell.border = { top: { style: 'thin' }, left: { style: 'thin' }, bottom: { style: 'thin' }, right: { style: 'thin' } };
     });
 
+    // Check for numbers in the dataset otherwise excel will not let the user so math
+    data.forEach((array) => {
+      array.forEach((element, index) => {
+        if (!isNaN(element)) {
+          array[index] = Number(element);
+        }
+      });
+    });
+
     // Add Data as rows to the worksheet.
     worksheet.addRows(data);
 

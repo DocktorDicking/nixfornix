@@ -168,14 +168,22 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
 
       // get the complete dataset[[*]] with the search applied.
       const dataObject = dtInstance.rows( { search: 'applied' } ).data();
-      const asArray = Object.entries(dataObject);
+      const objClone = {...dataObject};
+      const asArray = Object.entries(objClone);
 
       // filter the dataset[[]], so we only have the rows that contain registration data, and not application data.
       const filtered = asArray
         .filter(([key]) => !isNaN(Number(key)))
         .map((array) => array[1]);
-      filtered.forEach(array => array.pop());
 
+      // check last element for app data which needs to contain '<!--bindings...'
+      filtered.forEach(array => {
+        if (typeof array[array.length - 1] === 'string') {
+          array[array.length - 1].includes('<!--bindings') && array.pop();
+        }
+      });
+
+      // sum a total of all working hours and add it to the sheet data.
       let totalHours = 0;
       filtered.forEach(array => totalHours += +array[5]);
       filtered.push(['Totaal', totalHours]);
