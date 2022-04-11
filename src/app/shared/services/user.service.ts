@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import { User } from '../models/user.model';
-import {HttpClient, HttpParams} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import { AuthService } from './auth.service';
 import { ToastrService } from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
@@ -136,7 +136,7 @@ export class UserService {
       lastName: formUser.lastName,
       username: formUser.username,
       email: formUser.email,
-      password: formUser.password,
+      password: formUser.password, // TODO: i do not think we need to send pw
       admin: formUser.admin,
       active: formUser.active
     };

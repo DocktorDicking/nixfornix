@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {User} from '../../../shared/models/user.model';
 import {UserService} from '../../../shared/services/user.service';
 import {AuthService} from '../../../shared/services/auth.service';
+import {MailerService} from '../../../shared/services/mailer.service';
 
 @Component({
   selector: 'app-manage-users',
@@ -9,14 +10,18 @@ import {AuthService} from '../../../shared/services/auth.service';
   styleUrls: ['./manage-users.component.css']
 })
 export class ManageUsersComponent implements OnInit {
+  // TODO Add validation on e-mail before showing the option to send e-mails
+  // TODO Add validation for all other fields.
+
   public readonly NEW_USER_ID: number = 0;
 
   public formUser: User = new User(this.NEW_USER_ID);
   public message: string;
-  public hidePw = false;
+  public hidePw = true;
   public newPassword: string;
+  public sendmail = false;
 
-  constructor(public userService: UserService, private authService: AuthService) {
+  constructor(public userService: UserService, private authService: AuthService, private mailerService: MailerService) {
   }
 
   ngOnInit() {
@@ -32,6 +37,7 @@ export class ManageUsersComponent implements OnInit {
    */
   public onSave() {
     // if exist in userService (thus an existing user, call update)
+    // TODO on success check if email needs to be send. Create a mailerService for sending http requests to the api /mail
     if (!this.isNewUser() || this.userService.getUser(this.formUser.id) != null) {
       this.userService.update(this.formUser);
     } else if (this.isNewUser()) {
@@ -61,8 +67,15 @@ export class ManageUsersComponent implements OnInit {
   }
 
   public changePassword() {
+    // Update password and send api req
     this.formUser.password = this.newPassword;
     this.userService.update(this.formUser);
+
+    // Check if sendmail is checked and try to send cred mail
+    if (this.sendmail) {
+      this.sendCredMail(this.formUser);
+    }
+
     this.resetFormUser();
     this.newPassword = '';
   }
@@ -96,4 +109,13 @@ export class ManageUsersComponent implements OnInit {
   public isNewUser(): boolean {
     return (this.formUser.id === this.NEW_USER_ID) || (this.formUser.id === undefined);
   }
+
+  /**
+   * TODO: Docu
+   * @param user User
+   */
+  private sendCredMail(user: User) {
+    this.mailerService.sendCredentials(user);
+  }
+
 }
