@@ -34,6 +34,7 @@ import {ProfileComponent} from './web/usercomponents/profile/profile.component';
 import {DataTablesModule} from 'angular-datatables';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {DatelessShortTime} from './shared/pipes/DatelessShortTime';
+import { DashboardComponent } from './web/admincomponents/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import {DatelessShortTime} from './shared/pipes/DatelessShortTime';
     HourTableAllAdminComponent,
     ManageUsersComponent,
     ProfileComponent,
-    DatelessShortTime
+    DatelessShortTime,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

@@ -11,18 +11,15 @@
 <span class="heading">Menu</span>
 <ul class="list-unstyled">
   <!-- admin menu items -->
-  <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW_RECENT')"><i class="fa fa-bar-chart"></i>Recente
-    registraties</a></li>
-  <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW_ALL')"><i class="fa fa-bar-chart"></i>Alle
-    registraties</a></li>
+  <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW_RECENT')"><i class="fa fa-calendar-plus-o"></i>Recente registraties</a></li>
+  <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW_ALL')"><i class="fa fa-calendar"></i>Alle registraties</a></li>
+  <li *ngIf="stateService.getAdmin()"><a (click)="setState('DASHBOARD')"><i class="fa fa-area-chart"></i>Dashboard</a></li>
   <li *ngIf="stateService.getAdmin()"><a (click)="setState('MANAGE_USERS')"><i class="fa fa-users"></i>Beheer werknemers</a>
   </li>
 
   <!-- User menu items -->
-  <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_FORM')"><i class="fa fa-pencil"></i>Registreren</a>
-  </li>
-  <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_OVERVIEW')"><i class="fa fa-bar-chart"></i>Mijn
-    uren</a></li>
+  <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_FORM')"><i class="fa fa-pencil"></i>Registreren</a></li>
+  <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_OVERVIEW')"><i class="fa fa-bar-chart"></i>Mijn uren</a></li>
   <li *ngIf="!stateService.getAdmin()"><a (click)="setState('USER_PROFILE')"><i class="fa fa-user"></i>Mijn profiel</a>
   </li>
   <li><a (click)="logout()"><i class="fa fa-arrow-circle-o-left"></i> Uitloggen </a></li>
