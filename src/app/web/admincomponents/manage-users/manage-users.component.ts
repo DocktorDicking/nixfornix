@@ -3,6 +3,9 @@ import {User} from '../../../shared/models/user.model';
 import {UserService} from '../../../shared/services/user.service';
 import {AuthService} from '../../../shared/services/auth.service';
 import {MailerService} from '../../../shared/services/mailer.service';
+import {emailVerified} from '@angular/fire/auth-guard';
+import {EmailValidator, Validators} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-manage-users',
@@ -21,7 +24,7 @@ export class ManageUsersComponent implements OnInit {
   public newPassword: string;
   public sendmail = false;
 
-  constructor(public userService: UserService, private authService: AuthService, private mailerService: MailerService) {
+  constructor(public userService: UserService, private authService: AuthService, private mailerService: MailerService, private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -41,7 +44,16 @@ export class ManageUsersComponent implements OnInit {
     if (!this.isNewUser() || this.userService.getUser(this.formUser.id) != null) {
       this.userService.update(this.formUser);
     } else if (this.isNewUser()) {
-      this.userService.submit(this.formUser);
+      this.userService.submit(this.formUser).finally(() => {
+        if (this.sendmail) {
+          if (this.formUser.email == null || !this.isValidEmail(this.formUser.email)) {
+            this.toastr.warning('Controleer het e-mail adres van de gebruiker. Het lijkt erop dat deze niet valide is. ' +
+              'De gebruiker is wel aangemaakt.', 'E-mail kan niet verzonden worden.');
+          } else {
+            this.sendCredMail(this.formUser);
+          }
+        }
+      });
     }
   }
 
@@ -73,7 +85,12 @@ export class ManageUsersComponent implements OnInit {
 
     // Check if sendmail is checked and try to send cred mail
     if (this.sendmail) {
-      this.sendCredMail(this.formUser);
+      if (this.formUser.email == null || !this.isValidEmail(this.formUser.email)) {
+        this.toastr.warning('Controleer het e-mail adres van de gebruiker. Het lijkt erop dat deze niet valide is.'
+          , 'E-mail kan niet verzonden worden.');
+      } else {
+        this.sendCredMail(this.formUser);
+      }
     }
 
     this.resetFormUser();
@@ -110,6 +127,12 @@ export class ManageUsersComponent implements OnInit {
     return (this.formUser.id === this.NEW_USER_ID) || (this.formUser.id === undefined);
   }
 
+  private isValidEmail(email: string): boolean {
+    // tslint:disable-next-line:max-line-length
+    const regexp = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    return regexp.test(email);
+  }
+
   /**
    * TODO: Docu
    * @param user User
@@ -117,5 +140,4 @@ export class ManageUsersComponent implements OnInit {
   private sendCredMail(user: User) {
     this.mailerService.sendCredentials(user);
   }
-
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 /**
  * Handles all authentication related logic.
@@ -19,7 +20,7 @@ export class AuthService {
   private currentTokenSubject: BehaviorSubject<string>;
   public currentToken: Observable<string>;
 
-  constructor( private http: HttpClient, private router: Router) {
+  constructor( private http: HttpClient, private router: Router, private spinner: NgxSpinnerService) {
     this.currentTokenSubject = new BehaviorSubject<string>(sessionStorage.getItem('auth_token'));
     this.currentToken = this.currentTokenSubject.asObservable();
 
@@ -87,11 +88,12 @@ export class AuthService {
    * Destroys the active session and persistent session.
    */
   public logout() {
+    this.spinner.show();
     sessionStorage.clear();
     localStorage.clear();
     this.currentUserSubject.next(null);
     this.currentTokenSubject.next(null);
-    this.router.navigate(['login']);
+    this.router.navigate(['login']).finally(() => this.spinner.hide());
   }
 
   /**
