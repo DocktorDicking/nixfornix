@@ -1,3 +1,18 @@
-<p> Binnenkort beschikbaar. </p>
-<p> Overzicht uren van de afgelopen 12 maanden. </p>
-<p> Verschillende grafieken en informatie w.b. gewerkte uren. </p>
+<section class="no-padding-bottom">
+  <div class="col-lg-12">
+    <div class="block">
+      <div class="card">
+        <div class="card-body">
+            <strong>Registratie uren van de afgelopen 2 jaar</strong>
+            <canvas baseChart
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType">
+            </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

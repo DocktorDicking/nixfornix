@@ -3,6 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {ChartsModule, ThemeService} from 'ng2-charts';
 
 /** Declarations */
 import {AppRoutingModule} from './app-routing.module';
@@ -66,9 +67,10 @@ import { DashboardComponent } from './web/admincomponents/dashboard/dashboard.co
     BrowserAnimationsModule,
     DataTablesModule,
     NgxSpinnerModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    ChartsModule
   ],
-  providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatelessShortTime,
+  providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatelessShortTime, ThemeService,
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true}],
