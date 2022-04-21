@@ -21,6 +21,13 @@ export class DashboardComponent implements OnInit {
   public barChartType: ChartType = 'bar';
   public lineChartType: ChartType = 'line';
 
+  /*
+  TODO:
+   - Create a serv to fetch chart data
+   - Create API endpoint to get data from db
+   - Add loading spinners
+   - Check for 0/null values?
+   */
 
 
   constructor() { }
