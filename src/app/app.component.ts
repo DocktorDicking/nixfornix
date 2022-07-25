@@ -7,12 +7,13 @@ import {AuthService} from './shared/services/auth.service';
 import {HttpClient} from '@angular/common/http';
 import {ExcelService} from './shared/services/excel.service';
 import {MailerService} from './shared/services/mailer.service';
+import {ChartdataService} from './shared/services/chartdata.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TimeService, StateService, UserService, ExcelService, MailerService]
+  providers: [TimeService, StateService, UserService, ExcelService, MailerService, ChartdataService]
 })
 export class AppComponent {
   title = 'nix4nix';

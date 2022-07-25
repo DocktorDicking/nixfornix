@@ -7,6 +7,13 @@ import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ExcelService} from '../../../shared/services/excel.service';
 
+/*
+TODO: make this less data intensive
+- Fetch data per 3 months
+- Add option (with warning) to fetch all data for the current year or all the data
+- Save data in localstorage as a JSON blob and update when something is changed on the server? (Using some sort of update/version code)
+ */
+
 @Component({
   selector: 'app-hour-all-table-admin',
   templateUrl: './hour-table.component-all-admin.html',
@@ -194,6 +201,4 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       this.spinner.hide();
     });
   }
-
-
 }
