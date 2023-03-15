@@ -1948,6 +1948,19 @@ input.input-material ~ label.active {
   }
 }
 
+
+/*This bit makes a table scrollable*/
+.table-responsive-scrollable {
+  height:600px;
+  overflow:scroll;
+}
+
+thead tr:nth-child(1) th{
+  background: #2d3035;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
 /*
 
 =====================
