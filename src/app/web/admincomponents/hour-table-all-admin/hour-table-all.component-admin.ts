@@ -56,6 +56,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   // Modal variables
   public modalDataAvailable = false;
   public modalTime: TimeRow = new TimeRow();
+  private numNonChecked = 0;
 
   // TODO: change this to just an Array?
   @Input() times: TimeRow[] = [];
@@ -200,5 +201,16 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
 
       this.spinner.hide();
     });
+  }
+
+  checkAll() {
+
+  }
+
+  getNumNotChecked(): number {
+    if (this.numNonChecked < 1) {
+      //TODO loop registrations and count the ones that are not checked.
+    }
+    return this.numNonChecked;
   }
 }

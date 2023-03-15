@@ -35,7 +35,14 @@
         <div class="btn-group">
           <button type="submit"
                   class="btn btn-primary"
-                  (click)="dtExportData()">Export
+                  (click)="dtExportData()"><i class="fa fa-check-square-o"></i> | Export
+          </button>
+          <button type="submit"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                  data-toggle="modal"
+                  data-target="#checkAllConfirmation"
+                  (click)="checkAll()"><i class="fa fa-check-square-o"></i> | Accoderen
           </button>
         </div>
       </div>
@@ -138,7 +145,7 @@
         <h4 class="modal-title">Waarschuwing</h4>
       </div>
       <div class="modal-body">
-        <p>Weet u zeker dat u de tijd registratie van {{this.modalTime.user.fullName}} wilt verwijderen? <br/>
+        <p>Weet u zeker dat u de tijd registratie van: {{this.modalTime.user.name}} wilt verwijderen? <br/>
           <br/>
           Registratie datum: {{this.modalTime.date}}, Aantal uren: {{this.modalTime.hour}}
         </p>
@@ -158,6 +165,42 @@
                 data-toggle="modal"
                 data-target="#deleteConfirmation"
                 (click)="this.closeTimeModel()">Annuleren
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="checkAllConfirmation" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Waarschuwing</h4>
+      </div>
+      <div class="modal-body">
+        <p>Je staat op het punt om alle recent registraties te accoderen.<br/>
+            Het betreft {{getNumNotChecked()}} registraties die nog niet zijn geaccodeerd.
+          <br/><br/>
+          Door te klikken op de knop accoderen zullen {{getNumNotChecked()}} registraties worden geaccodeerd.
+          Klik op Annuleren als dit niet de bedoeling is.
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button"
+                class="btn btn-danger"
+                data-dismiss="modal"
+                data-toggle="modal"
+                data-target="#deleteConfirmation"
+                (click)="checkAll()">Accoderen
+        </button>
+        <button type="button"
+                class="btn btn-primary"
+                data-dismiss="modal"
+                data-toggle="modal"
+                data-target="#checkAllConfirmation">Annuleren
         </button>
       </div>
     </div>
