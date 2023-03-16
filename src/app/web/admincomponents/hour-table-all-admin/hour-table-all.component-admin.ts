@@ -204,17 +204,34 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   }
 
   approveAll() {
-
+    this.spinner.show(this.numNotApproved + ' Registraties updaten...');
+    this.times.forEach(element => {
+      if (!element.approved) {
+        element.approved = true;
+        this.timeService.onUpdateTime(element).then(res => {
+          if (res.statusCode === 200) {
+            // Do nothing
+          } else {
+            this.toastr.error('Registratie kon niet worden geüpdatet.' +
+              'Probeer het nogmaals of neem contact op met de beheerder.', 'Foutmelding: registratie kan niet worden geüpdatet');
+          }
+        }).catch(err => {
+            // Handled by HTTP interceptor.
+          });
+      }
+    });
+    this.toastr.success('', 'Registraties geaccodeerd.');
+    this.spinner.hide();
   }
 
   /**
    * Loops al registrations if any and returns the number of registrations that are not approved.
    */
   calcNumNotApproved(): number {
-    if (this.times && this.times.length > 0) {
+    if (this.times.length > 0) {
       this.spinner.show();
       this._numNotApproved = 0;
-      this.times.forEach(element => element.approved && this._numNotApproved++);
+      this.times.forEach(element => !element.approved && this._numNotApproved++);
       this.spinner.hide();
       return this._numNotApproved;
     }
