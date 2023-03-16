@@ -42,7 +42,7 @@
                   data-dismiss="modal"
                   data-toggle="modal"
                   data-target="#checkAllConfirmation"
-                  (click)="checkAll()"><i class="fa fa-check-square-o"></i> | Accoderen
+                  (click)="calcNumNotApproved()"><i class="fa fa-check-square-o"></i> | Accoderen
           </button>
         </div>
       </div>
@@ -181,9 +181,9 @@
       </div>
       <div class="modal-body">
         <p>Je staat op het punt om alle recent registraties te accoderen.<br/>
-            Het betreft {{getNumNotChecked()}} registraties die nog niet zijn geaccodeerd.
+            Het betreft {{numNotApproved}} registraties die nog niet zijn geaccodeerd.
           <br/><br/>
-          Door te klikken op de knop accoderen zullen {{getNumNotChecked()}} registraties worden geaccodeerd.
+          Door te klikken op de knop accoderen zullen {{numNotApproved}} registraties worden geaccodeerd.
           Klik op Annuleren als dit niet de bedoeling is.
         </p>
       </div>
@@ -193,8 +193,8 @@
                 class="btn btn-danger"
                 data-dismiss="modal"
                 data-toggle="modal"
-                data-target="#deleteConfirmation"
-                (click)="checkAll()">Accoderen
+                data-target="#checkAllConfirmation"
+                (click)="approveAll()">Accoderen
         </button>
         <button type="button"
                 class="btn btn-primary"
