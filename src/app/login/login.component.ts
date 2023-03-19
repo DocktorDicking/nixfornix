@@ -45,13 +45,15 @@ export class LoginComponent implements OnInit {
    */
   onSubmit() {
     // Call auth
-    this.spinner.show();
     if (this.user.username && this.user.password) {
+      this.spinner.show();
       this.messageService.clearMessage();
       this.authService.login(this.user.username, this.user.password, this.persistentLogin).then(() => {
-        this.authService.whoami().then(() => this.login());
-        this.spinner.hide();
+        if (this.authService.currentTokenValue) {
+          this.authService.whoami().then(() => this.login());
+        }
       });
+      this.spinner.hide();
     }
   }
 
