@@ -104,8 +104,9 @@ export class AuthService {
     const token = localStorage.getItem('auth_token');
     if (token) {
       sessionStorage.setItem('auth_token', token);
+      return true;
     }
-    return this.whoami();
+    return false;
   }
 
   /**

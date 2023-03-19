@@ -31,11 +31,13 @@ export class LoginComponent implements OnInit {
    */
   ngOnInit() {
     this.messageService.clearMessage();
-    this.authService.persistLogin().then(() => {
-      if (this.authService.currentUserValue) {
-        this.login();
-      }
-    });
+    if (this.authService.persistLogin()) {
+      this.authService.whoami().then(() => {
+        if (this.authService.currentUserValue) {
+          this.login();
+        }
+      });
+    }
   }
 
   /**
