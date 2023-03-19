@@ -35,26 +35,29 @@ export class ErrorInterceptorService implements HttpInterceptor {
    * Sets message in message service so it can be send to the component currently active.
    */
   private onError(response: HttpErrorResponse): void {
+    // debugger;
     // TODO: We realy need to redo this whole error handling shite. API needs to send: code, message, and state (error/warning)
-
-    // TODO we are going to change all messaging to toastr, so we need to replace the whole message service and nuke it.
-    switch (response.error.message) {
-      case this.ERROR_NOTIMEFOUND:
-        break;
-      case this.ERROR_BADCREDENTIALS:
-        this.auth.logout();
-        this.toastr.error(this.getMessage(response.error.error), this.getTitle(response.error.error));
-        break;
-      case this.ERROR_OLDJWT || this.ERROR_BADJWT:
-        this.auth.logout();
-        this.toastr.error(this.getMessage(response.error.message), this.getTitle(response.error.message));
-        break;
-      default:
-        const apiMessage = response.error.message;
-        const message = this.getMessage(apiMessage);
-        if (message) {
-          this.toastr.error(message, this.getTitle(apiMessage));
-        }
+    if (response.status === 0) {
+      this.toastr.error('Er is een fout op de server. Neem contact op met de beheerder, excuus voor het ongemak.', 'Server Error: API OFFLINE');
+    } else {
+      switch (response.error.message) {
+        case this.ERROR_NOTIMEFOUND:
+          break;
+        case this.ERROR_BADCREDENTIALS:
+          this.auth.logout();
+          this.toastr.error(this.getMessage(response.error.error), this.getTitle(response.error.error));
+          break;
+        case this.ERROR_OLDJWT || this.ERROR_BADJWT:
+          this.auth.logout();
+          this.toastr.error(this.getMessage(response.error.message), this.getTitle(response.error.message));
+          break;
+        default:
+          const apiMessage = response.error.message;
+          const message = this.getMessage(apiMessage);
+          if (message) {
+            this.toastr.error(message, this.getTitle(apiMessage));
+          }
+      }
     }
   }
 
