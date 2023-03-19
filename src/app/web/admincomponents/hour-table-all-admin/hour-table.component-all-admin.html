@@ -12,10 +12,11 @@
           <tr>
             <th class="form-control-label">Werknemer</th>
             <th class="form-control-label">Datum</th>
-            <th class="form-control-label">Begintijd</th>
-            <th class="form-control-label">Eindtijd</th>
+            <th class="form-control-label">Start</th>
+            <th class="form-control-label">Stop</th>
             <th class="form-control-label">Pauze</th>
             <th class="form-control-label">Uren</th>
+            <th class="form-control-label">Omschrijving</th>
             <th class="form-control-label">✓</th>
           </tr>
           </thead>
@@ -28,6 +29,7 @@
             <td>{{time.stop | dlessShortTime}}</td>
             <td>{{time.breaktime}}</td>
             <td>{{time.hour}}</td>
+            <td>{{time.description | slice : 0 :12}}</td>
             <td><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
           </tr>
           </tbody>
