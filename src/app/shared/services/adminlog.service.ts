@@ -17,7 +17,7 @@ export class AdminLogService {
    * Sends the request to fetch the logData from the server.
    */
   public fetchLog(): Subscription {
-    return this.http.get<any>('/log')
+    return this.http.get<any>('/log/get')
       .subscribe(data => {
         if (data.length >= 0) {
           this.logData = data;
