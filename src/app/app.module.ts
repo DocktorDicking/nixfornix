@@ -35,6 +35,7 @@ import {DataTablesModule} from 'angular-datatables';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {DatelessShortTime} from './shared/pipes/DatelessShortTime';
 import { DashboardComponent } from './web/admincomponents/dashboard/dashboard.component';
+import { AdminLogComponent } from './web/admincomponents/admin-log/admin-log.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { DashboardComponent } from './web/admincomponents/dashboard/dashboard.co
     ManageUsersComponent,
     ProfileComponent,
     DatelessShortTime,
-    DashboardComponent
+    DashboardComponent,
+    AdminLogComponent
   ],
   imports: [
     BrowserModule,
