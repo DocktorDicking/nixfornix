@@ -23,14 +23,14 @@
           <tbody>
           <tr *ngFor="let time of this.times" (click)="openTimeModal(time)" class="htable-text" data-toggle="modal"
               data-target="#timemodal">
-            <td>{{time.user.name}} {{time.user.middleName ? time.user.middleName : ''}} {{time.user.lastName}}</td>
-            <td>{{time.date}}</td>
-            <td>{{time.start | dlessShortTime}}</td>
-            <td>{{time.stop | dlessShortTime}}</td>
-            <td>{{time.breaktime}}</td>
-            <td>{{time.hour}}</td>
-            <td>{{time.description | slice : 0 :12}}</td>
-            <td><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
+            <td style="width: 25%">{{time.user.name}} {{time.user.middleName ? time.user.middleName : ''}} {{time.user.lastName}}</td>
+            <td style="width: 15%">{{time.date}}</td>
+            <td style="width: 10%">{{time.start | dlessShortTime}}</td>
+            <td style="width: 10%">{{time.stop | dlessShortTime}}</td>
+            <td style="width: 5%">{{time.breaktime}}</td>
+            <td style="width: 10%">{{time.hour}}</td>
+            <td style="width: 20%">{{time.description | slice : 0 :12}}</td>
+            <td style="width: 5%"><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
           </tr>
           </tbody>
         </table>
