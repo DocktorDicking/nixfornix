@@ -24,7 +24,6 @@ export class TimeService {
     timeRow.user = this.authService.currentUserValue;
     this.calculateWorkedHours(timeRow);
     const timePayload = this.getPayload(timeRow);
-
     return this.http.post<any>('/time/create', timePayload).toPromise();
   }
 
@@ -34,7 +33,6 @@ export class TimeService {
   public onUpdateTime(timeRow: TimeRow): Promise<any> {
     this.calculateWorkedHours(timeRow);
     const timePayload = this.getPayload(timeRow);
-
     return this.http.post<any>('/time/update', timePayload).toPromise();
   }
 
@@ -137,7 +135,6 @@ export class TimeService {
   /**
    * User
    * ... TODO doc
-   * @param year
    */
   public loadAllTimesForYear(year: number): Observable<TimeRow[]> {
     return this.http.get<TimeRow[]>('/time/get/all?user_id=' + this.authService.currentUserValue.id + '&year=' + year);
