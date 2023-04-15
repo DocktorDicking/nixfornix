@@ -32,10 +32,11 @@ import {MessageService} from './shared/services/message.service';
 import {HourTableAllAdminComponent} from './web/admincomponents/hour-table-all-admin/hour-table-all.component-admin';
 import {ProfileComponent} from './web/usercomponents/profile/profile.component';
 import {DataTablesModule} from 'angular-datatables';
-import { NgxSpinnerModule } from 'ngx-spinner';
+import {NgxSpinnerModule} from 'ngx-spinner';
 import {DatelessShortTime} from './shared/pipes/DatelessShortTime';
-import { DashboardComponent } from './web/admincomponents/dashboard/dashboard.component';
-import { AdminLogComponent } from './web/admincomponents/admin-log/admin-log.component';
+import {DashboardComponent} from './web/admincomponents/dashboard/dashboard.component';
+import {AdminLogComponent} from './web/admincomponents/admin-log/admin-log.component';
+import {ManageLocationsComponent} from './web/admincomponents/manage-locations/manage-locations.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { AdminLogComponent } from './web/admincomponents/admin-log/admin-log.com
     ProfileComponent,
     DatelessShortTime,
     DashboardComponent,
-    AdminLogComponent
+    AdminLogComponent,
+    ManageLocationsComponent
   ],
   imports: [
     BrowserModule,

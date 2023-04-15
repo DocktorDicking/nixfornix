@@ -14,9 +14,10 @@ export class StateService {
   private isAdmin: boolean;
 
   // Allowed states to access
-  private adminStates = ['OVERVIEW_ALL', 'MANAGE_USERS', 'DASHBOARD', 'ADMIN_LOG'];
+  private adminStates = ['OVERVIEW_ALL', 'MANAGE_USERS', 'DASHBOARD', 'ADMIN_LOG', 'MANAGE_LOCATIONS', 'MANAGE_SETTINGS'];
   private userStates = ['HOUR_FORM', 'HOUR_OVERVIEW', 'USER_PROFILE'];
 
+  // Default page landing, might want to move this to the setting table?
   private initState(): void {
     if (this.isAdmin) {
       this.currentState.next('OVERVIEW_ALL');
