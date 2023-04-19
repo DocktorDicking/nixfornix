@@ -19,8 +19,7 @@ import {LocationService} from './shared/services/location.service';
 })
 export class AppComponent {
   title = 'nix4nix';
-
-  // TODO: Check if TimeService actually need to be initialized in this constructor. Seems to me its bollocks.
+  
   constructor(private titleService: Title, private meta: Meta, private http: HttpClient, private auth: AuthService) {
     titleService.setTitle('Nix4Nix - Urenregistratie');
     meta.addTag({name: 'description', content: ''}, true);

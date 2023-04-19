@@ -1,1 +1,121 @@
-<p>manage-locations works!</p>
+<section class="no-padding-bottom">
+  <div class="col-lg-12">
+    <div class="block">
+      <div class="title">
+        <strong>Locaties</strong>
+      </div>
+      <div *ngIf="this.locationService.data.length > 0">
+        <div class="table-responsive table-responsive-scrollable">
+          <table class="table table-striped table-responsive-lg">
+            <thead>
+            <tr>
+              <th class="form-control-label">Naam</th>
+              <th class="form-control-label">Beschrijving</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let location of this.locationService.data" class="htable htable-text" (click)="onLocationData(location.id)" [class.table-row-selected]="location.id === this.selected.id">
+              <td>{{location.name}}</td>
+              <td>{{location.description}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div *ngIf="this.locationService.data.length < 1">
+        Er zijn geen locaties gevonden. <br/>
+        Mogelijk zijn alle locaties verwijderd of gaat er iets fout aan de server kant.
+      </div>
+      <div class="table-footer">
+        <div class="btn-group">
+          <button (click)="this.resetSelected()" type="button" class="btn btn-primary" data-toggle="modal"
+                  data-target="#saveModal">Toevoegen
+          </button>
+          <button *ngIf="this.doesSelectedExist()" type="button" class="btn btn-secondary"
+                  data-toggle="modal" data-target="#saveModal">Bewerken
+          </button>
+          <button *ngIf="this.doesSelectedExist()" type="button" class="btn btn-danger"
+                  data-toggle="modal" data-target="#deleteConfirmation">Verwijderen
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODALS START HERE -->
+
+<!-- delete modal -->
+<div id="deleteConfirmation" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Waarschuwing</h4>
+      </div>
+      <div class="modal-body">
+        <p>Weet u zeker dat u locatie {{this.selected.name}} wilt verwijderen?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="this.onDelete()">
+          Verwijderen
+        </button>
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Annuleren</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- create/update form modal -->
+<div id="saveModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Pop-up content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 *ngIf="this.isNew()" class="modal-title">Locatie toevoegen</h4>
+        <h4 *ngIf="!this.isNew()" class="modal-title">Locatie bewerken</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name" class="form-control-label">Naam</label>
+            <input [(ngModel)]="this.selected.name" #name="ngModel" id="name" name="name" type="text" class="form-control">
+            <!-- Error messages -->
+            <div class="alert-text">
+              <div *ngIf="name.invalid && name.touched" class="shakeIt">
+                <div *ngIf="name.errors.required">
+                  Dit veld mag niet leeg zijn.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="description" class="form-control-label">Omschrijving</label>
+            <input [(ngModel)]="this.selected.description" #description="ngModel" id="description" name="description" type="text" class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+          <button type="button"
+                  class="btn btn-primary"
+                  data-dismiss="modal"
+                  data-toggle="modal"
+                  data-target="#cuUserModal"
+                  (click)="this.onSave()">Opslaan
+          </button>
+          <button type="button"
+                  class="btn btn-warning"
+                  data-dismiss="modal"
+                  data-toggle="modal"
+                  data-target="#cuUserModal">Sluiten
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

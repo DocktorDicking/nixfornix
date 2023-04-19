@@ -3,8 +3,6 @@ import {User} from '../../../shared/models/user.model';
 import {UserService} from '../../../shared/services/user.service';
 import {AuthService} from '../../../shared/services/auth.service';
 import {MailerService} from '../../../shared/services/mailer.service';
-import {emailVerified} from '@angular/fire/auth-guard';
-import {EmailValidator, Validators} from '@angular/forms';
 import {ToastrService} from 'ngx-toastr';
 
 @Component({

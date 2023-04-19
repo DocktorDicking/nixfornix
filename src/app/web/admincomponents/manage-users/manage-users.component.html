@@ -34,7 +34,7 @@
       <div class="table-footer">
         <div class="btn-group">
           <button (click)="this.resetFormUser()" type="button" class="btn btn-primary" data-toggle="modal"
-                  data-target="#cuUserModal">+
+                  data-target="#cuUserModal">Toevoegen
           </button>
           <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-secondary"
                   data-toggle="modal" data-target="#changePasswordModal">Wachtwoord wijzigen
@@ -43,7 +43,7 @@
                   data-toggle="modal" data-target="#cuUserModal">Bewerken
           </button>
           <button *ngIf="this.userService.getUser(this.formUser.id)" type="button" class="btn btn-danger"
-                  data-toggle="modal" data-target="#deleteConfirmation">-
+                  data-toggle="modal" data-target="#deleteConfirmation">Verwijderen
           </button>
         </div>
       </div>

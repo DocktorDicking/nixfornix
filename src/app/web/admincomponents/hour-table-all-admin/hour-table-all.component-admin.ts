@@ -58,7 +58,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   public modalTime: TimeRow = new TimeRow();
   private _numNotApproved = 0;
 
-  // TODO: change this to just an Array?
+  // TODO: change this to just an Array? Figure out what the hell that input annotation is actually doing...
   @Input() times: TimeRow[] = [];
 
   ngOnInit() {

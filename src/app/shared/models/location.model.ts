@@ -1,12 +1,14 @@
 /**
  * Data model for location data.
+ * Called this class WorkLocation because we had conflicts using Location.
+ * And you know.. WorkLocation is the first thing that came to mind.
  */
-export class Location {
+export class WorkLocation {
   id: number;
   name: string;
   description: string;
 
-  constructor(id?: number, location?: Location) {
+  constructor(id?: number, location?: WorkLocation) {
     if (id) {
       this.id = id;
     }
