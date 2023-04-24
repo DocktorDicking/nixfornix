@@ -47,7 +47,7 @@ export class LocationService {
    *
    * @param location Location.model
    */
-  public onDeleteTime(location: WorkLocation): Promise<any> {
+  public onDelete(location: WorkLocation): Promise<any> {
     return this.http.post<any>('/location/delete', location).toPromise();
   }
 }

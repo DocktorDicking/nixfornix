@@ -19,7 +19,7 @@ export class ManageLocationsComponent implements OnInit {
     if (this.authService.currentUserValue.admin) {
       this.locationService.getLocations();
     } else {
-      // redirect
+      // TODO redirect
     }
   }
 
@@ -51,7 +51,24 @@ export class ManageLocationsComponent implements OnInit {
   onDelete() {
     this.spinner.show();
     if (this.doesSelectedExist()) {
-      // this.locationService.on
+      this.locationService.onDelete(this.selected).then(res => {
+        if (res.statusCode === 200) {
+          const oldLocationName = this.selected.name;
+          this.resetSelected();
+          this.locationService.getLocations();
+          this.spinner.hide();
+          this.toastr.success('Locatie ' + oldLocationName + ' is succesvol verwijderd.');
+        } else {
+          this.spinner.hide();
+          this.toastr.error('Locatie kon niet worden verwijderd.' +
+            'Probeer het nogmaals of neem contact op met de beheerder.');
+        }
+      }).catch(err => {
+        this.spinner.hide();
+        this.toastr.error('Locatie kon niet worden verwijderd.' +
+          'Probeer het nogmaals of neem contact op met de beheerder.');
+        // Handled by HTTP interceptor: ErrorInterceptor
+      });
     }
   }
 
