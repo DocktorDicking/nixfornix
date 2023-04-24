@@ -3,6 +3,8 @@ import {TimeRow} from '../../../shared/models/timeRow.model';
 import {TimeService} from '../../../shared/services/time.service';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {WorkLocation} from '../../../shared/models/worklocation.model';
+import {LocationService} from '../../../shared/services/location.service';
 
 @Component({
   selector: 'app-hour-form',
@@ -15,12 +17,13 @@ export class HourFormComponent implements OnInit {
   public breaktimes = [];
   message: string;
 
-  constructor(private timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService) {
+  constructor(private timeService: TimeService, private toastr: ToastrService, private locationService: LocationService, private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
-    this.breaktimes = this.timeService.BREAKTIMES;
+    this.breaktimes = this.timeService.BREAKTIMES; // TODO This needs to be moved to the settings table
     this.time = this.timeService.newTimeObj();
+    this.locationService.getLocations();
   }
 
   submitTime() {
@@ -89,7 +92,7 @@ export class HourFormComponent implements OnInit {
     }
 
     this.timeService.calculateWorkedHours(time);
-    if (time.hour >= 22) {
+    if (time.hour >= 22) { // TODO This magic number needs to be moved ot the settings table.
       this.message = 'Totale tijd overschrijdt het maximum.';
       return false;
     }
