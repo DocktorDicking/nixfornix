@@ -6,6 +6,8 @@ import {Subject} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ExcelService} from '../../../shared/services/excel.service';
+import {LocationService} from '../../../shared/services/location.service';
+import {WorkLocation} from '../../../shared/models/worklocation.model';
 
 /*
 TODO: make this less data intensive
@@ -45,7 +47,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   };
 
   constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService,
-              private xlsxService: ExcelService) {
+              private xlsxService: ExcelService, private locationService: LocationService) {
   }
 
   // Datatable variables
@@ -73,6 +75,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       lengthMenu: [15, 30, 60, 120]
     };
     this.loadTimeData();
+    this.locationService.getLocations();
   }
 
   ngAfterViewInit() {
@@ -156,11 +159,13 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
 
   openTimeModal(time: TimeRow) {
     this.modalTime = Object.assign({}, time);
+    this.locationService.addLocationFromTime(this.modalTime);
     this.modalDataAvailable = true;
   }
 
   closeTimeModel() {
     this.modalTime = new TimeRow();
+    this.locationService.getLocations();
     this.modalDataAvailable = false;
   }
 

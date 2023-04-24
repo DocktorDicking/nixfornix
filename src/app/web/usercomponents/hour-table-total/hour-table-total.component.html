@@ -79,9 +79,7 @@
             <label class="col-sm-3 form-control-label">Locatie</label>
             <div class="col-sm-9 select">
               <select [(ngModel)]="this.modalTime.location" name="location" class="form-control mb-3">
-                <option [ngValue]="'Luca Catering'">Luca catering</option>
-                <option [ngValue]="'DKA'">DKA</option>
-                <option [ngValue]="'Extern'">Extern (invullen bij omschrijving)</option>
+                <option *ngFor="let location of this.locationService.data" [ngValue]=location.name>{{location.name}}</option>
               </select>
             </div>
           </div>

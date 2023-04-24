@@ -3,6 +3,7 @@ import {TimeRow} from '../../../shared/models/timeRow.model';
 import {TimeService} from '../../../shared/services/time.service';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {LocationService} from '../../../shared/services/location.service';
 
 @Component({
   selector: 'app-hour-table-total',
@@ -16,7 +17,7 @@ export class HourTableTotalComponent implements OnInit {
   public activeYear: number;
   public times: TimeRow[] = [];
 
-  constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService) {
+  constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService, private locationService: LocationService) {
   }
 
   // TODO this will now break when the user does not have any registrations.
@@ -29,6 +30,7 @@ export class HourTableTotalComponent implements OnInit {
     }).catch(err => {
       // Handled by HTTP interceptor: ErrorInterceptor
     });
+    this.locationService.getLocations();
   }
 
   public updateTime(time: TimeRow) {
@@ -64,11 +66,13 @@ export class HourTableTotalComponent implements OnInit {
 
   public openTimeModal(time: TimeRow) {
     this.modalTime = Object.assign({}, time);
+    this.locationService.addLocationFromTime(this.modalTime);
     this.modalDataAvailable = true;
   }
 
   public closeTimeModel() {
     this.modalTime = new TimeRow();
+    this.locationService.getLocations();
     this.modalDataAvailable = false;
   }
 
