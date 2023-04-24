@@ -14,7 +14,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let location of this.locationService.data" class="htable htable-text" (click)="onLocationData(location.id)" [class.table-row-selected]="location.id === this.selected.id">
+            <tr *ngFor="let location of this.locationService.data" class="htable htable-text" (click)="setSelected(location.id)" [class.table-row-selected]="location.id === this.selected.id">
               <td>{{location.name}}</td>
               <td>{{location.description}}</td>
             </tr>

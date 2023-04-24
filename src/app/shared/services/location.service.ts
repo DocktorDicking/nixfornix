@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {AuthService} from './auth.service';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {WorkLocation} from '../models/location.model';
+import {WorkLocation} from '../models/worklocation.model';
 import {Subscription} from 'rxjs';
 
 @Injectable()
