@@ -37,6 +37,7 @@ export class StateService {
     return this.isAdmin;
   }
 
+  // TODO: This needs to change when adding user pages to admin things...
   public updateState(state: string): void {
     if (this.isAdmin) {
       if (this.adminStates.includes(state)) {

@@ -37,6 +37,7 @@ import {DatelessShortTime} from './shared/pipes/DatelessShortTime';
 import {DashboardComponent} from './web/admincomponents/dashboard/dashboard.component';
 import {AdminLogComponent} from './web/admincomponents/admin-log/admin-log.component';
 import {ManageLocationsComponent} from './web/admincomponents/manage-locations/manage-locations.component';
+import { SettingsComponent } from './web/admincomponents/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import {ManageLocationsComponent} from './web/admincomponents/manage-locations/m
     DatelessShortTime,
     DashboardComponent,
     AdminLogComponent,
-    ManageLocationsComponent
+    ManageLocationsComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
