@@ -1,6 +1,6 @@
 /** Imports */
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {ChartsModule, ThemeService} from 'ng2-charts';
@@ -38,6 +38,11 @@ import {DashboardComponent} from './web/admincomponents/dashboard/dashboard.comp
 import {AdminLogComponent} from './web/admincomponents/admin-log/admin-log.component';
 import {ManageLocationsComponent} from './web/admincomponents/manage-locations/manage-locations.component';
 import { SettingsComponent } from './web/admincomponents/settings/settings.component';
+import {SettingService} from './shared/services/setting.service';
+
+export function init_app(settingService: SettingService) {
+  return () => settingService.load();
+}
 
 @NgModule({
   declarations: [
@@ -74,11 +79,11 @@ import { SettingsComponent } from './web/admincomponents/settings/settings.compo
     ToastrModule.forRoot(),
     ChartsModule
   ],
-  providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatelessShortTime, ThemeService,
+  providers: [AppRoutingModule, AuthService, AuthGuard, MessageService, DatelessShortTime, ThemeService, SettingService,
+    {provide: APP_INITIALIZER, useFactory: init_app, deps: [SettingService], multi: true },
     {provide: HTTP_INTERCEPTORS, useClass: BaseUrlInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptorService, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptorService, multi: true}],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule {}

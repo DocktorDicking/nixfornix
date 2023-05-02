@@ -11,7 +11,9 @@ import {NgxSpinnerService} from 'ngx-spinner';
  * Check: https://jasonwatmore.com/post/2019/06/10/angular-8-user-registration-and-login-example-tutorial
  * see: https://stackoverflow.com/questions/48119369/wait-for-http-request-to-complete-in-angular-4-service
  */
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthService {
 
   private currentUserSubject: BehaviorSubject<User>;
