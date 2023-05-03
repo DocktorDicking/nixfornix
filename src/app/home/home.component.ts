@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
   constructor(public stateService: StateService, public authService: AuthService, public toastr: ToastrService) { }
 
   ngOnInit() {
-    this.stateService.setAdmin(this.authService.currentUserValue.admin);
+    this.stateService.initialize(this.authService.currentUserValue);
     this.stateService.currentState.subscribe(currentState => this.state = currentState);
 
     // Welcome message

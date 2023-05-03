@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import {User} from '../models/user.model';
 
 /**
  * StateService holds functionality to switch between states. A state determines which
  * component is active in the admin or user component.
  *
  * StateService is currently used to display the correct menu buttons and to keep track on which page (state) the user is.
+ *
+ * Possible states:
+ * 'OVERVIEW_ALL', 'MANAGE_USERS', 'DASHBOARD', 'ADMIN_LOG', 'MANAGE_LOCATIONS', 'MANAGE_SETTINGS'
+ * 'HOUR_FORM', 'HOUR_OVERVIEW', 'USER_PROFILE'
  */
 @Injectable()
 export class StateService {
@@ -13,31 +18,34 @@ export class StateService {
   private previousState: string;
   private isAdmin: boolean;
 
-  // Allowed states to access
+  // Allowed states to access for admin or user.
   private adminStates = ['OVERVIEW_ALL', 'MANAGE_USERS', 'DASHBOARD', 'ADMIN_LOG', 'MANAGE_LOCATIONS', 'MANAGE_SETTINGS'];
   private userStates = ['HOUR_FORM', 'HOUR_OVERVIEW', 'USER_PROFILE'];
 
-  // Default page landing, might want to move this to the setting table?
-  private initState(): void {
+  public initialize(currentUser: User) {
+    this.setAdmin(currentUser.admin);
+
+    // Init first state of the state service
     if (this.isAdmin) {
       this.currentState.next('OVERVIEW_ALL');
-    }
-    if (!this.isAdmin) {
+    } else {
       this.currentState.next('HOUR_FORM');
     }
   }
 
   // on component init, set userRole
-  public setAdmin(value: boolean): void {
+  private setAdmin(value: boolean): void {
     this.isAdmin = value;
-    this.initState();
   }
 
   public getAdmin(): boolean {
     return this.isAdmin;
   }
 
-  // TODO: This needs to change when adding user pages to admin things...
+  /**
+   *
+   * @param state
+   */
   public updateState(state: string): void {
     if (this.isAdmin) {
       if (this.adminStates.includes(state)) {

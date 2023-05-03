@@ -3,6 +3,7 @@ import { StateService } from '../shared/services/state.service';
 import { AuthService } from '../shared/services/auth.service';
 import { User } from '../shared/models/user.model';
 import { ToastrService } from 'ngx-toastr';
+import {SettingService} from '../shared/services/setting.service';
 
 @Component({
   selector: 'app-admin',
@@ -10,11 +11,12 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit {
+  constructor(public stateService: StateService, public authService: AuthService, public toastr: ToastrService,
+              public settings: SettingService) { }
   public state: string;
-  constructor(public stateService: StateService, public authService: AuthService, public toastr: ToastrService) { }
 
   ngOnInit() {
-    this.stateService.setAdmin(this.authService.currentUserValue.admin);
+    this.stateService.initialize(this.authService.currentUserValue);
     this.stateService.currentState.subscribe(currentState => this.state = currentState);
 
     // Welcome message
