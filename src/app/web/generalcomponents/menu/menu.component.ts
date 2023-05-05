@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {StateService} from '../../../shared/services/state.service';
 import {AuthService} from '../../../shared/services/auth.service';
 import $ from 'jquery';
+import {ActivatedRoute} from '@angular/router';
+import {SettingService} from '../../../shared/services/setting.service';
+import {SettingModel} from '../../../shared/models/setting.model';
 
 @Component({
   selector: 'app-menu',
@@ -10,8 +13,17 @@ import $ from 'jquery';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(public stateService: StateService, private authService: AuthService) {
+  public settingData: SettingModel[];
+  public adminCanRegisterTime = false;
+  public adminCanManageUsers = false;
 
+  constructor(public stateService: StateService, private authService: AuthService,
+              private route: ActivatedRoute) {
+
+    // Reads the settingData from the RouteResolver, see SettingDataResolver.
+    this.route.data.subscribe(() => {
+      this.settingData = this.route.snapshot.data.settingData;
+    });
   }
 
   setState(state: string) {
@@ -27,6 +39,20 @@ export class MenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Initializing setting vars. Cannot be done in template, result to null.
+    this.settingData.forEach((setting) => {
+      switch (setting.name) {
+        case SettingService.ADMIN_MANAGE_USERS:
+          // Cast from String to boolean using JSON
+          this.adminCanManageUsers = JSON.parse(setting.value);
+          break;
+        case SettingService.ADMIN_REGISTER_TIME:
+          // Cast from String to boolean using JSON
+          this.adminCanRegisterTime = JSON.parse(setting.value);
+          break;
+      }
+    });
+
     $('.sidebar-toggle').on('click', function() {
       $(this).toggleClass('active');
 
@@ -45,4 +71,6 @@ export class MenuComponent implements OnInit {
       }
     });
   }
+
+  protected readonly SettingService = SettingService;
 }

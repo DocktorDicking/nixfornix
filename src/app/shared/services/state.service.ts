@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {User} from '../models/user.model';
+import firebase from 'firebase';
+import settings = firebase.analytics.settings;
+import {HttpClient} from '@angular/common/http';
+import {SettingService} from './setting.service';
+import {SettingModel} from '../models/setting.model';
 
 /**
  * StateService holds functionality to switch between states. A state determines which
@@ -19,8 +24,10 @@ export class StateService {
   private isAdmin: boolean;
 
   // Allowed states to access for admin or user.
-  private adminStates = ['OVERVIEW_ALL', 'MANAGE_USERS', 'DASHBOARD', 'ADMIN_LOG', 'MANAGE_LOCATIONS', 'MANAGE_SETTINGS'];
+  private adminStates = ['OVERVIEW_ALL', 'DASHBOARD', 'ADMIN_LOG', 'MANAGE_LOCATIONS', 'MANAGE_SETTINGS'];
   private userStates = ['HOUR_FORM', 'HOUR_OVERVIEW', 'USER_PROFILE'];
+
+  // constructor(private settingService: SettingService) {}
 
   public initialize(currentUser: User) {
     this.setAdmin(currentUser.admin);
@@ -31,6 +38,15 @@ export class StateService {
     } else {
       this.currentState.next('HOUR_FORM');
     }
+
+    // TODO
+    // Check settings for extra settings
+    // if (this.settingService.getSetting(SettingService.ADMIN_REGISTER_TIME)) {
+    //   this.adminStates.push('HOUR_FORM');
+    // }
+    // if (this.settingService.getSetting(SettingService.ADMIN_MANAGE_USERS)) {
+    //   this.adminStates.push('MANAGE_USERS');
+    // }
   }
 
   // on component init, set userRole

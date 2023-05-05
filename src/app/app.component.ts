@@ -10,16 +10,17 @@ import {MailerService} from './shared/services/mailer.service';
 import {ChartdataService} from './shared/services/chartdata.service';
 import {AdminLogService} from './shared/services/adminlog.service';
 import {LocationService} from './shared/services/location.service';
+import {SettingService} from './shared/services/setting.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TimeService, StateService, UserService, ExcelService, MailerService, ChartdataService, AdminLogService, LocationService]
+  providers: [TimeService, StateService, UserService, ExcelService, MailerService, ChartdataService, AdminLogService, LocationService, SettingService]
 })
 export class AppComponent {
   title = 'nix4nix';
-  
+
   constructor(private titleService: Title, private meta: Meta, private http: HttpClient, private auth: AuthService) {
     titleService.setTitle('Nix4Nix - Urenregistratie');
     meta.addTag({name: 'description', content: ''}, true);
