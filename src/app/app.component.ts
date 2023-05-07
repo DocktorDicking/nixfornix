@@ -10,13 +10,12 @@ import {MailerService} from './shared/services/mailer.service';
 import {ChartdataService} from './shared/services/chartdata.service';
 import {AdminLogService} from './shared/services/adminlog.service';
 import {LocationService} from './shared/services/location.service';
-import {SettingService} from './shared/services/setting.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [TimeService, StateService, UserService, ExcelService, MailerService, ChartdataService, AdminLogService, LocationService, SettingService]
+  providers: [TimeService, StateService, UserService, ExcelService, MailerService, ChartdataService, AdminLogService, LocationService]
 })
 export class AppComponent {
   title = 'nix4nix';
