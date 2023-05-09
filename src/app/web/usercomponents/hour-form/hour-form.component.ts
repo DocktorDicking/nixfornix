@@ -5,6 +5,7 @@ import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {WorkLocation} from '../../../shared/models/worklocation.model';
 import {LocationService} from '../../../shared/services/location.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-hour-form',
@@ -13,15 +14,22 @@ import {LocationService} from '../../../shared/services/location.service';
   providers: []
 })
 export class HourFormComponent implements OnInit {
+  private settingData;
   public time: TimeRow;
   public breaktimes = [];
   message: string;
 
-  constructor(private timeService: TimeService, private toastr: ToastrService, private locationService: LocationService, private spinner: NgxSpinnerService) {
+  constructor(private timeService: TimeService, private toastr: ToastrService, private locationService: LocationService,
+              private spinner: NgxSpinnerService, private route: ActivatedRoute) {
+    // Reads the settingData from the RouteResolver, see SettingDataResolver.
+    this.route.data.subscribe(() => {
+      this.settingData = this.route.snapshot.data.settingData;
+    });
   }
 
   ngOnInit() {
-    this.breaktimes = this.timeService.BREAKTIMES; // TODO This needs to be moved to the settings table
+    this.timeService.initialize(this.settingData);
+    this.breaktimes = this.timeService.BREAKTIMES; // TODO We can reference this from the timeService?
     this.time = this.timeService.newTimeObj();
     this.locationService.getLocations();
   }

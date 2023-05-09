@@ -17,8 +17,6 @@ export class TimeRow {
   user: User;
   approved: boolean;
 
-
-  // TODO add user object here? (API also haves this, might be handy dandy)
   constructor() {
     this.description = '';
   }

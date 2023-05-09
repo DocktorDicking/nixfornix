@@ -4,17 +4,41 @@ import {TimeRow} from '../models/timeRow.model';
 import {AuthService} from './auth.service';
 import {ToastrService} from 'ngx-toastr';
 import {Observable, Subscription} from 'rxjs';
+import {SettingModel} from '../models/setting.model';
+import {SettingService} from './setting.service';
 
 @Injectable()
 export class TimeService {
   public recentTimesChanged = new EventEmitter<TimeRow[]>();
   private recentTimes: TimeRow[] = [];
 
-  private readonly DEFAULTBREAKTIME = 30; // TODO: Move to settings file or something alike.
-  private readonly DEFAULTLOCATION = 'Luca Catering'; // TODO: Change to numeric value and move to settingsfile
-  public readonly BREAKTIMES = [0, 15, 30, 45, 60]; // TODO: Move to settingsfile
+  private settingData;
+  private DEFAULTBREAKTIME: number;
+  private DEFAULTLOCATION: string;
+  public BREAKTIMES: number[];
 
   constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService) {}
+
+  public initialize(settingData: SettingModel[]) {
+    this.settingData = settingData;
+
+    // Initializing setting vars.
+    this.settingData.forEach((setting) => {
+      switch (setting.name) {
+        case SettingService.DEFAULT_BREAKTIME:
+          // Cast from String to number
+          this.DEFAULTBREAKTIME = JSON.parse(setting.value);
+          break;
+        case SettingService.DEFAULT_LOCATION:
+          this.DEFAULTLOCATION = setting.value;
+          break;
+        case SettingService.BREAKTIMES:
+          // Cast from String to boolean using JSON
+          this.BREAKTIMES = JSON.parse(setting.value);
+          break;
+      }
+    });
+  }
 
   /**
    * Registered a time row.
