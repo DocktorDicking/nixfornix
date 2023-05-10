@@ -1,1 +1,62 @@
-<p>settings works!</p>
+<div class="col-lg-12">
+  <div class="card">
+    <div class="card-header padding-bottom-sm">
+      <h3 class="h4 mb-0">Applicatie instellingen</h3>
+    </div>
+    <div class="card-body pt-0">
+      <form class="form-group">
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Logo bestandsnaam:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text" [(ngModel)]="this.logo" name="logo"/>
+          </div>
+        </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Standaard pauze tijd:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="number" [(ngModel)]="this.defaultBreaktime" name="defaultBreaktime"/>
+          </div>
+        </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Mogelijke pauze tijden:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="text"/>
+            <small class="form-text">Plaats tussen elke keuze een komma (,)</small>
+          </div>
+        </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Standaard locatie:</label>
+          <div class="col-sm-9 select">
+            <select [(ngModel)]="defaultLocation" name="defaultLocation" class="form-control mb-3">
+              <option *ngFor="let location of this.locationService.data" [ngValue]=location.name>{{location.name}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Admin kan gebruikers managen:</label>
+          <div class="col-sm-9 select">
+            <select [(ngModel)]="adminManageUsers" name="adminManageUsers" class="form-control mb-3">
+              <option [ngValue]="true">Ja</option>
+              <option [ngValue]="false">Nee</option>
+            </select>
+          </div>
+        </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Admin kan tijd registreren:</label>
+          <div class="col-sm-9 select">
+            <select [(ngModel)]="adminRegisterTime" name="adminRegisterTime" class="form-control mb-3">
+              <option [ngValue]="true">Ja</option>
+              <option [ngValue]="false">Nee</option>
+            </select>
+          </div>
+        </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Max actieve gebruikers:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="number" [(ngModel)]="maxActiveUsers" name="maxActiveUsers"/>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
