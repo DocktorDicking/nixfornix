@@ -58,4 +58,60 @@ export class SettingsComponent implements OnInit {
     });
   }
 
+  //TODO: CONTINUE HERE. Not entirely sure how to go about this. Still in the process of "designing"
+  /**
+   * Might be best to check what setting is changed on submit and only encode those and send a http request for each setting
+   * changed.
+   */
+
+  public onSubmit() {
+    if (this.validate()) {
+      this.encode();
+      //submit to api
+      alert('SUBMIT!');
+    }
+    alert('Retry!');
+  }
+
+  private validate(): boolean {
+    if (!(Number.isFinite(this.defaultBreaktime))) {
+      alert("Input error: [Insert usefull text]");
+      return false;
+    }
+    if (!(Array.isArray(Array.from(this.breakTimes)))) {
+      alert("Input error: [Insert usefull text]");
+      return false;
+    }
+    return true;
+  }
+
+  private encode() {
+    this.settingData.forEach((setting) => {
+      switch (setting.name) {
+        case SettingService.LOGO:
+          setting.value = this.logo;
+          break;
+        case SettingService.DEFAULT_BREAKTIME:
+          setting.value = JSON.stringify(this.defaultBreaktime);
+          break;
+        case SettingService.BREAKTIMES:
+          setting.value = JSON.stringify(this.breakTimes);
+          break;
+        case SettingService.DEFAULT_LOCATION:
+          setting.value = this.defaultLocation;
+          break;
+        case SettingService.ADMIN_REGISTER_TIME:
+          setting.value = JSON.stringify(this.adminRegisterTime);
+          break;
+        case SettingService.ADMIN_MANAGE_USERS:
+          this.adminManageUsers = JSON.parse(setting.value);
+          break;
+        case SettingService.MAX_USERS:
+          this.maxActiveUsers = JSON.parse(setting.value);
+          break;
+      }
+    });
+
+    //JSON encode variables and set setting objects.
+  }
 }

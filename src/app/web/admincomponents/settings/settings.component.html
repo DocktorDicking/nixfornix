@@ -4,7 +4,7 @@
       <h3 class="h4 mb-0">Applicatie instellingen</h3>
     </div>
     <div class="card-body pt-0">
-      <form class="form-group">
+      <form class="form-group" (ngSubmit)="onSubmit()">
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Logo bestandsnaam:</label>
           <div class="col-sm-9">
@@ -20,7 +20,7 @@
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Mogelijke pauze tijden:</label>
           <div class="col-sm-9">
-            <input class="form-control" type="text"/>
+            <input class="form-control" type="text" [(ngModel)]="this.breakTimes" name="breakTimes"/>
             <small class="form-text">Plaats tussen elke keuze een komma (,)</small>
           </div>
         </div>
@@ -50,10 +50,16 @@
             </select>
           </div>
         </div>
-        <div class="row padding-top-sm">
+        <div class="row padding-top-sm padding-bottom-sm">
           <label class="col-sm-3 form-control-label">Max actieve gebruikers:</label>
           <div class="col-sm-9">
             <input class="form-control" type="number" [(ngModel)]="maxActiveUsers" name="maxActiveUsers"/>
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <div class="btn-group">
+            <button type="submit" class="btn btn-primary">Opslaan</button>
           </div>
         </div>
       </form>
