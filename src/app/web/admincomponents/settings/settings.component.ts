@@ -3,6 +3,8 @@ import {ActivatedRoute} from '@angular/router';
 import {SettingModel} from '../../../shared/models/setting.model';
 import {SettingService} from '../../../shared/services/setting.service';
 import {LocationService} from '../../../shared/services/location.service';
+import {ToastrService} from 'ngx-toastr';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-settings',
@@ -20,7 +22,8 @@ export class SettingsComponent implements OnInit {
   public adminManageUsers: boolean;
   public maxActiveUsers: number;
 
-  constructor(private route: ActivatedRoute, private locationService: LocationService) {
+  constructor(private route: ActivatedRoute, private locationService: LocationService, private settingService: SettingService,
+              private toastr: ToastrService, private spinner: NgxSpinnerService) {
     this.locationService.getLocations();
 
     // Reads the settingData from the RouteResolver, see SettingDataResolver.
@@ -62,24 +65,42 @@ export class SettingsComponent implements OnInit {
   /**
    * Might be best to check what setting is changed on submit and only encode those and send a http request for each setting
    * changed.
+   *
+   * Guess we will do this. Save all settings at the same time since the one button "Save" makes it feel like we should
+   * implement it like this.
+   *
+   * Spring api needs a DTO and this side needs to send the settings like "{settings: [1,2,3,4]}"
+   * https://stackoverflow.com/questions/57557763/how-to-send-array-of-objects-in-spring-boot-post-request
    */
-
   public onSubmit() {
     if (this.validate()) {
-      this.encode();
-      //submit to api
-      alert('SUBMIT!');
+      this.spinner.show();
+      this.settingService.onUpdate({settings: this.settingData}).then(res => {
+        if (res.statusCode === 200) {
+          //TODO: Load new data into route? Check when data is loaded.
+
+          this.spinner.hide();
+          this.toastr.success('Instellingen zijn opgeslagen.');
+        } else {
+          this.spinner.hide();
+          this.toastr.error('Er ging iets fout, instellingen zijn niet opgeslagen.');
+        }
+      }).catch(err => {
+        this.spinner.hide();
+        debugger;
+        this.toastr.error('Error');
+        // Handled by HTTP interceptor: ErrorInterceptor
+      });
     }
-    alert('Retry!');
   }
 
   private validate(): boolean {
     if (!(Number.isFinite(this.defaultBreaktime))) {
-      alert("Input error: [Insert usefull text]");
+      this.toastr.error('Validator error: Standaard pauze tijd is geen nummer.');
       return false;
     }
     if (!(Array.isArray(Array.from(this.breakTimes)))) {
-      alert("Input error: [Insert usefull text]");
+      this.toastr.error('Validator error: Pauze tijden staat niet in een juist formaat: [1,2,3]');
       return false;
     }
     return true;
@@ -104,14 +125,15 @@ export class SettingsComponent implements OnInit {
           setting.value = JSON.stringify(this.adminRegisterTime);
           break;
         case SettingService.ADMIN_MANAGE_USERS:
-          this.adminManageUsers = JSON.parse(setting.value);
+          setting.value = JSON.stringify(this.adminManageUsers);
           break;
         case SettingService.MAX_USERS:
-          this.maxActiveUsers = JSON.parse(setting.value);
+          setting.value = JSON.stringify(this.maxActiveUsers);
           break;
       }
     });
 
-    //JSON encode variables and set setting objects.
+    // Return object with the property settings and stringify it so that a json string is returned.
+    return JSON.stringify({settings: this.settingData});
   }
 }

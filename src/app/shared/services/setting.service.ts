@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {SettingModel} from '../models/setting.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,5 +19,13 @@ export class SettingService {
 
   load() {
     return this.http.get<any>('/setting/get');
+  }
+
+  /**
+   *
+   * @param settingJson
+   */
+  public onUpdate(settingJson: { settings: SettingModel[] }): Promise<any> {
+    return this.http.post<any>('/setting/update', settingJson).toPromise();
   }
 }
