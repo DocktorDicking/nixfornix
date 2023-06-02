@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import {User} from '../models/user.model';
-import firebase from 'firebase';
-import settings = firebase.analytics.settings;
-import {HttpClient} from '@angular/common/http';
-import {SettingService} from './setting.service';
-import {SettingModel} from '../models/setting.model';
-import {ActivatedRoute} from '@angular/router';
 
 /**
  * StateService holds functionality to switch between states. A state determines which
@@ -20,14 +14,30 @@ import {ActivatedRoute} from '@angular/router';
  */
 @Injectable()
 export class StateService {
+  // Admin states
+  public static OVERVIEW_ALL = 'OVERVIEW_ALL';
+  public static DASHBOARD = 'DASHBOARD';
+  public static ADMIN_LOG = 'ADMIN_LOG';
+  public static MANAGE_USERS = 'MANAGE_USERS';
+  public static MANAGE_LOCATIONS = 'MANAGE_LOCATIONS';
+  public static MANAGE_SETTINGS = 'MANAGE_SETTINGS';
+
+  // User states
+  public static HOUR_FORM = 'HOUR_FORM';
+  public static HOUR_OVERVIEW = 'HOUR_OVERVIEW';
+  public static USER_PROFILE = 'USER_PROFILE';
+
   private settingData;
   currentState = new BehaviorSubject(null);
   private previousState: string;
   private isAdmin: boolean;
 
-  // Allowed states to access for admin or user.
-  private adminStates = ['OVERVIEW_ALL', 'DASHBOARD', 'ADMIN_LOG', 'MANAGE_LOCATIONS', 'MANAGE_SETTINGS'];
-  private userStates = ['HOUR_FORM', 'HOUR_OVERVIEW', 'USER_PROFILE'];
+  // All states an admin needs access to
+  private adminStates = [StateService.OVERVIEW_ALL, StateService.DASHBOARD, StateService.ADMIN_LOG,
+    StateService.MANAGE_LOCATIONS, StateService.MANAGE_SETTINGS];
+
+  // All states a user needs access to
+  private userStates = [StateService.HOUR_FORM, StateService.HOUR_OVERVIEW, StateService.USER_PROFILE];
 
   constructor() {}
 
@@ -36,17 +46,17 @@ export class StateService {
 
     // Init first state of the state service
     if (this.isAdmin) {
-      this.currentState.next('OVERVIEW_ALL');
+      this.currentState.next(StateService.OVERVIEW_ALL);
     } else {
-      this.currentState.next('HOUR_FORM');
+      this.currentState.next(StateService.HOUR_FORM);
     }
 
-    // Check settings for extra settings
+    // Check settings for extra states for admin
     if (adminCanRegister) {
-      this.adminStates.push('HOUR_FORM');
+      this.adminStates.push(StateService.HOUR_FORM);
     }
     if (adminCanManageUsers) {
-      this.adminStates.push('MANAGE_USERS');
+      this.adminStates.push(StateService.MANAGE_USERS);
     }
   }
 
@@ -77,5 +87,9 @@ export class StateService {
         this.currentState.next(state);
       }
     }
+  }
+
+  public getCurrentStateString(): string {
+    return this.currentState.getValue();
   }
 }

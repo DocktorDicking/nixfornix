@@ -73,9 +73,11 @@ export class SettingsComponent implements OnInit {
    * https://stackoverflow.com/questions/57557763/how-to-send-array-of-objects-in-spring-boot-post-request
    */
   public onSubmit() {
+    // alert(this.getSettingData());
+
     if (this.validate()) {
       this.spinner.show();
-      this.settingService.onUpdate({settings: this.settingData}).then(res => {
+      this.settingService.onUpdate(this.getSettingData()).then(res => {
         if (res.statusCode === 200) {
           //TODO: Load new data into route? Check when data is loaded.
 
@@ -83,18 +85,19 @@ export class SettingsComponent implements OnInit {
           this.toastr.success('Instellingen zijn opgeslagen.');
         } else {
           this.spinner.hide();
-          this.toastr.error('Er ging iets fout, instellingen zijn niet opgeslagen.');
+          this.toastr.error('De server kon de instellingen niet opslaan.');
         }
       }).catch(err => {
         this.spinner.hide();
-        debugger;
-        this.toastr.error('Error');
+        this.toastr.error('Error er ging iets fout: ' + err);
         // Handled by HTTP interceptor: ErrorInterceptor
       });
     }
   }
 
   private validate(): boolean {
+    //TODO: Default breaktime must be in the 'possible breaktimes' array.
+
     if (!(Number.isFinite(this.defaultBreaktime))) {
       this.toastr.error('Validator error: Standaard pauze tijd is geen nummer.');
       return false;
@@ -106,7 +109,7 @@ export class SettingsComponent implements OnInit {
     return true;
   }
 
-  private encode() {
+  private getSettingData() {
     this.settingData.forEach((setting) => {
       switch (setting.name) {
         case SettingService.LOGO:
@@ -134,6 +137,6 @@ export class SettingsComponent implements OnInit {
     });
 
     // Return object with the property settings and stringify it so that a json string is returned.
-    return JSON.stringify({settings: this.settingData});
+    return {settings: this.settingData};
   }
 }

@@ -9,24 +9,23 @@
 
 <!-- Sidebar Navidation Menu items-->
 <span class="heading">Menu</span>
-<span class="heading">Res: {{this.adminCanManageUsers}}</span>
 <ul class="list-unstyled">
-  <!-- admin menu items -->
-  <li *ngIf="stateService.getAdmin()"><a (click)="setState('OVERVIEW_ALL')"><i class="fa fa-calendar"></i>Alle registraties</a></li>
-  <li *ngIf="stateService.getAdmin() && this.adminCanRegisterTime"><a (click)="setState('HOUR_FORM')"><i class="fa fa-pencil"></i>Registreren</a></li>
-  <li *ngIf="stateService.getAdmin()"><a (click)="setState('DASHBOARD')"><i class="fa fa-area-chart"></i>Dashboard</a></li>
-  <li *ngIf="stateService.getAdmin() && this.adminCanManageUsers"><a (click)="setState('MANAGE_USERS')"><i class="fa fa-users"></i>Beheer werknemers</a></li>
-  <li *ngIf="stateService.getAdmin()"><a (click)="setState('ADMIN_LOG')"><i class="fa fa-book"></i>Logboek</a></li>
+  <!-- Admin menu items -->
+  <li *ngIf="stateService.getAdmin()"><a [ngClass]="isActiveState(StateService.OVERVIEW_ALL) ? 'active' : null" (click)="setState(StateService.OVERVIEW_ALL)"><i class="fa fa-calendar"></i>Alle registraties</a></li>
+  <li *ngIf="stateService.getAdmin() && this.adminCanRegisterTime"><a (click)="setState(StateService.HOUR_FORM)"><i class="fa fa-pencil"></i>Registreren</a></li>
+  <li *ngIf="stateService.getAdmin()"><a (click)="setState(StateService.DASHBOARD)"><i class="fa fa-area-chart"></i>Dashboard</a></li>
+  <li *ngIf="stateService.getAdmin() && this.adminCanManageUsers"><a (click)="setState(StateService.MANAGE_USERS)"><i class="fa fa-users"></i>Beheer werknemers</a></li>
+  <li *ngIf="stateService.getAdmin()"><a (click)="setState(StateService.ADMIN_LOG)"><i class="fa fa-book"></i>Logboek</a></li>
   <li *ngIf="stateService.getAdmin()"><a class="sidebar-toggle" href="#settingsDropdown" data-toggle="collapse"><i class="fa fa-cogs"></i>Instellingen</a></li>
     <ul id="settingsDropdown" class="list-unstyled collapse" style="background: #1d2124">
-      <li *ngIf="stateService.getAdmin()"><a (click)="setState('MANAGE_LOCATIONS')"><i class="fa fa-building"></i>Locaties</a></li>
-      <li *ngIf="stateService.getAdmin()"><a (click)="setState('MANAGE_SETTINGS')"><i class="fa fa-cog"></i>Applicatie instellingen</a></li>
+      <li *ngIf="stateService.getAdmin()"><a (click)="setState(StateService.MANAGE_LOCATIONS)"><i class="fa fa-building"></i>Locaties</a></li>
+      <li *ngIf="stateService.getAdmin()"><a (click)="setState(StateService.MANAGE_SETTINGS)"><i class="fa fa-cog"></i>Applicatie instellingen</a></li>
     </ul>
 
   <!-- User menu items -->
-  <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_FORM')"><i class="fa fa-pencil"></i>Registreren</a></li>
-  <li *ngIf="!stateService.getAdmin()"><a (click)="setState('HOUR_OVERVIEW')"><i class="fa fa-bar-chart"></i>Mijn uren</a></li>
-  <li *ngIf="!stateService.getAdmin()"><a (click)="setState('USER_PROFILE')"><i class="fa fa-user"></i>Mijn profiel</a></li>
+  <li *ngIf="!stateService.getAdmin()"><a (click)="setState(StateService.HOUR_FORM)"><i class="fa fa-pencil"></i>Registreren</a></li>
+  <li *ngIf="!stateService.getAdmin()"><a (click)="setState(StateService.HOUR_OVERVIEW)"><i class="fa fa-bar-chart"></i>Mijn uren</a></li>
+  <li *ngIf="!stateService.getAdmin()"><a (click)="setState(StateService.USER_PROFILE)"><i class="fa fa-user"></i>Mijn profiel</a></li>
   <li><a (click)="logout()"><i class="fa fa-arrow-circle-o-left"></i> Uitloggen </a></li>
 </ul>
 <span class="heading">Overig</span>
