@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Router} from '@angular/router';
 import { User } from '../shared/models/user.model';
 import { AuthService } from '../shared/services/auth.service';
 import { MessageService } from '../shared/services/message.service';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {environment} from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,8 @@ import {NgxSpinnerService} from 'ngx-spinner';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  protected readonly environment = environment;
+
   public message: string;
   public user = new User(null);
   public persistentLogin: boolean;

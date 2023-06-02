@@ -15,6 +15,7 @@
           <label class="col-sm-3 form-control-label">Standaard pauze tijd:</label>
           <div class="col-sm-9">
             <input class="form-control" type="number" [(ngModel)]="this.defaultBreaktime" name="defaultBreaktime"/>
+            <small class="form-text">De pauze tijd in dit veld, moet voorkomen in het veld met mogelijke pauze tijden!</small>
           </div>
         </div>
         <div class="row padding-top-sm">
@@ -32,6 +33,9 @@
             </select>
           </div>
         </div>
+
+        <small class="form-text">-- Rootadmin settings todo sepperate this --</small>
+
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Admin kan gebruikers managen:</label>
           <div class="col-sm-9 select">

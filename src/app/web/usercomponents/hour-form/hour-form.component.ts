@@ -3,7 +3,6 @@ import {TimeRow} from '../../../shared/models/timeRow.model';
 import {TimeService} from '../../../shared/services/time.service';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
-import {WorkLocation} from '../../../shared/models/worklocation.model';
 import {LocationService} from '../../../shared/services/location.service';
 import {ActivatedRoute} from '@angular/router';
 
@@ -19,7 +18,7 @@ export class HourFormComponent implements OnInit {
   public breaktimes = [];
   message: string;
 
-  constructor(private timeService: TimeService, private toastr: ToastrService, private locationService: LocationService,
+  constructor(private timeService: TimeService, private toastr: ToastrService, public locationService: LocationService,
               private spinner: NgxSpinnerService, private route: ActivatedRoute) {
     // Reads the settingData from the RouteResolver, see SettingDataResolver.
     this.route.data.subscribe(() => {

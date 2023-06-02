@@ -47,7 +47,7 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   };
 
   constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService,
-              private xlsxService: ExcelService, private locationService: LocationService) {
+              private xlsxService: ExcelService, public locationService: LocationService) {
   }
 
   // Datatable variables

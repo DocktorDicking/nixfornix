@@ -12,6 +12,9 @@ import {SettingModel} from '../../../shared/models/setting.model';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
+  // Needed for static variable references
+  public readonly SettingService = SettingService;
+  public readonly StateService = StateService;
 
   public settingData: SettingModel[];
   public adminCanRegisterTime = false;
@@ -72,5 +75,7 @@ export class MenuComponent implements OnInit {
     });
   }
 
-  protected readonly SettingService = SettingService;
+  isActiveState(state: string) {
+    return (this.stateService.getCurrentStateString() === state);
+  }
 }

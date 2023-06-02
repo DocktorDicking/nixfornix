@@ -17,7 +17,7 @@ export class HourTableTotalComponent implements OnInit {
   public activeYear: number;
   public times: TimeRow[] = [];
 
-  constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService, private locationService: LocationService) {
+  constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService, public locationService: LocationService) {
   }
 
   // TODO this will now break when the user does not have any registrations.

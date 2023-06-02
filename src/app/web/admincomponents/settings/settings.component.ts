@@ -22,7 +22,7 @@ export class SettingsComponent implements OnInit {
   public adminManageUsers: boolean;
   public maxActiveUsers: number;
 
-  constructor(private route: ActivatedRoute, private locationService: LocationService, private settingService: SettingService,
+  constructor(private route: ActivatedRoute, public locationService: LocationService, private settingService: SettingService,
               private toastr: ToastrService, private spinner: NgxSpinnerService) {
     this.locationService.getLocations();
 
@@ -36,6 +36,7 @@ export class SettingsComponent implements OnInit {
     // Initializing setting vars.
     this.settingData.forEach((setting) => {
       switch (setting.name) {
+        //TODO remove logo from settings
         case SettingService.LOGO:
           this.logo = setting.value;
           break;
