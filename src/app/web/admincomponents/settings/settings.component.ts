@@ -13,8 +13,6 @@ import {NgxSpinnerService} from 'ngx-spinner';
 })
 export class SettingsComponent implements OnInit {
   private settingData: SettingModel[];
-
-  public logo = '';
   public defaultBreaktime: number;
   public breakTimes: number[];
   public defaultLocation: string;
@@ -36,10 +34,6 @@ export class SettingsComponent implements OnInit {
     // Initializing setting vars.
     this.settingData.forEach((setting) => {
       switch (setting.name) {
-        //TODO remove logo from settings
-        case SettingService.LOGO:
-          this.logo = setting.value;
-          break;
         case SettingService.DEFAULT_BREAKTIME:
           this.defaultBreaktime = JSON.parse(setting.value);
           break;
@@ -62,7 +56,6 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  //TODO: CONTINUE HERE. Not entirely sure how to go about this. Still in the process of "designing"
   /**
    * Might be best to check what setting is changed on submit and only encode those and send a http request for each setting
    * changed.
@@ -113,9 +106,6 @@ export class SettingsComponent implements OnInit {
   private getSettingData() {
     this.settingData.forEach((setting) => {
       switch (setting.name) {
-        case SettingService.LOGO:
-          setting.value = this.logo;
-          break;
         case SettingService.DEFAULT_BREAKTIME:
           setting.value = JSON.stringify(this.defaultBreaktime);
           break;

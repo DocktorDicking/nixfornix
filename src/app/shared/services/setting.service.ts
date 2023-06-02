@@ -7,7 +7,6 @@ import {SettingModel} from '../models/setting.model';
 })
 export class SettingService {
   // Lib of current settings, just to make referencing easier.
-  public static LOGO = 'logo';
   public static DEFAULT_BREAKTIME = 'default-breaktime';
   public static BREAKTIMES = 'breaktimes';
   public static DEFAULT_LOCATION = 'default-location';
