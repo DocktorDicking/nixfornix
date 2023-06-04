@@ -33,7 +33,6 @@ export class TimeService {
           this.DEFAULTLOCATION = setting.value;
           break;
         case SettingService.BREAKTIMES:
-          debugger;
           // Cast from String to boolean using JSON
           this.BREAKTIMES = JSON.parse(setting.value);
           break;
