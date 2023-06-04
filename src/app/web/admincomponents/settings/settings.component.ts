@@ -38,7 +38,7 @@ export class SettingsComponent implements OnInit {
           this.defaultBreaktime = JSON.parse(setting.value);
           break;
         case SettingService.BREAKTIMES:
-          this.breakTimes = JSON.parse(setting.value);
+          this.breakTimes = setting.value;
           break;
         case SettingService.DEFAULT_LOCATION:
           this.defaultLocation = setting.value;
@@ -67,13 +67,11 @@ export class SettingsComponent implements OnInit {
    * https://stackoverflow.com/questions/57557763/how-to-send-array-of-objects-in-spring-boot-post-request
    */
   public onSubmit() {
-    // alert(this.getSettingData());
-
     if (this.validate()) {
       this.spinner.show();
       this.settingService.onUpdate(this.getSettingData()).then(res => {
         if (res.statusCode === 200) {
-          //TODO: Load new data into route? Check when data is loaded.
+          // TODO: Load new data into route? Check when data is loaded.
 
           this.spinner.hide();
           this.toastr.success('Instellingen zijn opgeslagen.');
@@ -90,7 +88,8 @@ export class SettingsComponent implements OnInit {
   }
 
   private validate(): boolean {
-    //TODO: Default breaktime must be in the 'possible breaktimes' array.
+    // TODO: Default breaktime must be in the 'possible breaktimes' array.
+    // TODO: Breaktimes needs to be in the format [1,2,3]
 
     if (!(Number.isFinite(this.defaultBreaktime))) {
       this.toastr.error('Validator error: Standaard pauze tijd is geen nummer.');
@@ -110,7 +109,7 @@ export class SettingsComponent implements OnInit {
           setting.value = JSON.stringify(this.defaultBreaktime);
           break;
         case SettingService.BREAKTIMES:
-          setting.value = JSON.stringify(this.breakTimes);
+          setting.value = this.breakTimes;
           break;
         case SettingService.DEFAULT_LOCATION:
           setting.value = this.defaultLocation;
