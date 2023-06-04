@@ -22,7 +22,7 @@
           </tr>
           </thead>
           <tbody>
-          <!-- TODO: These columns need to switch with settings (on/off) -->
+          <!-- TODO: These columns need to switch with settings (on/off), CONTINUE HERE -->
           <tr *ngFor="let time of this.times" (click)="openTimeModal(time)" class="htable-text" data-toggle="modal"
               data-target="#timemodal">
             <td style="width: 25%">{{time.user.name}} {{time.user.middleName ? time.user.middleName : ''}} {{time.user.lastName}}</td>

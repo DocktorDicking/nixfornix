@@ -19,6 +19,11 @@ export class SettingsComponent implements OnInit {
   public adminRegisterTime: boolean;
   public adminManageUsers: boolean;
   public maxActiveUsers: number;
+  public tableShowColEmployee: boolean;
+  public tableShowColDescription: boolean;
+  public tableShowColLocation: boolean;
+  public tableShowColApproved: boolean;
+  public licenseDate: string;
 
   constructor(private route: ActivatedRoute, public locationService: LocationService, private settingService: SettingService,
               private toastr: ToastrService, private spinner: NgxSpinnerService) {
@@ -31,6 +36,8 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
+
+
     // Initializing setting vars.
     this.settingData.forEach((setting) => {
       switch (setting.name) {

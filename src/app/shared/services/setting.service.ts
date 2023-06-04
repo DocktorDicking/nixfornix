@@ -13,6 +13,11 @@ export class SettingService {
   public static ADMIN_REGISTER_TIME = 'admin-register-time';
   public static ADMIN_MANAGE_USERS = 'admin-manage-users';
   public static MAX_USERS = 'max-users';
+  public static TABLE_SHOW_COL_EMPLOYEE = 'table-show-col-employee';
+  public static TABLE_SHOW_COL_DESCRIPTION = 'table-show-col-description';
+  public static TABLE_SHOW_COL_LOCATION = 'table-show-col-location';
+  public static TABLE_SHOW_COL_APPROVED = 'table-show-col-approved';
+  public static LICENSE_DATE = 'license-date';
 
   constructor(private http: HttpClient) {}
 

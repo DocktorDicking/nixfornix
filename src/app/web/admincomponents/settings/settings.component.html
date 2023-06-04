@@ -8,6 +8,7 @@
 
         <!-- TODO: Add new field for deadline, as in untill when employees can register things. -->
         <!-- TODO: Add new setting 'show' approved thing. Wes does not have any use for this functionality untill he has mroe employees and shit. -->
+        <small class="form-text">-- Uren formulier instellingen --</small>
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Standaard pauze tijd:</label>
           <div class="col-sm-9">
@@ -30,9 +31,45 @@
             </select>
           </div>
         </div>
+        <small class="form-text">-- Filter tabel instellingen --</small>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Kolom werknemer zichtbaar:</label>
+          <div class="col-sm-9 select">
+            <select [(ngModel)]="tableShowColEmployee" name="tableShowColEmployee" class="form-control mb-3">
+              <option [ngValue]="true">Ja</option>
+              <option [ngValue]="false">Nee</option>
+            </select>
+          </div>
+        </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Kolom omschrijving zichtbaar:</label>
+          <div class="col-sm-9 select">
+            <select [(ngModel)]="tableShowColDescription" name="tableShowColDescription" class="form-control mb-3">
+              <option [ngValue]="true">Ja</option>
+              <option [ngValue]="false">Nee</option>
+            </select>
+          </div>
+        </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Kolom locatie zichtbaar:</label>
+          <div class="col-sm-9 select">
+            <select [(ngModel)]="tableShowColLocation" name="tableShowColLocation" class="form-control mb-3">
+              <option [ngValue]="true">Ja</option>
+              <option [ngValue]="false">Nee</option>
+            </select>
+          </div>
+        </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Kolom accoderen zichtbaar:</label>
+          <div class="col-sm-9 select">
+            <select [(ngModel)]="tableShowColApproved" name="tableShowColApproved" class="form-control mb-3">
+              <option [ngValue]="true">Ja</option>
+              <option [ngValue]="false">Nee</option>
+            </select>
+          </div>
+        </div>
 
-        <small class="form-text">-- Rootadmin settings todo sepperate this --</small>
-
+        <small class="form-text">-- Module instellingen --</small>
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Admin kan gebruikers managen:</label>
           <div class="col-sm-9 select">
@@ -51,10 +88,19 @@
             </select>
           </div>
         </div>
+
+        <small class="form-text">-- Licentie instellingen --</small>
         <div class="row padding-top-sm padding-bottom-sm">
           <label class="col-sm-3 form-control-label">Max actieve gebruikers:</label>
           <div class="col-sm-9">
             <input class="form-control" type="number" [(ngModel)]="maxActiveUsers" name="maxActiveUsers"/>
+          </div>
+        </div>
+
+        <div class="row padding-top-sm padding-bottom-sm">
+          <label class="col-sm-3 form-control-label">Licentie datum:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="date" [(ngModel)]="licenseDate" name="licenseDate"/>
           </div>
         </div>
 
