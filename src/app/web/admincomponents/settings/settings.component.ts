@@ -14,7 +14,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 export class SettingsComponent implements OnInit {
   private settingData: SettingModel[];
   public defaultBreaktime: number;
-  public breakTimes: number[];
+  public breakTimes: any;
   public defaultLocation: string;
   public adminRegisterTime: boolean;
   public adminManageUsers: boolean;
@@ -90,15 +90,29 @@ export class SettingsComponent implements OnInit {
   private validate(): boolean {
     // TODO: Default breaktime must be in the 'possible breaktimes' array.
     // TODO: Breaktimes needs to be in the format [1,2,3]
+    // Validate if breakTimes is an array
+    try {
+      if (!(Array.isArray(JSON.parse(this.breakTimes)))) {
+        this.toastr.error('Validator error: Pauze tijden staat niet in een juist formaat: [1,2,3]');
+        return false;
+      }
+    } catch (e) {
+      this.toastr.error('Validator error: Pauze tijden staat niet in een juist formaat: [1,2,3]');
+      return false;
+    }
 
+    // Validate default breaktime and check if it is in the array of breakTimes.
     if (!(Number.isFinite(this.defaultBreaktime))) {
       this.toastr.error('Validator error: Standaard pauze tijd is geen nummer.');
       return false;
     }
-    if (!(Array.isArray(Array.from(this.breakTimes)))) {
-      this.toastr.error('Validator error: Pauze tijden staat niet in een juist formaat: [1,2,3]');
+
+    const btArray = JSON.parse(this.breakTimes);
+    if (!btArray.includes(this.defaultBreaktime)) {
+      this.toastr.error('Validator error: Standaard pauze tijd komt niet voor in mogelijke pauze tijden.');
       return false;
     }
+
     return true;
   }
 

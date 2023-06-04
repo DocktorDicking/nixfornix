@@ -113,8 +113,8 @@ export class TimeService {
     // Create dateobjects
     const start = new Date(time.date);
     const end = new Date(time.date);
-    start.setHours(parseInt(splitStart[0]) , parseInt(splitStart[1]));
-    end.setHours(parseInt(splitStop[0]), parseInt(splitStop[1]));
+    start.setHours(parseInt(splitStart[0], null) , parseInt(splitStart[1], null));
+    end.setHours(parseInt(splitStop[0], null), parseInt(splitStop[1], null));
 
     // If endtime is past midnight add a day to end
     if (end < start) {
@@ -141,11 +141,6 @@ export class TimeService {
       }, error => {
         // Handled by HTTP interceptor: ErrorInterceptor
       });
-  }
-
-  public autoLoadRecentTimes() {
-    this.loadRecentTimes();
-    this.toastr.info('Recent geregistreerde tijden zijn automatisch ververst', 'Automatische verversing');
   }
 
   /**
