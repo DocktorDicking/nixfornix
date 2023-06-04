@@ -28,7 +28,7 @@
             <td style="width: 10%">{{time.start | dlessShortTime}}</td>
             <td style="width: 10%">{{time.stop | dlessShortTime}}</td>
             <td style="width: 5%">{{time.breaktime}}</td>
-            <td style="width: 10%">{{time.hour}}</td>
+            <td style="width: 10%">{{time.hour | number: '0.1-2'}}</td>
             <td style="width: 20%">{{time.description | slice : 0 :12}}</td>
             <td style="width: 5%"><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
           </tr>
@@ -91,9 +91,6 @@
             <div class="col-sm-9 select">
               <select [(ngModel)]="this.modalTime.location" name="location" class="form-control mb-3">
                 <option *ngFor="let location of this.locationService.data" [ngValue]=location.name>{{location.name}}</option>
-<!--                <option [ngValue]="'Luca Catering'">Luca catering</option>-->
-<!--                <option [ngValue]="'DKA'">DKA</option>-->
-<!--                <option [ngValue]="'Extern'">Extern (invullen bij omschrijving)</option>-->
               </select>
             </div>
           </div>

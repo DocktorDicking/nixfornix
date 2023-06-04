@@ -27,6 +27,10 @@ export class StateService {
   public static HOUR_OVERVIEW = 'HOUR_OVERVIEW';
   public static USER_PROFILE = 'USER_PROFILE';
 
+  // Default states
+  private adminStartState = StateService.OVERVIEW_ALL;
+  private userStartState = StateService.HOUR_FORM;
+
   private settingData;
   currentState = new BehaviorSubject(null);
   private previousState: string;
@@ -44,19 +48,20 @@ export class StateService {
   public initialize(currentUser: User, adminCanRegister = false, adminCanManageUsers = false) {
     this.setAdmin(currentUser.admin);
 
-    // Init first state of the state service
-    if (this.isAdmin) {
-      this.currentState.next(StateService.OVERVIEW_ALL);
-    } else {
-      this.currentState.next(StateService.HOUR_FORM);
-    }
-
     // Check settings for extra states for admin
     if (adminCanRegister) {
       this.adminStates.push(StateService.HOUR_FORM);
+      this.adminStartState = StateService.HOUR_FORM;
     }
     if (adminCanManageUsers) {
       this.adminStates.push(StateService.MANAGE_USERS);
+    }
+
+    // Init first state of the state service
+    if (this.isAdmin) {
+      this.currentState.next(this.adminStartState);
+    } else {
+      this.currentState.next(this.userStartState);
     }
   }
 

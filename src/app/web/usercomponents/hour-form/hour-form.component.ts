@@ -41,7 +41,7 @@ export class HourFormComponent implements OnInit {
           this.timeService.loadRecentTimes();
           this.time = this.timeService.newTimeObj();
           this.spinner.hide();
-          this.toastr.success(this.time.hour + ' uren geregistreerd.', 'Jou uren zijn opgeslagen!');
+          this.toastr.success('Uren zijn succesvol geregistreerd.');
         } else {
           this.spinner.hide();
           this.toastr.error('Er is iets fout gegaan tijdens het opslaan van jou uren. ' +

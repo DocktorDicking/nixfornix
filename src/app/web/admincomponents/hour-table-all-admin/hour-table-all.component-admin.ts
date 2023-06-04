@@ -7,7 +7,6 @@ import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ExcelService} from '../../../shared/services/excel.service';
 import {LocationService} from '../../../shared/services/location.service';
-import {WorkLocation} from '../../../shared/models/worklocation.model';
 
 /*
 TODO: make this less data intensive
@@ -132,6 +131,13 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       this.times = timeData;
       this.rerender();
       this.spinner.hide();
+    }).catch(error => {
+      if (error.status === 404) {
+        this.toastr.info('De uren tabel is leeg. Mogelijk omdat er nog geen uren zijn geregistreerd.');
+        this.spinner.hide();
+      } else {
+        this.toastr.error('Er is een fout opgetreden: ' + error.message);
+      }
     });
   }
 
