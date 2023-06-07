@@ -12,21 +12,21 @@
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Standaard pauze tijd:</label>
           <div class="col-sm-9">
-            <input class="form-control" type="number" [(ngModel)]="this.defaultBreaktime" name="defaultBreaktime"/>
+            <input class="form-control" type="number" [(ngModel)]="settingCache[SettingService.DEFAULT_BREAKTIME]" name="defaultBreaktime"/>
             <small class="form-text">De pauze tijd in dit veld, moet voorkomen in het veld met mogelijke pauze tijden!</small>
           </div>
         </div>
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Mogelijke pauze tijden:</label>
           <div class="col-sm-9">
-            <input class="form-control" type="text" [(ngModel)]="this.breakTimes" name="breakTimes"/>
+            <input class="form-control" type="text" [(ngModel)]="settingCache[SettingService.BREAKTIMES]" name="breakTimes"/>
             <small class="form-text">Plaats tussen elke keuze een komma (,) laat '[' en ']' staan.</small>
           </div>
         </div>
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Standaard locatie:</label>
           <div class="col-sm-9 select">
-            <select [(ngModel)]="defaultLocation" name="defaultLocation" class="form-control mb-3">
+            <select [(ngModel)]="settingCache[SettingService.DEFAULT_LOCATION]" name="defaultLocation" class="form-control mb-3">
               <option *ngFor="let location of this.locationService.data" [ngValue]=location.name>{{location.name}}</option>
             </select>
           </div>
@@ -35,7 +35,7 @@
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Kolom werknemer zichtbaar:</label>
           <div class="col-sm-9 select">
-            <select [(ngModel)]="tableShowColEmployee" name="tableShowColEmployee" class="form-control mb-3">
+            <select [(ngModel)]="settingCache[SettingService.TABLE_SHOW_COL_EMPLOYEE]" name="tableShowColEmployee" class="form-control mb-3">
               <option [ngValue]="true">Ja</option>
               <option [ngValue]="false">Nee</option>
             </select>
@@ -44,7 +44,7 @@
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Kolom omschrijving zichtbaar:</label>
           <div class="col-sm-9 select">
-            <select [(ngModel)]="tableShowColDescription" name="tableShowColDescription" class="form-control mb-3">
+            <select [(ngModel)]="settingCache[SettingService.TABLE_SHOW_COL_DESCRIPTION]" name="tableShowColDescription" class="form-control mb-3">
               <option [ngValue]="true">Ja</option>
               <option [ngValue]="false">Nee</option>
             </select>
@@ -53,7 +53,7 @@
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Kolom locatie zichtbaar:</label>
           <div class="col-sm-9 select">
-            <select [(ngModel)]="tableShowColLocation" name="tableShowColLocation" class="form-control mb-3">
+            <select [(ngModel)]="settingCache[SettingService.TABLE_SHOW_COL_LOCATION]" name="tableShowColLocation" class="form-control mb-3">
               <option [ngValue]="true">Ja</option>
               <option [ngValue]="false">Nee</option>
             </select>
@@ -62,7 +62,7 @@
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Kolom accoderen zichtbaar:</label>
           <div class="col-sm-9 select">
-            <select [(ngModel)]="tableShowColApproved" name="tableShowColApproved" class="form-control mb-3">
+            <select [(ngModel)]="settingCache[SettingService.TABLE_SHOW_COL_APPROVED]" name="tableShowColApproved" class="form-control mb-3">
               <option [ngValue]="true">Ja</option>
               <option [ngValue]="false">Nee</option>
             </select>
@@ -73,7 +73,7 @@
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Admin kan gebruikers managen:</label>
           <div class="col-sm-9 select">
-            <select [(ngModel)]="adminManageUsers" name="adminManageUsers" class="form-control mb-3">
+            <select [(ngModel)]="settingCache[SettingService.ADMIN_MANAGE_USERS]" name="adminManageUsers" class="form-control mb-3">
               <option [ngValue]="true">Ja</option>
               <option [ngValue]="false">Nee</option>
             </select>
@@ -82,7 +82,7 @@
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Admin kan tijd registreren:</label>
           <div class="col-sm-9 select">
-            <select [(ngModel)]="adminRegisterTime" name="adminRegisterTime" class="form-control mb-3">
+            <select [(ngModel)]="settingCache[SettingService.ADMIN_REGISTER_TIME]" name="adminRegisterTime" class="form-control mb-3">
               <option [ngValue]="true">Ja</option>
               <option [ngValue]="false">Nee</option>
             </select>
@@ -93,14 +93,14 @@
         <div class="row padding-top-sm padding-bottom-sm">
           <label class="col-sm-3 form-control-label">Max actieve gebruikers:</label>
           <div class="col-sm-9">
-            <input class="form-control" type="number" [(ngModel)]="maxActiveUsers" name="maxActiveUsers"/>
+            <input class="form-control" type="number" [(ngModel)]="settingCache[SettingService.MAX_USERS]" name="maxActiveUsers"/>
           </div>
         </div>
 
         <div class="row padding-top-sm padding-bottom-sm">
           <label class="col-sm-3 form-control-label">Licentie datum:</label>
           <div class="col-sm-9">
-            <input class="form-control" type="date" [(ngModel)]="licenseDate" name="licenseDate"/>
+            <input class="form-control" type="date" [(ngModel)]="settingCache[SettingService.LICENSE_DATE]" name="licenseDate"/>
           </div>
         </div>
 

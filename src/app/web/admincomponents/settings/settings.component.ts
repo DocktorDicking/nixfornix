@@ -13,17 +13,7 @@ import {NgxSpinnerService} from 'ngx-spinner';
 })
 export class SettingsComponent implements OnInit {
   private settingData: SettingModel[];
-  public defaultBreaktime: number;
-  public breakTimes: any;
-  public defaultLocation: string;
-  public adminRegisterTime: boolean;
-  public adminManageUsers: boolean;
-  public maxActiveUsers: number;
-  public tableShowColEmployee: boolean;
-  public tableShowColDescription: boolean;
-  public tableShowColLocation: boolean;
-  public tableShowColApproved: boolean;
-  public licenseDate: string;
+  public settingCache: {[key: string]: any} = {};
 
   constructor(private route: ActivatedRoute, public locationService: LocationService, private settingService: SettingService,
               private toastr: ToastrService, private spinner: NgxSpinnerService) {
@@ -36,28 +26,43 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    // TODO: Continue here, implementing the new settings and shit
 
     // Initializing setting vars.
     this.settingData.forEach((setting) => {
       switch (setting.name) {
         case SettingService.DEFAULT_BREAKTIME:
-          this.defaultBreaktime = JSON.parse(setting.value);
+          this.settingCache[SettingService.DEFAULT_BREAKTIME] = JSON.parse(setting.value);
           break;
         case SettingService.BREAKTIMES:
-          this.breakTimes = setting.value;
+          this.settingCache[SettingService.BREAKTIMES] = setting.value;
           break;
         case SettingService.DEFAULT_LOCATION:
-          this.defaultLocation = setting.value;
+          this.settingCache[SettingService.DEFAULT_LOCATION] = setting.value;
           break;
         case SettingService.ADMIN_REGISTER_TIME:
-          this.adminRegisterTime = JSON.parse(setting.value);
+          this.settingCache[SettingService.ADMIN_REGISTER_TIME] = JSON.parse(setting.value);
           break;
         case SettingService.ADMIN_MANAGE_USERS:
-          this.adminManageUsers = JSON.parse(setting.value);
+          this.settingCache[SettingService.ADMIN_MANAGE_USERS] = JSON.parse(setting.value);
           break;
         case SettingService.MAX_USERS:
-          this.maxActiveUsers = JSON.parse(setting.value);
+          this.settingCache[SettingService.MAX_USERS] = JSON.parse(setting.value);
+          break;
+        case SettingService.LICENSE_DATE:
+          this.settingCache[SettingService.LICENSE_DATE] = setting.value;
+          break;
+        case SettingService.TABLE_SHOW_COL_APPROVED:
+          this.settingCache[SettingService.TABLE_SHOW_COL_APPROVED] = JSON.parse(setting.value);
+          break;
+        case SettingService.TABLE_SHOW_COL_DESCRIPTION:
+          this.settingCache[SettingService.TABLE_SHOW_COL_DESCRIPTION] = JSON.parse(setting.value);
+          break;
+        case SettingService.TABLE_SHOW_COL_LOCATION:
+          this.settingCache[SettingService.TABLE_SHOW_COL_LOCATION] = JSON.parse(setting.value);
+          break;
+        case SettingService.TABLE_SHOW_COL_EMPLOYEE:
+          this.settingCache[SettingService.TABLE_SHOW_COL_EMPLOYEE] = JSON.parse(setting.value);
           break;
       }
     });
@@ -95,11 +100,11 @@ export class SettingsComponent implements OnInit {
   }
 
   private validate(): boolean {
-    // TODO: Default breaktime must be in the 'possible breaktimes' array.
-    // TODO: Breaktimes needs to be in the format [1,2,3]
+    const btArray = JSON.parse(this.settingCache[SettingService.BREAKTIMES]);
+
     // Validate if breakTimes is an array
     try {
-      if (!(Array.isArray(JSON.parse(this.breakTimes)))) {
+      if (!(Array.isArray(btArray))) {
         this.toastr.error('Validator error: Pauze tijden staat niet in een juist formaat: [1,2,3]');
         return false;
       }
@@ -109,13 +114,13 @@ export class SettingsComponent implements OnInit {
     }
 
     // Validate default breaktime and check if it is in the array of breakTimes.
-    if (!(Number.isFinite(this.defaultBreaktime))) {
+    const defaultBreaktime = this.settingCache[SettingService.DEFAULT_BREAKTIME];
+    if (!(Number.isFinite(defaultBreaktime))) {
       this.toastr.error('Validator error: Standaard pauze tijd is geen nummer.');
       return false;
     }
 
-    const btArray = JSON.parse(this.breakTimes);
-    if (!btArray.includes(this.defaultBreaktime)) {
+    if (!btArray.includes(defaultBreaktime)) {
       this.toastr.error('Validator error: Standaard pauze tijd komt niet voor in mogelijke pauze tijden.');
       return false;
     }
@@ -123,31 +128,28 @@ export class SettingsComponent implements OnInit {
     return true;
   }
 
+  /**
+   * Gets setting data from the settingCache and sets it to the settings in the settingData array.
+   * Finally, it returns an object that will be send back to the api. The api expects this format.
+   */
   private getSettingData() {
     this.settingData.forEach((setting) => {
-      switch (setting.name) {
-        case SettingService.DEFAULT_BREAKTIME:
-          setting.value = JSON.stringify(this.defaultBreaktime);
-          break;
-        case SettingService.BREAKTIMES:
-          setting.value = this.breakTimes;
-          break;
-        case SettingService.DEFAULT_LOCATION:
-          setting.value = this.defaultLocation;
-          break;
-        case SettingService.ADMIN_REGISTER_TIME:
-          setting.value = JSON.stringify(this.adminRegisterTime);
-          break;
-        case SettingService.ADMIN_MANAGE_USERS:
-          setting.value = JSON.stringify(this.adminManageUsers);
-          break;
-        case SettingService.MAX_USERS:
-          setting.value = JSON.stringify(this.maxActiveUsers);
-          break;
+      if (setting.name === SettingService.BREAKTIMES) {
+        setting.value = this.settingCache[SettingService.DEFAULT_BREAKTIME];
       }
+      if (setting.name === SettingService.DEFAULT_LOCATION) {
+        setting.value = this.settingCache[SettingService.DEFAULT_LOCATION];
+      }
+      if (setting.name === SettingService.LICENSE_DATE) {
+        setting.value = this.settingCache[SettingService.LICENSE_DATE];
+      }
+
+      setting.value = JSON.stringify(this.settingCache[setting.name]);
     });
 
     // Return object with the property settings and stringify it so that a json string is returned.
     return {settings: this.settingData};
   }
+
+  protected readonly SettingService = SettingService;
 }
