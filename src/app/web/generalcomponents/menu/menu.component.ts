@@ -17,8 +17,7 @@ export class MenuComponent implements OnInit {
   public readonly StateService = StateService;
 
   public settingData: SettingModel[];
-  public adminCanRegisterTime = false;
-  public adminCanManageUsers = false;
+  public settingCache: {[key: string]: any} = {};
 
   constructor(public stateService: StateService, private authService: AuthService,
               private route: ActivatedRoute) {
@@ -47,11 +46,11 @@ export class MenuComponent implements OnInit {
       switch (setting.name) {
         case SettingService.ADMIN_MANAGE_USERS:
           // Cast from String to boolean using JSON
-          this.adminCanManageUsers = JSON.parse(setting.value);
+          this.settingCache[SettingService.ADMIN_MANAGE_USERS] = JSON.parse(setting.value);
           break;
         case SettingService.ADMIN_REGISTER_TIME:
           // Cast from String to boolean using JSON
-          this.adminCanRegisterTime = JSON.parse(setting.value);
+          this.settingCache[SettingService.ADMIN_REGISTER_TIME] = JSON.parse(setting.value);
           break;
       }
     });
