@@ -7,6 +7,9 @@ import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {ExcelService} from '../../../shared/services/excel.service';
 import {LocationService} from '../../../shared/services/location.service';
+import {ActivatedRoute} from '@angular/router';
+import {SettingModel} from '../../../shared/models/setting.model';
+import {SettingService} from '../../../shared/services/setting.service';
 
 /*
 TODO: make this less data intensive
@@ -44,9 +47,16 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       sortDescending: ': Sorteren aflopend'
     }
   };
+  private settingData: SettingModel[];
+  public settingCache: {[key: string]: any} = {};
 
   constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService,
-              private xlsxService: ExcelService, public locationService: LocationService) {
+              private xlsxService: ExcelService, public locationService: LocationService, private route: ActivatedRoute) {
+
+    // Reads the settingData from the RouteResolver, see SettingDataResolver.
+    this.route.data.subscribe(() => {
+      this.settingData = this.route.snapshot.data.settingData;
+    });
   }
 
   // Datatable variables
@@ -63,6 +73,28 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   @Input() times: TimeRow[] = [];
 
   ngOnInit() {
+    // Initializing setting vars. Cannot be done in template, result to null.
+    this.settingData.forEach((setting) => {
+      switch (setting.name) {
+        case SettingService.TABLE_SHOW_COL_APPROVED:
+          // Cast from String to boolean using JSON
+          this.settingCache[SettingService.TABLE_SHOW_COL_APPROVED] = JSON.parse(setting.value);
+          break;
+        case SettingService.TABLE_SHOW_COL_EMPLOYEE:
+          // Cast from String to boolean using JSON
+          this.settingCache[SettingService.TABLE_SHOW_COL_EMPLOYEE] = JSON.parse(setting.value);
+          break;
+        case SettingService.TABLE_SHOW_COL_DESCRIPTION:
+          // Cast from String to boolean using JSON
+          this.settingCache[SettingService.TABLE_SHOW_COL_DESCRIPTION] = JSON.parse(setting.value);
+          break;
+        case SettingService.TABLE_SHOW_COL_LOCATION:
+          // Cast from String to boolean using JSON
+          this.settingCache[SettingService.TABLE_SHOW_COL_LOCATION] = JSON.parse(setting.value);
+          break;
+      }
+    });
+
     // Init options here according to DT docs.
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -252,4 +284,6 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   get numNotApproved(): number {
     return this._numNotApproved;
   }
+
+  protected readonly SettingService = SettingService;
 }
