@@ -100,6 +100,7 @@ export class SettingsComponent implements OnInit {
   }
 
   private validate(): boolean {
+    // We have to parse since the input field adds String quotes to this.
     const btArray = JSON.parse(this.settingCache[SettingService.BREAKTIMES]);
 
     // Validate if breakTimes is an array
@@ -114,7 +115,7 @@ export class SettingsComponent implements OnInit {
     }
 
     // Validate default breaktime and check if it is in the array of breakTimes.
-    const defaultBreaktime = this.settingCache[SettingService.DEFAULT_BREAKTIME];
+    const defaultBreaktime = JSON.parse(this.settingCache[SettingService.DEFAULT_BREAKTIME]);
     if (!(Number.isFinite(defaultBreaktime))) {
       this.toastr.error('Validator error: Standaard pauze tijd is geen nummer.');
       return false;
@@ -129,22 +130,14 @@ export class SettingsComponent implements OnInit {
   }
 
   /**
-   * Gets setting data from the settingCache and sets it to the settings in the settingData array.
-   * Finally, it returns an object that will be send back to the api. The api expects this format.
+   * Gets setting data from the settingCache, parses it to the correct data type, and sets it to the
+   * settings in the settingData array.
+   *
+   * Finally, it returns an object that will be sent back to the api. The api expects this format.
    */
   private getSettingData() {
     this.settingData.forEach((setting) => {
-      if (setting.name === SettingService.BREAKTIMES) {
-        setting.value = this.settingCache[SettingService.DEFAULT_BREAKTIME];
-      }
-      if (setting.name === SettingService.DEFAULT_LOCATION) {
-        setting.value = this.settingCache[SettingService.DEFAULT_LOCATION];
-      }
-      if (setting.name === SettingService.LICENSE_DATE) {
-        setting.value = this.settingCache[SettingService.LICENSE_DATE];
-      }
-
-      setting.value = JSON.stringify(this.settingCache[setting.name]);
+      setting.value = this.settingCache[setting.name];
     });
 
     // Return object with the property settings and stringify it so that a json string is returned.
