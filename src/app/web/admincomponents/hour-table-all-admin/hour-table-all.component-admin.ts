@@ -241,8 +241,9 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       });
 
       // sum a total of all working hours and add it to the sheet data.
+      const totalHoursIndex = this.settingCache[SettingService.TABLE_SHOW_COL_EMPLOYEE] ? 5 : 4;
       let totalHours = 0;
-      filtered.forEach(array => totalHours += +array[5]);
+      filtered.forEach(array => totalHours += +array[totalHoursIndex]);
       filtered.push(['Totaal', totalHours]);
 
       // Service will create the excel doc with the filtered data.

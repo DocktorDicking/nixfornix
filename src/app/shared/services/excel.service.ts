@@ -75,7 +75,6 @@ export class ExcelService {
       column.width = maxLength;
     });
 
-
     // TODO: Add total hours (sum of all rows)
 
     // Generate Excel File with given name
