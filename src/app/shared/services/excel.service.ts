@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
-import {SettingModel} from '../models/setting.model';
 import {SettingService} from './setting.service';
 import {environment} from '../../../environments/environment';
 
@@ -69,11 +68,19 @@ export class ExcelService {
     // Blank Row
     worksheet.addRow([]);
 
+    // Size columns based on amount of characters in a cell.
+    worksheet.columns.forEach(column => {
+      const lengths = column.values.map(v => v.toString().length);
+      const maxLength = Math.max(...lengths.filter(v => typeof v === 'number'));
+      column.width = maxLength;
+    });
+
+
     // TODO: Add total hours (sum of all rows)
-    const filename = 'Nix4Nix_Export_' + date.toString();
-    const fileExtension = '.xlsx';
 
     // Generate Excel File with given name
+    const filename = 'Nix4Nix_Export_' + date.toString();
+    const fileExtension = '.xlsx';
     workbook.xlsx.writeBuffer().then((excelData) => {
       const blob = new Blob([excelData], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
       fs.saveAs(blob, filename + fileExtension);
