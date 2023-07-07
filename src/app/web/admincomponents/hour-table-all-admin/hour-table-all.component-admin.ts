@@ -285,5 +285,5 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
     return this._numNotApproved;
   }
 
-  protected readonly SettingService = SettingService;
+  public readonly SettingService = SettingService;
 }

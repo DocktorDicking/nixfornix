@@ -144,5 +144,5 @@ export class SettingsComponent implements OnInit {
     return {settings: this.settingData};
   }
 
-  protected readonly SettingService = SettingService;
+  public readonly SettingService = SettingService;
 }

@@ -12,7 +12,7 @@ import {environment} from '../../environments/environment';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  protected readonly environment = environment;
+  public readonly environment = environment;
 
   public message: string;
   public user = new User(null);
