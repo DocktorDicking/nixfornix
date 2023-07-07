@@ -31,7 +31,6 @@ export class StateService {
   private adminStartState = StateService.OVERVIEW_ALL;
   private userStartState = StateService.HOUR_FORM;
 
-  private settingData;
   currentState = new BehaviorSubject(null);
   private previousState: string;
   private isAdmin: boolean;

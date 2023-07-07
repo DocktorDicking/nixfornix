@@ -17,7 +17,7 @@
             <th class="form-control-label">Pauze</th>
             <th class="form-control-label">Uren</th>
             <th *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_DESCRIPTION]" class="form-control-label">Omschrijving</th>
-            <th *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_LOCATION]" class="form-control-label">Locatie</th>
+            <th *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_LOCATION]" class="form-control-label">{{environment.locationLabel}}</th>
             <th *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_APPROVED]" class="form-control-label">✓</th>
           </tr>
           </thead>

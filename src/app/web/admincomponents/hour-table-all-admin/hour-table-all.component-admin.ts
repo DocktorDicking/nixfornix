@@ -10,6 +10,7 @@ import {LocationService} from '../../../shared/services/location.service';
 import {ActivatedRoute} from '@angular/router';
 import {SettingModel} from '../../../shared/models/setting.model';
 import {SettingService} from '../../../shared/services/setting.service';
+import {environment} from '../../../../environments/environment';
 
 /*
 TODO: make this less data intensive
@@ -49,6 +50,8 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   };
   private settingData: SettingModel[];
   public settingCache: {[key: string]: any} = {};
+  public readonly SettingService = SettingService;
+  public readonly environment = environment;
 
   constructor(public timeService: TimeService, private toastr: ToastrService, private spinner: NgxSpinnerService,
               private xlsxService: ExcelService, public locationService: LocationService, private route: ActivatedRoute) {
@@ -94,6 +97,9 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
           break;
       }
     });
+
+    // Passing the settingsCache instead of the whole settingData array, since the export service is only interested in the columns active.
+    this.xlsxService.initialize(this.settingCache);
 
     // Init options here according to DT docs.
     this.dtOptions = {
@@ -284,6 +290,4 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
   get numNotApproved(): number {
     return this._numNotApproved;
   }
-
-  public readonly SettingService = SettingService;
 }

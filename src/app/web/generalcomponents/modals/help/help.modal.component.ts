@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-modals', // TODO rename to menu-help-modals
@@ -12,4 +13,5 @@ export class HelpModalComponent implements OnInit {
   ngOnInit() {
   }
 
+  public readonly environment = environment;
 }
