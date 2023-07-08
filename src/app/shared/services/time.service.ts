@@ -20,24 +20,32 @@ export class TimeService {
   constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService) {}
 
   public initialize(settingData: SettingModel[]) {
-    this.settingData = settingData;
+    /*
+    Because there are multiple components calling this method we want to make sure that this is
+    only run once. Components calling this method at the moment of writing this are:
+    - hour-table-all.component-admin.ts
+    - hour-form.component.ts
+     */
+    if (this.settingData.length < 1) {
+      this.settingData = settingData;
 
-    // Initializing setting vars.
-    this.settingData.forEach((setting) => {
-      switch (setting.name) {
-        case SettingService.DEFAULT_BREAKTIME:
-          // Cast from String to number
-          this.DEFAULTBREAKTIME = JSON.parse(setting.value);
-          break;
-        case SettingService.DEFAULT_LOCATION:
-          this.DEFAULTLOCATION = setting.value;
-          break;
-        case SettingService.BREAKTIMES:
-          // Cast from String to boolean using JSON
-          this.BREAKTIMES = JSON.parse(setting.value);
-          break;
-      }
-    });
+      // Initializing setting vars.
+      this.settingData.forEach((setting) => {
+        switch (setting.name) {
+          case SettingService.DEFAULT_BREAKTIME:
+            // Cast from String to number
+            this.DEFAULTBREAKTIME = JSON.parse(setting.value);
+            break;
+          case SettingService.DEFAULT_LOCATION:
+            this.DEFAULTLOCATION = setting.value;
+            break;
+          case SettingService.BREAKTIMES:
+            // Cast from String to boolean using JSON
+            this.BREAKTIMES = JSON.parse(setting.value);
+            break;
+        }
+      });
+    }
   }
 
   /**

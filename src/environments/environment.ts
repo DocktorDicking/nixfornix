@@ -8,7 +8,7 @@ export const environment = {
   production: false,
   API_URL: 'http://localhost:8080',
   logo_path: '../../assets/img/nix4nix-logo-alt-trans.png',
-  version: 'v0.9.8.1',
+  version: 'v0.9.8.2',
   locationLabel: 'Locatie'
 };
 

@@ -111,6 +111,8 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       autoWidth: false,
       lengthMenu: [15, 30, 60, 120]
     };
+
+    this.timeService.initialize(this.settingData);
     this.loadTimeData();
     this.locationService.getLocations();
   }
