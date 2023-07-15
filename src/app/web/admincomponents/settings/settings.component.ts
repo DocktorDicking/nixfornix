@@ -5,6 +5,7 @@ import {SettingService} from '../../../shared/services/setting.service';
 import {LocationService} from '../../../shared/services/location.service';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-settings',
@@ -26,8 +27,6 @@ export class SettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    // TODO: Continue here, implementing the new settings and shit
-
     // Initializing setting vars.
     this.settingData.forEach((setting) => {
       switch (setting.name) {
@@ -145,4 +144,5 @@ export class SettingsComponent implements OnInit {
   }
 
   public readonly SettingService = SettingService;
+  public readonly environment = environment;
 }

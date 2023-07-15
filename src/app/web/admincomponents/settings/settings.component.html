@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="row padding-top-sm">
-          <label class="col-sm-3 form-control-label">Standaard locatie:</label>
+          <label class="col-sm-3 form-control-label">Standaard {{environment.locationLabel}}:</label>
           <div class="col-sm-9 select">
             <select [(ngModel)]="settingCache[SettingService.DEFAULT_LOCATION]" name="defaultLocation" class="form-control mb-3">
               <option *ngFor="let location of this.locationService.data" [ngValue]=location.name>{{location.name}}</option>
@@ -51,7 +51,7 @@
           </div>
         </div>
         <div class="row padding-top-sm">
-          <label class="col-sm-3 form-control-label">Kolom locatie zichtbaar:</label>
+          <label class="col-sm-3 form-control-label">Kolom {{environment.locationLabel}} zichtbaar:</label>
           <div class="col-sm-9 select">
             <select [(ngModel)]="settingCache[SettingService.TABLE_SHOW_COL_LOCATION]" name="tableShowColLocation" class="form-control mb-3">
               <option [ngValue]="true">Ja</option>

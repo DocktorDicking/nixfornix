@@ -12,7 +12,7 @@ export class TimeService {
   public recentTimesChanged = new EventEmitter<TimeRow[]>();
   private recentTimes: TimeRow[] = [];
 
-  private settingData;
+  private settingData = [];
   private DEFAULTBREAKTIME: number;
   private DEFAULTLOCATION: string;
   public BREAKTIMES: number[];
