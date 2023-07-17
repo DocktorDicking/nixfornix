@@ -111,7 +111,6 @@ export class TimeService {
 
   /**
    * Calculates the worked hours based on the start time and the stop time.
-   * TODO: This needs to be checked on the server side.
    * @param time TimeRow
    */
   public calculateWorkedHours(time: TimeRow) {
