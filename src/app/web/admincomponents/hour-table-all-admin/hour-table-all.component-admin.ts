@@ -101,12 +101,18 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
     // Passing the settingsCache instead of the whole settingData array, since the export service is only interested in the columns active.
     this.xlsxService.initialize(this.settingCache);
 
+    // Because the first column might be employees, we need to check if that is enabled.
+    let defaultOrderColumn = 0;
+    if (this.settingCache[SettingService.TABLE_SHOW_COL_EMPLOYEE]) {
+      defaultOrderColumn = 1;
+    }
+
     // Init options here according to DT docs.
     this.dtOptions = {
       pagingType: 'full_numbers',
       destroy: true,
       language: this.dtTablesDutch,
-      order: [[0, 'desc']],
+      order: [[defaultOrderColumn, 'desc']],
       stateSave: true,
       autoWidth: false,
       lengthMenu: [30, 60, 120, 150]
