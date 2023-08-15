@@ -26,7 +26,7 @@
           <tr *ngFor="let time of this.times" (click)="openTimeModal(time)" class="htable-text" data-toggle="modal"
               data-target="#timemodal">
             <td *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_EMPLOYEE]" style="width: 25%">{{time.user.name}} {{time.user.middleName ? time.user.middleName : ''}} {{time.user.lastName}}</td>
-            <td style="width: 15%">{{time.date | date:'dd-MM-yyyy'}}</td>
+            <td style="width: 15%">{{time.date}}</td> <!-- Date format does not play nice with table sorting -->
             <td style="width: 10%">{{time.start | dlessShortTime}}</td>
             <td style="width: 10%">{{time.stop | dlessShortTime}}</td>
             <td style="width: 5%">{{time.breaktime}}</td>

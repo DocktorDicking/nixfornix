@@ -106,10 +106,10 @@ export class HourTableAllAdminComponent implements OnInit, AfterViewInit, OnDest
       pagingType: 'full_numbers',
       destroy: true,
       language: this.dtTablesDutch,
-      order: [[1, 'desc']],
+      order: [[0, 'desc']],
       stateSave: true,
       autoWidth: false,
-      lengthMenu: [15, 30, 60, 120]
+      lengthMenu: [30, 60, 120, 150]
     };
 
     this.timeService.initialize(this.settingData);
