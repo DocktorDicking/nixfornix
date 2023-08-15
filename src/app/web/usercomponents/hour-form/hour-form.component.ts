@@ -15,7 +15,6 @@ import {ActivatedRoute} from '@angular/router';
 export class HourFormComponent implements OnInit {
   private settingData;
   public time: TimeRow;
-  public breaktimes = [];
   message: string;
 
   constructor(private timeService: TimeService, private toastr: ToastrService, public locationService: LocationService,
@@ -28,7 +27,6 @@ export class HourFormComponent implements OnInit {
 
   ngOnInit() {
     this.timeService.initialize(this.settingData);
-    this.breaktimes = this.timeService.BREAKTIMES; // TODO We can reference this from the timeService?
     this.time = this.timeService.newTimeObj();
     this.locationService.getLocations();
   }
