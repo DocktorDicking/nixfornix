@@ -26,7 +26,7 @@
           <tr *ngFor="let time of this.times" (click)="openTimeModal(time)" class="htable-text" data-toggle="modal"
               data-target="#timemodal">
             <td *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_EMPLOYEE]" style="width: 25%">{{time.user.name}} {{time.user.middleName ? time.user.middleName : ''}} {{time.user.lastName}}</td>
-            <td style="width: 15%">{{time.date}}</td>
+            <td style="width: 15%">{{time.date | date:'dd-MM-yyyy'}}</td>
             <td style="width: 10%">{{time.start | dlessShortTime}}</td>
             <td style="width: 10%">{{time.stop | dlessShortTime}}</td>
             <td style="width: 5%">{{time.breaktime}}</td>
@@ -64,7 +64,7 @@
         <h4 class="modal-title">Tijd bewerken van {{modalTime.user.name}}</h4>
       </div>
       <div class="modal-body">
-        <p>Laatst bijgewerkt op: {{this.timeService.formatDate(this.modalTime.updatedAt)}}</p> <!-- TODO: use pipe -->
+        <p>Laatst bijgewerkt op: {{this.timeService.formatDate(this.modalTime.updatedAt) | date:'dd-MM-yyyy'}}</p>
         <form>
           <div class="form-group">
             <label class="form-control-label">Datum</label>
