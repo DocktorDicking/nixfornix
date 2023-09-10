@@ -1,34 +1,82 @@
 <section class="no-padding-bottom">
+
+  <!-- Top filter row -->
+  <div class="col-lg-12">
+    <div class="card">
+      <div class="card-body no-padding">
+        <form class="form-row align-items-center">
+          <div class="col-md">
+            <div class="input-group">
+              <div class="input-group-text">Filter:</div>
+              <select [(ngModel)]="filterLocationSelection" name="location" class="form-text w-50">
+                <option value="">--</option>
+                <option *ngFor="let location of this.locationService.data"
+                        [ngValue]=location.name>{{location.name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md">
+            <div class="input-group">
+              <div class="input-group-text">Jaartal:</div>
+              <select [(ngModel)]="filterYearSelection" name="year" class="form-text w-50">
+                <option value="0">--</option>
+                <option *ngFor="let year of this.chartYears"
+                        [ngValue]=year>{{year}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-md justify-content-end">
+            <div class="btn-group">
+              <button (click)="onSubmit()" type="button" class="btn btn-primary">Toepassen</button>
+              <button (click)="onReset()" type="button" class="btn btn-secondary">Reset</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
   <div class="col-lg-12">
     <div class="block">
-      <div class="card">
-        <div class="card-body">
-            <strong>Totaal geregistreerde uren</strong>
-            <canvas baseChart
-                    [datasets]="chartData"
-                    [labels]="chartLabels"
-                    [options]="chartOptions"
-                    [legend]="chartLegend"
-                    [chartType]="barChartType">
-            </canvas>
-        </div>
+      <div class="card-body">
+        <strong>Totalen & Statistieken</strong>
+        <!-- TODO -->
+      </div>
+    </div>
+  </div>
+
+  <!-- charts -->
+  <div class="col-lg-12">
+    <div class="block">
+      <div class="card-body">
+        <strong>Totaal geregistreerde uren</strong>
+        <canvas baseChart
+                [datasets]="chartData"
+                [labels]="chartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="barChartType">
+        </canvas>
       </div>
     </div>
   </div>
   <div class="col-lg-12">
     <div class="block">
-      <div class="card">
-        <div class="card-body">
-          <strong>Totaal geregistreerde uren</strong>
-          <canvas baseChart
-                  [datasets]="chartData"
-                  [labels]="chartLabels"
-                  [options]="chartOptions"
-                  [legend]="chartLegend"
-                  [chartType]="lineChartType">
-          </canvas>
-        </div>
+      <div class="card-body">
+        <strong>Totaal geregistreerde uren</strong>
+        <canvas baseChart
+                [datasets]="chartData"
+                [labels]="chartLabels"
+                [options]="chartOptions"
+                [legend]="chartLegend"
+                [chartType]="lineChartType">
+        </canvas>
       </div>
     </div>
   </div>
 </section>
+
+

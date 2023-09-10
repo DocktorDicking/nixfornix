@@ -17,7 +17,7 @@ export class HourFormComponent implements OnInit {
   public time: TimeRow;
   message: string;
 
-  constructor(private timeService: TimeService, private toastr: ToastrService, public locationService: LocationService,
+  constructor(public timeService: TimeService, private toastr: ToastrService, public locationService: LocationService,
               private spinner: NgxSpinnerService, private route: ActivatedRoute) {
     // Reads the settingData from the RouteResolver, see SettingDataResolver.
     this.route.data.subscribe(() => {
