@@ -8,6 +8,7 @@ import {User} from '../models/user.model';
  *
  * StateService is currently used to display the correct menu buttons and to keep track on which page (state) the user is.
  *
+ * Shared stated might be available for the admin depending on the settings.
  * Possible states:
  * 'OVERVIEW_ALL', 'MANAGE_USERS', 'DASHBOARD', 'ADMIN_LOG', 'MANAGE_LOCATIONS', 'MANAGE_SETTINGS'
  * 'HOUR_FORM', 'HOUR_OVERVIEW', 'USER_PROFILE'
@@ -22,12 +23,14 @@ export class StateService {
   public static MANAGE_LOCATIONS = 'MANAGE_LOCATIONS';
   public static MANAGE_SETTINGS = 'MANAGE_SETTINGS';
 
-  // User states
+  // Shared states
   public static HOUR_FORM = 'HOUR_FORM';
-  public static HOUR_OVERVIEW = 'HOUR_OVERVIEW';
   public static USER_PROFILE = 'USER_PROFILE';
 
-  // Default states
+  // User states
+  public static HOUR_OVERVIEW = 'HOUR_OVERVIEW';
+
+  // init Default states
   private adminStartState = StateService.OVERVIEW_ALL;
   private userStartState = StateService.HOUR_FORM;
 
@@ -37,7 +40,7 @@ export class StateService {
 
   // All states an admin needs access to
   private adminStates = [StateService.OVERVIEW_ALL, StateService.DASHBOARD, StateService.ADMIN_LOG,
-    StateService.MANAGE_LOCATIONS, StateService.MANAGE_SETTINGS];
+    StateService.MANAGE_LOCATIONS, StateService.MANAGE_SETTINGS, StateService.USER_PROFILE];
 
   // All states a user needs access to
   private userStates = [StateService.HOUR_FORM, StateService.HOUR_OVERVIEW, StateService.USER_PROFILE];

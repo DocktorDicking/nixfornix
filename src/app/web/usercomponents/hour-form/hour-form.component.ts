@@ -5,6 +5,7 @@ import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {LocationService} from '../../../shared/services/location.service';
 import {ActivatedRoute} from '@angular/router';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-hour-form',
@@ -104,4 +105,6 @@ export class HourFormComponent implements OnInit {
 
     return true;
   }
+
+  protected readonly environment = environment;
 }

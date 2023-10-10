@@ -7,7 +7,7 @@
         <form class="form-row align-items-center">
           <div class="col-md">
             <div class="input-group">
-              <div class="input-group-text">Filter:</div>
+              <div class="input-group-text">{{environment.locationLabel}}:</div>
               <select [(ngModel)]="filterLocationSelection" name="location" class="form-text w-50">
                 <option value="">--</option>
                 <option *ngFor="let location of this.locationService.data"

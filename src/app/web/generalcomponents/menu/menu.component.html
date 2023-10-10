@@ -25,7 +25,7 @@
   <!-- User menu items -->
   <li *ngIf="!stateService.getAdmin()"><a (click)="setState(StateService.HOUR_FORM)"><i class="fa fa-pencil"></i>Registreren</a></li>
   <li *ngIf="!stateService.getAdmin()"><a (click)="setState(StateService.HOUR_OVERVIEW)"><i class="fa fa-bar-chart"></i>Mijn uren</a></li>
-  <li *ngIf="!stateService.getAdmin()"><a (click)="setState(StateService.USER_PROFILE)"><i class="fa fa-user"></i>Mijn profiel</a></li>
+  <li><a (click)="setState(StateService.USER_PROFILE)"><i class="fa fa-user"></i>Mijn profiel</a></li>
   <li><a (click)="logout()"><i class="fa fa-arrow-circle-o-left"></i> Uitloggen </a></li>
 </ul>
 <span class="heading">Overig</span>

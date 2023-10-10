@@ -4,6 +4,7 @@ import {ChartdataService} from '../../../shared/services/chartdata.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {LocationService} from '../../../shared/services/location.service';
 import {WorkLocation} from '../../../shared/models/worklocation.model';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -59,4 +60,6 @@ export class DashboardComponent implements OnInit {
   public onSubmit() {
     alert('TODO');
   }
+
+  protected readonly environment = environment;
 }

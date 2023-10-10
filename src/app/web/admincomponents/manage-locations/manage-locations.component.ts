@@ -4,6 +4,7 @@ import {AuthService} from '../../../shared/services/auth.service';
 import {ToastrService} from 'ngx-toastr';
 import {WorkLocation} from '../../../shared/models/worklocation.model';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-manage-locations',
@@ -115,4 +116,5 @@ export class ManageLocationsComponent implements OnInit {
     }
   }
 
+  protected readonly environment = environment;
 }
