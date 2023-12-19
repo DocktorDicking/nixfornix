@@ -17,6 +17,7 @@ export class SettingService {
   public static TABLE_SHOW_COL_DESCRIPTION = 'table-show-col-description';
   public static TABLE_SHOW_COL_LOCATION = 'table-show-col-location';
   public static TABLE_SHOW_COL_APPROVED = 'table-show-col-approved';
+  public static DASH_SHOW_RATE = 'dash-show-rate';
   public static LICENSE_DATE = 'license-date';
 
   constructor(private http: HttpClient) {}
@@ -26,6 +27,7 @@ export class SettingService {
   }
 
   /**
+   * Calls API to update the given settings.
    *
    * @param settingJson
    */

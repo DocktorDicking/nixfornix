@@ -9,7 +9,7 @@
             <div class="input-group">
               <div class="input-group-text">{{environment.locationLabel}}:</div>
               <select [(ngModel)]="filterLocationSelection" name="location" class="form-text w-50">
-                <option value="">--</option>
+                <option value="--">--</option>
                 <option *ngFor="let location of this.locationService.data"
                         [ngValue]=location.name>{{location.name}}</option>
               </select>
@@ -38,12 +38,25 @@
     </div>
   </div>
 
-
   <div class="col-lg-12">
-    <div class="block">
+    <div class="card">
       <div class="card-body">
-        <strong>Totalen & Statistieken</strong>
-        <!-- TODO -->
+        <strong>Totalen & Statistieken: {{getChartTitles()}}</strong>
+        <form class="form-row">
+          <div class="col-md">
+            <p><br/>
+              Beste maand: <span class="defaultFontColor">{{statsBestMonthData[0]}}, {{statsBestMonthData[2]}}</span><br/>
+              Aantal uren in de beste maand: <span class="defaultFontColor">{{statsBestMonthData[1]}}</span>
+            </p>
+          </div>
+          <!-- TODO: Add setting check -->
+          <div class="col-md">
+            <p><br/>
+              Geschatte omzet: <span class="defaultFontColor">WIP{{getExpectedGrossIncome()}}</span><br/>
+              Totaal aantal uren <span class="defaultFontColor">{{statsTotalHoursSpend}}</span>
+            </p>
+          </div>
+        </form>
       </div>
     </div>
   </div>
@@ -52,7 +65,7 @@
   <div class="col-lg-12">
     <div class="block">
       <div class="card-body">
-        <strong>Totaal geregistreerde uren</strong>
+        <strong>Totaal geregistreerde uren: {{getChartTitles()}}</strong>
         <canvas baseChart
                 [datasets]="chartData"
                 [labels]="chartLabels"
@@ -66,7 +79,7 @@
   <div class="col-lg-12">
     <div class="block">
       <div class="card-body">
-        <strong>Totaal geregistreerde uren</strong>
+        <strong>Totaal geregistreerde uren {{getChartTitles()}}</strong>
         <canvas baseChart
                 [datasets]="chartData"
                 [labels]="chartLabels"

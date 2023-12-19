@@ -1,7 +1,5 @@
 /**
- * Data model for location data.
- * Called this class WorkLocation because we had conflicts using Location.
- * And you know.. WorkLocation is the first thing that came to mind.
+ * Data model for setting data.
  */
 export class SettingModel {
   id: number;
