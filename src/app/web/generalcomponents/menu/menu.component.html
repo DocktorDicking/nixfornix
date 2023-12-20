@@ -18,7 +18,7 @@
   <li *ngIf="stateService.getAdmin()"><a (click)="setState(StateService.ADMIN_LOG)"><i class="fa fa-book"></i>Logboek</a></li>
   <li *ngIf="stateService.getAdmin()"><a class="sidebar-toggle" href="#settingsDropdown" data-toggle="collapse"><i class="fa fa-cogs"></i>Instellingen</a></li>
     <ul id="settingsDropdown" class="list-unstyled collapse" style="background: #1d2124">
-      <li *ngIf="stateService.getAdmin()"><a (click)="setState(StateService.MANAGE_LOCATIONS)"><i class="fa fa-building"></i>Locaties</a></li>
+      <li *ngIf="stateService.getAdmin()"><a (click)="setState(StateService.MANAGE_LOCATIONS)"><i class="fa fa-building"></i>{{environment.locationLabel}}</a></li>
       <li *ngIf="stateService.getAdmin()"><a (click)="setState(StateService.MANAGE_SETTINGS)"><i class="fa fa-cog"></i>Applicatie instellingen</a></li>
     </ul>
 

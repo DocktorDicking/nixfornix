@@ -5,6 +5,7 @@ import $ from 'jquery';
 import {ActivatedRoute} from '@angular/router';
 import {SettingService} from '../../../shared/services/setting.service';
 import {SettingModel} from '../../../shared/models/setting.model';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -77,4 +78,6 @@ export class MenuComponent implements OnInit {
   isActiveState(state: string) {
     return (this.stateService.getCurrentStateString() === state);
   }
+
+  protected readonly environment = environment;
 }

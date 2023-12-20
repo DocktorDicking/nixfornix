@@ -63,6 +63,9 @@ export class SettingsComponent implements OnInit {
         case SettingService.TABLE_SHOW_COL_EMPLOYEE:
           this.settingCache[SettingService.TABLE_SHOW_COL_EMPLOYEE] = JSON.parse(setting.value);
           break;
+        case SettingService.ENABLE_LOCATION_DASH_RATE:
+          this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE] = JSON.parse(setting.value);
+          break;
       }
     });
   }

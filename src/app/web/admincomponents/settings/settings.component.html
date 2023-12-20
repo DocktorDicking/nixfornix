@@ -88,6 +88,15 @@
             </select>
           </div>
         </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Uurtarief per project:</label>
+          <div class="col-sm-9 select">
+            <select [(ngModel)]="settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]" name="locationDashRate" class="form-control mb-3">
+              <option [ngValue]="true">Ja</option>
+              <option [ngValue]="false">Nee</option>
+            </select>
+          </div>
+        </div>
 
         <small class="form-text">-- Licentie instellingen --</small>
         <div class="row padding-top-sm padding-bottom-sm">
