@@ -5,6 +5,9 @@ import {NgxSpinnerService} from 'ngx-spinner';
 import {LocationService} from '../../../shared/services/location.service';
 import {environment} from '../../../../environments/environment';
 import firebase from 'firebase';
+import {SettingModel} from '../../../shared/models/setting.model';
+import {SettingService} from '../../../shared/services/setting.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -12,6 +15,11 @@ import firebase from 'firebase';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  // Setting vars for the dashboard component.
+  public settingData: SettingModel[];
+  public settingCache: {[key: string]: any} = {};
+
+  // Chart vars
   public chartOptions = {
     scaleShowVerticalLines: false,
     responsive: true
@@ -36,10 +44,28 @@ export class DashboardComponent implements OnInit {
   public filterYearSelection = 0;
   public filterLocationSelection = '--'; // Start value of selection.
 
-  constructor(private chartDataService: ChartdataService, private spinner: NgxSpinnerService, public locationService: LocationService) { }
+  constructor(private chartDataService: ChartdataService, private spinner: NgxSpinnerService, public locationService: LocationService,
+              private route: ActivatedRoute) {
+
+    // Reads the settingData from the RouteResolver, see SettingDataResolver.
+    this.route.data.subscribe(() => {
+      this.settingData = this.route.snapshot.data.settingData;
+    });
+  }
 
   ngOnInit() {
     this.spinner.show('Dashboard data laden...');
+
+    // Initializing setting vars. Need to be done in ngOnInit, because of async data.
+    this.settingData.forEach((setting) => {
+      switch (setting.name) {
+        case SettingService.ENABLE_LOCATION_DASH_RATE:
+          // Cast from String to boolean using JSON
+          this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE] = JSON.parse(setting.value);
+          break;
+      }
+    });
+
     this.locationService.getLocations();
     this.chartDataService.loadChartData();
 
@@ -50,26 +76,36 @@ export class DashboardComponent implements OnInit {
         this.statsBestMonthData = this.getBestMonthData();
         this.statsTotalHoursSpend = this.getTotalHours();
 
-        // TODO: if (settings.....) {getExpectedGrossIncome}
+        if (this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]) {
+          this.statsExpectedGrossIncome = this.getExpectedGrossIncome();
+        }
 
         this.spinner.hide();
       }
     );
   }
 
+  /**
+   * Function will load the chart years from the given chart data.
+   * @param chartData
+   * @private
+   */
   private loadChartYearsFromData(chartData: any[]) {
     chartData.forEach((data) => {
       this.chartYears.push(data.label);
     });
   }
 
+  /**
+   * Function will reset the filter selection.
+   */
   public onReset() {
     this.filterYearSelection = 0;
     this.filterLocationSelection = '--';
   }
 
   public onSubmit() {
-    alert('TODO');
+    alert('This is a work in progress.');
   }
 
   protected readonly environment = environment;
@@ -115,7 +151,8 @@ export class DashboardComponent implements OnInit {
    * Function will return estimated gross income for the current selection in the dashboard.
    */
   public getExpectedGrossIncome() {
-
+    // TODO
+    return 0;
   }
 
   /**
