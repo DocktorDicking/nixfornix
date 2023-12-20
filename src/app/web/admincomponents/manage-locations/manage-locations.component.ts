@@ -5,6 +5,9 @@ import {ToastrService} from 'ngx-toastr';
 import {WorkLocation} from '../../../shared/models/worklocation.model';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {environment} from '../../../../environments/environment';
+import {SettingModel} from '../../../shared/models/setting.model';
+import {ActivatedRoute} from '@angular/router';
+import {SettingService} from '../../../shared/services/setting.service';
 
 @Component({
   selector: 'app-manage-locations',
@@ -12,11 +15,33 @@ import {environment} from '../../../../environments/environment';
   styleUrls: ['./manage-locations.component.css']
 })
 export class ManageLocationsComponent implements OnInit {
+  // Setting vars for the dashboard component.
+  public settingData: SettingModel[];
+  public settingCache: {[key: string]: any} = {};
+
+  // Location var that holds the selected location.
   public selected: WorkLocation = new WorkLocation(0);
 
-  constructor(public locationService: LocationService, private authService: AuthService, private toastr: ToastrService, private spinner: NgxSpinnerService) { }
+  constructor(public locationService: LocationService, private authService: AuthService, private toastr: ToastrService,
+              private spinner: NgxSpinnerService, private route: ActivatedRoute) {
+
+    // Reads the settingData from the RouteResolver, see SettingDataResolver.
+    this.route.data.subscribe(() => {
+      this.settingData = this.route.snapshot.data.settingData;
+    });
+  }
 
   ngOnInit() {
+    // Initializing setting vars. Need to be done in ngOnInit, because of async data.
+    this.settingData.forEach((setting) => {
+      switch (setting.name) {
+        case SettingService.ENABLE_LOCATION_DASH_RATE:
+          // Cast from String to boolean using JSON
+          this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE] = JSON.parse(setting.value);
+          break;
+      }
+    });
+
     if (this.authService.currentUserValue.admin) {
       this.locationService.getLocations();
     } else {
@@ -49,6 +74,9 @@ export class ManageLocationsComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Deletes the selected location.
+   */
   onDelete() {
     this.spinner.show();
     if (this.doesSelectedExist()) {
@@ -117,4 +145,5 @@ export class ManageLocationsComponent implements OnInit {
   }
 
   protected readonly environment = environment;
+  protected readonly SettingService = SettingService;
 }

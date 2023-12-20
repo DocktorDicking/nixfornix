@@ -4,7 +4,6 @@ import {ChartdataService} from '../../../shared/services/chartdata.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {LocationService} from '../../../shared/services/location.service';
 import {environment} from '../../../../environments/environment';
-import firebase from 'firebase';
 import {SettingModel} from '../../../shared/models/setting.model';
 import {SettingService} from '../../../shared/services/setting.service';
 import {ActivatedRoute} from '@angular/router';

@@ -12,12 +12,14 @@
               <tr>
                 <th class="form-control-label">Naam</th>
                 <th class="form-control-label">Beschrijving</th>
+                <th *ngIf="this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]" class="form-control-label">Uur Tarief €</th>
               </tr>
               </thead>
               <tbody>
               <tr *ngFor="let location of this.locationService.data" class="htable htable-text" (click)="setSelected(location.id)" [class.table-row-selected]="location.id === this.selected.id">
                 <td>{{location.name}}</td>
                 <td>{{location.description}}</td>
+                <td *ngIf="this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]">{{location.rate}}</td>
               </tr>
               </tbody>
             </table>
