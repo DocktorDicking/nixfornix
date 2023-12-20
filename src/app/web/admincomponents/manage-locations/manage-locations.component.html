@@ -60,6 +60,7 @@
       </div>
       <div class="modal-body">
         <p>Weet u zeker dat u {{environment.locationLabel}} {{this.selected.name}} wilt verwijderen?
+          Dit heeft invloed op de resultaten in het Dashboard.
         </p>
       </div>
       <div class="modal-footer">
@@ -100,6 +101,11 @@
           <div class="form-group">
             <label for="description" class="form-control-label">Omschrijving</label>
             <input [(ngModel)]="this.selected.description" #description="ngModel" id="description" name="description" type="text" class="form-control">
+          </div>
+
+          <div *ngIf="this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]" class="form-group">
+            <label for="rate" class="form-control-label">Uur Tarief €</label>
+            <input [(ngModel)]="this.selected.rate" #rate="ngModel" id="rate" name="rate" type="number" class="form-control">
           </div>
         </form>
       </div>
