@@ -9,7 +9,7 @@ export class WorkLocation {
   id: number;
   name: string;
   description: string;
-  rate: number;
+  rate: any;
 
   constructor(id?: number, location?: WorkLocation) {
     if (id) {

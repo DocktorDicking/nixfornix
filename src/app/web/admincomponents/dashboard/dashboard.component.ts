@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
   // [month, hours, year]
   public statsBestMonthData: [string, number, number] = ['', 0, 0];
   public statsTotalHoursSpend = 0;
-  public statsExpectedGrossIncome = 0;
+  public statsExpectedGrossIncome;
 
   public barChartType: ChartType = 'bar';
   public lineChartType: ChartType = 'line';
@@ -150,8 +150,24 @@ export class DashboardComponent implements OnInit {
    * Function will return estimated gross income for the current selection in the dashboard.
    */
   public getExpectedGrossIncome() {
-    // TODO
-    return 0;
+    let grossRate = 0;
+
+    if (this.filterLocationSelection === '--' && this.locationService.data.length > 1) {
+      this.locationService.data.forEach((location) => {
+        grossRate += location.rate;
+      });
+
+      grossRate = grossRate / this.locationService.data.length;
+    } else if (this.filterLocationSelection !== '--' && this.locationService.data.length === 1) {
+      grossRate = this.locationService.data[0].rate;
+    }
+
+    // If grossRate is 0, then we don't have a rate to calculate with.
+    if (grossRate > 0) {
+      return (this.statsTotalHoursSpend * grossRate).toFixed(2);
+    }
+
+    return grossRate;
   }
 
   /**
@@ -168,4 +184,6 @@ export class DashboardComponent implements OnInit {
 
     return totalHours;
   }
+
+  protected readonly SettingService = SettingService;
 }

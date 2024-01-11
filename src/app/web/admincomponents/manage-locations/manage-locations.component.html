@@ -19,7 +19,7 @@
               <tr *ngFor="let location of this.locationService.data" class="htable htable-text" (click)="setSelected(location.id)" [class.table-row-selected]="location.id === this.selected.id">
                 <td>{{location.name}}</td>
                 <td>{{location.description}}</td>
-                <td *ngIf="this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]">{{location.rate}}</td>
+                <td *ngIf="this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]">€ {{location.rate}}</td>
               </tr>
               </tbody>
             </table>
@@ -105,7 +105,7 @@
 
           <div *ngIf="this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]" class="form-group">
             <label for="rate" class="form-control-label">Uur Tarief €</label>
-            <input [(ngModel)]="this.selected.rate" #rate="ngModel" id="rate" name="rate" type="number" class="form-control">
+            <input [(ngModel)]="this.selected.rate" #rate="ngModel" id="rate" name="rate" type="text" class="form-control">
           </div>
         </form>
       </div>

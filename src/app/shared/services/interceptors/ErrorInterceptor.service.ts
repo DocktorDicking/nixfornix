@@ -32,13 +32,15 @@ export class ErrorInterceptorService implements HttpInterceptor {
   }
 
   /**
-   * Sets message in message service so it can be send to the component currently active.
+   * Handles the error response from the API.
+   * Sets message in message service, so it can be sent to the component currently active.
+   * @param response
+   * @private
    */
   private onError(response: HttpErrorResponse): void {
-    // debugger;
-    // TODO: We realy need to redo this whole error handling shite. API needs to send: code, message, and state (error/warning)
     if (response.status === 0) {
-      this.toastr.error('Er is een fout op de server. Neem contact op met de beheerder, excuus voor het ongemak.', 'Server Error: API OFFLINE');
+      this.toastr.error('Er is een fout op de server. Neem contact op met de beheerder, excuus voor het ongemak.',
+        'Server Error: API OFFLINE');
     } else {
       switch (response.error.message) {
         case this.ERROR_NOTIMEFOUND:

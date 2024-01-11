@@ -107,6 +107,7 @@ export class ManageLocationsComponent implements OnInit {
 
   onSave() {
     this.spinner.show();
+    this.sanatizeRateString();
     if (this.isNew()) {
       this.locationService.onCreate(this.selected).then(res => {
         if (res.statusCode === 200) {
@@ -143,6 +144,24 @@ export class ManageLocationsComponent implements OnInit {
       });
     }
   }
+
+  /**
+   * Sanatize the rate inputfield and make sure it is an acceptable number.
+   * The html input field with type number does not allow for comma's.
+   */
+  sanatizeRateString() {
+    if (this.selected.rate) {
+      // Replace comma with period and remove non-numeric characters except periods
+      const sanitizedValue = this.selected.rate.replace(/,/g, '.').replace(/[^\d.]/g, '');
+
+      // Parse the sanitized string to a number
+      const parsedNumber = parseFloat(sanitizedValue);
+
+      // Return the parsed number or null if parsing fails
+      isNaN(parsedNumber) ? this.selected.rate = null : this.selected.rate = parsedNumber;
+    }
+  }
+
 
   protected readonly environment = environment;
   protected readonly SettingService = SettingService;
