@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {ChartType} from 'chart.js';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import Chart, {ChartType} from 'chart.js';
 import {ChartdataService} from '../../../shared/services/chartdata.service';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {LocationService} from '../../../shared/services/location.service';
@@ -7,6 +7,8 @@ import {environment} from '../../../../environments/environment';
 import {SettingModel} from '../../../shared/models/setting.model';
 import {SettingService} from '../../../shared/services/setting.service';
 import {ActivatedRoute} from '@angular/router';
+import {WorkLocation} from '../../../shared/models/worklocation.model';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -14,17 +16,35 @@ import {ActivatedRoute} from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  protected readonly environment = environment;
+  protected readonly SettingService = SettingService;
+
+  // Chart elements
+  @ViewChild('barChart', null) barElement: ElementRef<HTMLCanvasElement>;
+  @ViewChild('lineChart', null) lineElement: ElementRef<HTMLCanvasElement>;
+  private lineChart: Chart;
+  private barChart: Chart;
+
+  // Because of how the chartService now works a reset is needed before doing a new submit.
+  public submitDisabled = false;
+
   // Setting vars for the dashboard component.
   public settingData: SettingModel[];
   public settingCache: {[key: string]: any} = {};
 
   // Chart vars
-  public chartOptions = {
+  public chartOptions: any = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    legend: {
+      display: true,
+      position: 'top',
+      labels: {
+        fontColor: 'white'
+      }
+    }
   };
   public chartLabels = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
-  public chartLegend = true;
   public chartData = [];
   public chartYears = [];
   /*
@@ -37,19 +57,34 @@ export class DashboardComponent implements OnInit {
   public statsTotalHoursSpend = 0;
   public statsExpectedGrossIncome;
 
-  public barChartType: ChartType = 'bar';
-  public lineChartType: ChartType = 'line';
-
   public filterYearSelection = 0;
-  public filterLocationSelection = '--'; // Start value of selection.
+  public filterLocationSelection: WorkLocation = null; // Start value of selection.
 
   constructor(private chartDataService: ChartdataService, private spinner: NgxSpinnerService, public locationService: LocationService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, private toastr: ToastrService) {
 
     // Reads the settingData from the RouteResolver, see SettingDataResolver.
     this.route.data.subscribe(() => {
       this.settingData = this.route.snapshot.data.settingData;
     });
+
+    // Set up the callback function on the subscribe for this emitter. This needs to be called whenever the chartCacheEmitter emits.
+    this.chartDataService.chartDataEmitter.subscribe(
+      (newChartData: []) => {
+        this.spinner.show();
+        this.chartData = newChartData;
+        this.loadChartYearsFromData(newChartData);
+        this.statsBestMonthData = this.getBestMonthData();
+        this.statsTotalHoursSpend = this.getTotalHours();
+
+        if (this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]) {
+          this.statsExpectedGrossIncome = this.getExpectedGrossIncome();
+        }
+
+        this.createCharts();
+        this.spinner.hide();
+      }
+    );
   }
 
   ngOnInit() {
@@ -67,29 +102,35 @@ export class DashboardComponent implements OnInit {
 
     this.locationService.getLocations();
     this.chartDataService.loadChartData();
+  }
 
-    this.chartDataService.chartDataEmitter.subscribe(
-      (newChartData: []) => {
-        this.chartData = newChartData;
-        this.loadChartYearsFromData(newChartData);
-        this.statsBestMonthData = this.getBestMonthData();
-        this.statsTotalHoursSpend = this.getTotalHours();
+  createCharts() {
+    if (this.lineElement && this.barElement) {
+      this.lineChart = new Chart(this.lineElement.nativeElement.getContext('2d'), {
+        type: 'line',
+        data: {
+          labels: this.chartLabels,
+          datasets: this.chartData
+        },
+        options: this.chartOptions
+      });
 
-        if (this.settingCache[SettingService.ENABLE_LOCATION_DASH_RATE]) {
-          this.statsExpectedGrossIncome = this.getExpectedGrossIncome();
-        }
-
-        this.spinner.hide();
-      }
-    );
+      this.barChart = new Chart(this.barElement.nativeElement.getContext('2d'), {
+        type: 'bar',
+        data: {
+          labels: this.chartLabels,
+          datasets: this.chartData
+        },
+        options: this.chartOptions
+      });
+    }
   }
 
   /**
    * Function will load the chart years from the given chart data.
-   * @param chartData
-   * @private
    */
   private loadChartYearsFromData(chartData: any[]) {
+    this.chartYears = [];
     chartData.forEach((data) => {
       this.chartYears.push(data.label);
     });
@@ -100,14 +141,27 @@ export class DashboardComponent implements OnInit {
    */
   public onReset() {
     this.filterYearSelection = 0;
-    this.filterLocationSelection = '--';
+    this.filterLocationSelection = null;
+    this.submitDisabled = false;
+    this.chartDataService.loadChartData();
   }
 
+  /**
+   * Because of the way we fetch data and because the filters selectable values are based on this data.
+   * We need to reset first before selecting new data. Hence the use of 'submitDisabled' since we want to force the users
+   * to reset. The reset will make sure all data is loaded again which results in the filters having all the data (mainly years).
+   *
+   * The list of selectable years is based on the fetched data. We might want to change this in some future update by loading
+   * the years once (during the first data fetch).
+   */
   public onSubmit() {
-    alert('This is a work in progress.');
+    if (!this.submitDisabled) {
+      this.submitDisabled = true;
+      this.chartDataService.loadChartData(this.filterYearSelection, this.filterLocationSelection.id);
+    } else {
+      this.toastr.warning('Klik eerst op de Reset knop voordat u een nieuwe selectie maakt.');
+    }
   }
-
-  protected readonly environment = environment;
 
   /**
    * Gets the best month data. As a Tuple [string, number] == [month, hours].
@@ -139,8 +193,8 @@ export class DashboardComponent implements OnInit {
    */
   public getChartTitles(): string {
     // Get chart title based on filterLocationSelection
-    if (!(this.filterLocationSelection === '--') && !(this.filterLocationSelection === '')) {
-      return this.filterLocationSelection;
+    if (this.filterLocationSelection) {
+      return this.filterLocationSelection.name;
     }
 
     return 'Alle data';
@@ -150,24 +204,26 @@ export class DashboardComponent implements OnInit {
    * Function will return estimated gross income for the current selection in the dashboard.
    */
   public getExpectedGrossIncome() {
-    let grossRate = 0;
+    // If there is no data, return 0.
+    if (this.locationService.data.length === 0) {
+      return 0;
+    }
 
-    if (this.filterLocationSelection === '--' && this.locationService.data.length > 1) {
+    // If there is only one location, return the total hours * location.rate.
+    if (this.locationService.data.length === 1) {
+      return (this.statsTotalHoursSpend * this.locationService.data[0].rate).toFixed(2);
+    }
+
+    // If there are more than one location, return the average rate * total hours.
+    if (this.locationService.data.length > 1) {
+      let grossRate = 0;
       this.locationService.data.forEach((location) => {
         grossRate += location.rate;
       });
 
       grossRate = grossRate / this.locationService.data.length;
-    } else if (this.filterLocationSelection !== '--' && this.locationService.data.length === 1) {
-      grossRate = this.locationService.data[0].rate;
-    }
-
-    // If grossRate is 0, then we don't have a rate to calculate with.
-    if (grossRate > 0) {
       return (this.statsTotalHoursSpend * grossRate).toFixed(2);
     }
-
-    return grossRate;
   }
 
   /**
@@ -184,6 +240,4 @@ export class DashboardComponent implements OnInit {
 
     return totalHours;
   }
-
-  protected readonly SettingService = SettingService;
 }

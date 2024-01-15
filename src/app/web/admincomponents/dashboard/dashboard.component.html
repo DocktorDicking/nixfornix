@@ -9,9 +9,9 @@
             <div class="input-group">
               <div class="input-group-text">{{environment.locationLabel}}:</div>
               <select [(ngModel)]="filterLocationSelection" name="location" class="form-text w-50">
-                <option value="--">--</option>
+                <option value="">--</option>
                 <option *ngFor="let location of this.locationService.data"
-                        [ngValue]=location.name>{{location.name}}</option>
+                        [ngValue]=location>{{location.name}}</option>
               </select>
             </div>
           </div>
@@ -73,13 +73,7 @@
     <div class="block">
       <div class="card-body">
         <strong>Totaal geregistreerde uren: {{getChartTitles()}}</strong>
-        <canvas baseChart
-                [datasets]="chartData"
-                [labels]="chartLabels"
-                [options]="chartOptions"
-                [legend]="chartLegend"
-                [chartType]="barChartType">
-        </canvas>
+        <canvas #barChart></canvas>
       </div>
     </div>
   </div>
@@ -87,13 +81,7 @@
     <div class="block">
       <div class="card-body">
         <strong>Totaal geregistreerde uren {{getChartTitles()}}</strong>
-        <canvas baseChart
-                [datasets]="chartData"
-                [labels]="chartLabels"
-                [options]="chartOptions"
-                [legend]="chartLegend"
-                [chartType]="lineChartType">
-        </canvas>
+        <canvas #lineChart></canvas>
       </div>
     </div>
   </div>
