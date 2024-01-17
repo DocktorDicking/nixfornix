@@ -105,6 +105,12 @@ export class DashboardComponent implements OnInit {
   }
 
   createCharts() {
+    // Charts need to be destroyed to avoid visual bugs where multiple charts are rendered.
+    if (this.lineChart && this.barChart) {
+      this.lineChart.destroy();
+      this.barChart.destroy();
+    }
+
     if (this.lineElement && this.barElement) {
       this.lineChart = new Chart(this.lineElement.nativeElement.getContext('2d'), {
         type: 'line',
@@ -157,7 +163,10 @@ export class DashboardComponent implements OnInit {
   public onSubmit() {
     if (!this.submitDisabled) {
       this.submitDisabled = true;
-      this.chartDataService.loadChartData(this.filterYearSelection, this.filterLocationSelection.id);
+
+      // If no location is selected, filterLocationSelection will me null. Thus .id will result in errors.
+      const locationId = this.filterLocationSelection ? this.filterLocationSelection.id : null;
+      this.chartDataService.loadChartData(this.filterYearSelection, locationId);
     } else {
       this.toastr.warning('Klik eerst op de Reset knop voordat u een nieuwe selectie maakt.');
     }
@@ -204,6 +213,11 @@ export class DashboardComponent implements OnInit {
    * Function will return estimated gross income for the current selection in the dashboard.
    */
   public getExpectedGrossIncome() {
+    // Whenever a location is selected we only want to use the rate of that location.
+    if (this.filterLocationSelection) {
+      return (this.statsTotalHoursSpend * this.filterLocationSelection.rate).toFixed(2);
+    }
+
     // If there is no data, return 0.
     if (this.locationService.data.length === 0) {
       return 0;

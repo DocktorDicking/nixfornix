@@ -61,7 +61,7 @@ export class ChartdataService {
    */
   public loadChartData(year?: number, locationId?: number) {
     // If year and locationId are set, fetch the data for that year and location.
-    if (year && locationId) {
+    if (year || locationId) {
       this.fetchChartData(year, locationId);
     } else {
       this.fetchChartData();
@@ -74,8 +74,12 @@ export class ChartdataService {
   private fetchChartData(year?: number, locationId?: number): Subscription {
     // If year and locationId are set, fetch the data for that year and location.
     let httpString = '/chart/get';
-    if (year && locationId) { // TODO Split this in year and location.
+    if (year && locationId) {
       httpString = '/chart/get?year=' + year + '&locationId=' + locationId;
+    } else if (year && !locationId) {
+      httpString = '/chart/get?year=' + year;
+    } else if (!year && locationId) {
+      httpString = '/chart/get?locationId=' + locationId;
     }
 
     return this.http.get<any>(httpString)
