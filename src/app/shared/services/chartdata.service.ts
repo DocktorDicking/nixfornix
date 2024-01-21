@@ -20,7 +20,11 @@ export class ChartdataService {
           this.chartData = [];
         }
 
-        cache.forEach((row: any, counter) => {
+        // The foreach counter counts to much in this setup.
+        let colorCounter = 0;
+        const black = 'rgb(0,0,0)';
+
+        cache.forEach((row: any) => {
           if (this.chartData.length > 0 && this.chartYearExists(row.year)) {
             this.chartData.forEach((chartDataObj) => {
               if (chartDataObj.label === row.year) {
@@ -29,16 +33,26 @@ export class ChartdataService {
               }
             });
           } else {
-            const obj = {
-              label: undefined,
-              backgroundColor: this.getColor(counter),
+            const color = this.getColor(colorCounter);
+            const hoverColor = this.getColor(colorCounter, true);
+
+            // Chart config for each year
+            const chartObj = {
+              label: row.year,
+              backgroundColor: color,
+              borderColor: black,
+              borderWidth: 1,
+              hoverBackgroundColor: hoverColor,
+              hoverBorderColor: black,
               data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             };
 
+            // Set the data in the data property of the chartObj
             const index = row.month - 1;
-            obj.label = row.year;
-            obj.data[index] = row.hours;
-            this.chartData.push(obj);
+            chartObj.data[index] = row.hours;
+            this.chartData.push(chartObj);
+
+            colorCounter++;
           }
         });
 
@@ -70,9 +84,11 @@ export class ChartdataService {
 
   /**
    * Sends the request to fetch the chartData from the server.
+   * This method accepts optional params. When both year and locationId are set data will be
+   * fetched for the current location and year. If one of the params is set data for that param will be fetched.
    */
   private fetchChartData(year?: number, locationId?: number): Subscription {
-    // If year and locationId are set, fetch the data for that year and location.
+    // Create the httpString depending on the given params.
     let httpString = '/chart/get';
     if (year && locationId) {
       httpString = '/chart/get?year=' + year + '&locationId=' + locationId;
@@ -106,31 +122,30 @@ export class ChartdataService {
   }
 
   /**
-   * Generates a random color for the chart.
+   * Get's a color from the
    */
-  private getColor(index: number): string {
-    // TODO we need these colors to have some opacity.
+  private getColor(index: number, hoverColor?: boolean): string {
+    // Change the opacity for the hover color.
+    let opacity = 0.5;
+    if (hoverColor) {
+      opacity = 1;
+    }
+
+    // Array with our chart colors with opacity.
     const pastelColors = [
-      '#98FB98', // PaleGreen
-      '#AFEEEE', // PaleTurquoise
-      '#F0E68C', // Khaki
-      '#FFC0CB', // Pink
-      '#FFA07A', // LightSalmon
-      '#FFD700', // Gold
-      '#87CEFA', // LightSkyBlue
-      '#B0E0E6', // PowderBlue
-      '#DDA0DD', // Plum
-      '#E6E6FA', // Lavender
-      '#F08080', // LightCoral
-      '#E0FFFF', // LightCyan
-      '#FAFAD2', // LightGoldenrodYellow
-      '#D3D3D3', // LightGray
-      '#FFF5EE', // Seashell
-      '#FFE4E1', // MistyRose
-      '#FDF5E6', // OldLace
-      '#FFFACD', // LemonChiffon
-      '#F5FFFA', // MintCream
+      'rgba(152, 251, 152, ' + opacity + ')', // PaleGreen
+      'rgba(135, 206, 250,' + opacity + ')', // Skyblue
+      'rgba(255, 215, 0,' + opacity + ')', // Gold
+      'rgba(255, 228, 196,' + opacity + ')', // Bisque
+      'rgba(255, 99, 71,' + opacity + ')', // Tomato
+      'rgba(245, 245, 220,' + opacity + ')', // Beige
     ];
+
+    // When the given index exceeds the color array limit, we want to set the index to 0 again and keep going from there.
+    if (index > (pastelColors.length - 1)) {
+      const newIndex = (index % pastelColors.length) - 1;
+      return pastelColors[newIndex];
+    }
 
     return pastelColors[index];
   }
