@@ -6,7 +6,7 @@ import {WorkLocation} from '../../../shared/models/worklocation.model';
 import {NgxSpinnerService} from 'ngx-spinner';
 import {environment} from '../../../../environments/environment';
 import {SettingModel} from '../../../shared/models/setting.model';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SettingService} from '../../../shared/services/setting.service';
 
 @Component({
@@ -23,7 +23,7 @@ export class ManageLocationsComponent implements OnInit {
   public selected: WorkLocation = new WorkLocation(0);
 
   constructor(public locationService: LocationService, private authService: AuthService, private toastr: ToastrService,
-              private spinner: NgxSpinnerService, private route: ActivatedRoute) {
+              private spinner: NgxSpinnerService, private route: ActivatedRoute, private router: Router) {
 
     // Reads the settingData from the RouteResolver, see SettingDataResolver.
     this.route.data.subscribe(() => {
@@ -45,7 +45,7 @@ export class ManageLocationsComponent implements OnInit {
     if (this.authService.currentUserValue.admin) {
       this.locationService.getLocations();
     } else {
-      // TODO redirect
+      this.router.navigate(['login']);
     }
   }
 
