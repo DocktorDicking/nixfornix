@@ -4,6 +4,7 @@ import {UserService} from '../../../shared/services/user.service';
 import {AuthService} from '../../../shared/services/auth.service';
 import {MailerService} from '../../../shared/services/mailer.service';
 import {ToastrService} from 'ngx-toastr';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Component({
   selector: 'app-manage-users',
@@ -15,6 +16,7 @@ export class ManageUsersComponent implements OnInit {
   // TODO Add validation for all other fields.
 
   public readonly NEW_USER_ID: number = 0;
+  public showInactive = false;
 
   public formUser: User = new User(this.NEW_USER_ID);
   public message: string;
@@ -22,12 +24,14 @@ export class ManageUsersComponent implements OnInit {
   public newPassword: string;
   public sendmail = false;
 
-  constructor(public userService: UserService, private authService: AuthService, private mailerService: MailerService, private toastr: ToastrService) {
-  }
+  constructor(public userService: UserService, private authService: AuthService, private mailerService: MailerService,
+              private toastr: ToastrService, private spinner: NgxSpinnerService) { }
 
   ngOnInit() {
-    this.userService.getUsers();
+    this.spinner.show();
+    this.userService.getUsers(this.showInactive);
     this.newPassword = '';
+    this.spinner.hide();
   }
 
   /**
@@ -53,6 +57,15 @@ export class ManageUsersComponent implements OnInit {
         }
       });
     }
+  }
+
+  /**
+   * Used by the checkbox on top of the table to show/hide inactive users.
+   * This does not do a http call but loads the data from the userCache.
+   */
+  public showInactiveChange() {
+    this.userService.showInactive = this.showInactive;
+    this.userService.refreshDataFromCache();
   }
 
   /**

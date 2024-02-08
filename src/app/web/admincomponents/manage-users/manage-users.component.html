@@ -3,6 +3,10 @@
     <div class="block">
       <div class="title">
         <strong>Geregistreerde gebruikers</strong>
+        <div class="custom-checkbox">
+          <label for="showInactiveUsers">Laat inactieve gebruikers zien</label>
+          <input type="checkbox" id="showInactiveUsers" [(ngModel)]="showInactive" (change)="showInactiveChange()">
+        </div>
       </div>
       <div *ngIf="this.userService.users.length > 0">
         <div class="table-responsive table-responsive-scrollable">

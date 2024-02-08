@@ -7,8 +7,9 @@ import {NgxSpinnerService} from 'ngx-spinner';
 
 @Injectable()
 export class UserService {
-  usersChanged = new EventEmitter<User[]>();
   public users: User[] = [];
+  private userCache: User[] = [];
+  public showInactive = false;
 
   // TODO: Rewrite this shite like the timeservice. Where the logic is on the component.
 
@@ -20,13 +21,26 @@ export class UserService {
    * Returns all users
    * @return User[]
    */
-  public getUsers() {
+  public getUsers(showInactive: boolean) {
     this.spinner.show();
     this.http.get<User[]>('/user/list')
       .subscribe(data => {
         if (data.length > 0) {
-          this.users = data;
-          this.usersChanged.emit(this.users);
+          if (!showInactive) {
+            this.showInactive = showInactive;
+            this.userCache = data;
+            this.users = [];
+
+            this.userCache.forEach(user => {
+              if (user.active) {
+                this.users.push(user);
+              }
+            });
+          } else {
+            this.users = data;
+          }
+
+          // this.userDataEmitter.emit(this.users);
           this.spinner.hide();
         } else {
           this.spinner.hide();
@@ -36,6 +50,7 @@ export class UserService {
   }
 
   /**
+   * TODO?
    * Validates user object on errors and returns a boolean and a message.
    * @return boolean
    */
@@ -43,6 +58,9 @@ export class UserService {
     return false;
   }
 
+  /**
+   * Returns a single user from the dataset of users.
+   */
   public getUser(id: number): User {
     for (const user of this.users) {
       if (user.id === id) {
@@ -50,6 +68,35 @@ export class UserService {
       }
     }
     return null;
+  }
+
+  /**
+   * Pass through.
+   */
+  private getUsersAfterUpdate() {
+    if (this.showInactive !== undefined) {
+      this.getUsers(this.showInactive);
+    } else {
+      this.getUsers(true);
+    }
+  }
+
+  /**
+   * When showing/hiding inactive users we do not want to do another http call.
+   * Just to keep calls to a minimum we use the Cache to refresh it's dataset.
+   */
+  public refreshDataFromCache() {
+    if (!this.showInactive) {
+      this.users = [];
+
+      this.userCache.forEach(user => {
+        if (user.active) {
+          this.users.push(user);
+        }
+      });
+    } else {
+      this.users = this.userCache;
+    }
   }
 
   /**
@@ -76,7 +123,7 @@ export class UserService {
       .then( res => {
         if (res.statusCode === 200) {
           if (this.authService.currentUserValue.admin) {
-            this.getUsers();
+            this.getUsersAfterUpdate();
             this.spinner.hide();
             this.toastr.success('Gebruiker: ' + newUserPayload.username + ' is succesvol geüpdatet.', 'Gebruiker geüpdatet');
           } else {
@@ -116,7 +163,7 @@ export class UserService {
       .toPromise()
       .then( res => {
         if (res.statusCode === 200) {
-          this.getUsers();
+          this.getUsersAfterUpdate();
           this.toastr.success('Gebruiker: ' + newUserPayload.username + ' is succesvol aangemaakt.', 'Gebruiker aangemaakt');
         } else {
           this.toastr.error('De gebruiker kon niet worden aangemaakt.' +
@@ -146,7 +193,7 @@ export class UserService {
       .toPromise()
       .then( res => {
         if (res.statusCode === 200) {
-          this.getUsers();
+          this.getUsersAfterUpdate();
           this.spinner.hide();
           this.toastr.success('Gebruiker: ' + deleteUserPayload.username + ' en al zijn data, is succesvol verwijderd.',
             'Gebruiker verwijderd.');

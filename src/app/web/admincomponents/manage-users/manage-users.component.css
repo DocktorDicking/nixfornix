@@ -1,0 +1,8 @@
+.custom-checkbox {
+  display: flex;
+  justify-content: end;
+}
+
+.custom-checkbox input[type="checkbox"] {
+  margin-left: 10px;
+}
