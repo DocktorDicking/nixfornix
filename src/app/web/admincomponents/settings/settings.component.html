@@ -31,6 +31,13 @@
             </select>
           </div>
         </div>
+        <div class="row padding-top-sm">
+          <label class="col-sm-3 form-control-label">Deadline registratie:</label>
+          <div class="col-sm-9">
+            <input class="form-control" type="number" [(ngModel)]="settingCache[SettingService.DEADLINE_REGISTRATION]" name="defaultBreaktime"/>
+            <small class="form-text">De hoeveelheid tijd in uren die men heeft om de gewerkte uren te registreren.</small>
+          </div>
+        </div>
         <small class="form-text">-- Filter tabel instellingen --</small>
         <div class="row padding-top-sm">
           <label class="col-sm-3 form-control-label">Kolom werknemer zichtbaar:</label>
@@ -98,7 +105,7 @@
           </div>
         </div>
 
-        <small class="form-text">-- Licentie instellingen --</small>
+        <small class="form-text">-- Licentie --</small>
         <div class="row padding-top-sm padding-bottom-sm">
           <label class="col-sm-3 form-control-label">Max actieve gebruikers:</label>
           <div class="col-sm-9">

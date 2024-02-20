@@ -39,6 +39,9 @@ export class SettingsComponent implements OnInit {
         case SettingService.DEFAULT_LOCATION:
           this.settingCache[SettingService.DEFAULT_LOCATION] = setting.value;
           break;
+        case SettingService.DEADLINE_REGISTRATION:
+          this.settingCache[SettingService.DEADLINE_REGISTRATION] = setting.value;
+          break;
         case SettingService.ADMIN_REGISTER_TIME:
           this.settingCache[SettingService.ADMIN_REGISTER_TIME] = JSON.parse(setting.value);
           break;
@@ -85,8 +88,6 @@ export class SettingsComponent implements OnInit {
       this.spinner.show();
       this.settingService.onUpdate(this.getSettingData()).then(res => {
         if (res.statusCode === 200) {
-          // TODO: Load new data into route? Check when data is loaded.
-
           this.spinner.hide();
           this.toastr.success('Instellingen zijn opgeslagen.');
         } else {

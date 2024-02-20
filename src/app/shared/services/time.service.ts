@@ -6,6 +6,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Observable, Subscription} from 'rxjs';
 import {SettingModel} from '../models/setting.model';
 import {SettingService} from './setting.service';
+import {min} from 'rxjs/operators';
 
 @Injectable()
 export class TimeService {
@@ -16,6 +17,7 @@ export class TimeService {
   private DEFAULTBREAKTIME: number;
   private DEFAULTLOCATION: string;
   public BREAKTIMES: number[];
+  public DEADLINE: any;
 
   constructor(private http: HttpClient, private authService: AuthService, private toastr: ToastrService) {}
 
@@ -42,6 +44,17 @@ export class TimeService {
           case SettingService.BREAKTIMES:
             // Cast from String to boolean using JSON
             this.BREAKTIMES = JSON.parse(setting.value);
+            break;
+          case SettingService.DEADLINE_REGISTRATION:
+            if (setting.value === '0') {
+              this.DEADLINE = false;
+            } else {
+              if (!isNaN(Number(setting.value))) {
+                this.DEADLINE = parseInt(setting.value, 10);
+              } else {
+                this.DEADLINE = setting.value;
+              }
+            }
             break;
         }
       });

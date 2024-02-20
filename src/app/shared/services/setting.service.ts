@@ -10,6 +10,7 @@ export class SettingService {
   public static DEFAULT_BREAKTIME = 'default-breaktime';
   public static BREAKTIMES = 'breaktimes';
   public static DEFAULT_LOCATION = 'default-location';
+  public static DEADLINE_REGISTRATION = 'deadline-registration';
   public static ADMIN_REGISTER_TIME = 'admin-register-time';
   public static ADMIN_MANAGE_USERS = 'admin-manage-users';
   public static MAX_USERS = 'max-users';

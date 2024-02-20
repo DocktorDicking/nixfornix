@@ -12,10 +12,6 @@ import {AuthService} from '../auth.service';
 @Injectable()
 export class ErrorInterceptorService implements HttpInterceptor {
   ERROR_BADCREDENTIALS = 'Unauthorized';
-  ERROR_BADJWT = 'JWT signature does not match locally computed signature. ' +
-    'JWT validity cannot be asserted and should not be trusted.';
-  ERROR_OLDJWT = 'JWT signature does not match locally computed signature. ' +
-    'JWT validity cannot be asserted and should not be trusted.';
   ERROR_NOTIMEFOUND = 'No time found.';
 
   constructor(private messageService: MessageService, private toastr: ToastrService, private auth: AuthService) {}
@@ -49,16 +45,19 @@ export class ErrorInterceptorService implements HttpInterceptor {
           this.auth.logout();
           this.toastr.error(this.getMessage(response.error.error), this.getTitle(response.error.error));
           break;
-        case this.ERROR_OLDJWT || this.ERROR_BADJWT:
-          this.auth.logout();
-          this.toastr.error(this.getMessage(response.error.message), this.getTitle(response.error.message));
-          break;
         default:
+          if (response.error.status === 'UNAUTHORIZED') {
+            this.auth.logout();
+            this.toastr.error('Uw login token is verlopen. Log opnieuw in.');
+            break;
+          }
+
           const apiMessage = response.error.message;
           const message = this.getMessage(apiMessage);
           if (message) {
             this.toastr.error(message, this.getTitle(apiMessage));
           }
+          break;
       }
     }
   }
