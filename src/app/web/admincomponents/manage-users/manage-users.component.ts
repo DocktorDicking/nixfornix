@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../../shared/models/user.model';
 import {UserService} from '../../../shared/services/user.service';
 import {AuthService} from '../../../shared/services/auth.service';
 import {MailerService} from '../../../shared/services/mailer.service';
 import {ToastrService} from 'ngx-toastr';
 import {NgxSpinnerService} from 'ngx-spinner';
+import {DataTableDirective} from 'angular-datatables';
 
 @Component({
   selector: 'app-manage-users',
@@ -24,6 +25,10 @@ export class ManageUsersComponent implements OnInit {
   public newPassword: string;
   public sendmail = false;
 
+  // Table vars
+  @ViewChild(DataTableDirective, {static: false}) dtDirective: DataTableDirective;
+  public dtOptions: DataTables.Settings = {}; // Data-table settings, this is bound in the HTML on the <table> tag
+
   constructor(public userService: UserService, private authService: AuthService, private mailerService: MailerService,
               private toastr: ToastrService, private spinner: NgxSpinnerService) { }
 
@@ -31,6 +36,21 @@ export class ManageUsersComponent implements OnInit {
     this.spinner.show();
     this.userService.getUsers(this.showInactive);
     this.newPassword = '';
+
+    // Init options here according to DT docs.
+    this.dtOptions = {
+      // Disable the search bar
+      searching: false,
+      // Disable pagination forcing all items on one page
+      paging: false,
+      // Hide the length menu
+      lengthMenu: [],
+      // Disable sorting for column 4 (indexes are zero-based)
+      columnDefs: [{targets: [3], orderable: false}],
+      // Removes entries text
+      info: false,
+    };
+
     this.spinner.hide();
   }
 
