@@ -138,5 +138,5 @@ export class HourFormComponent implements OnInit {
     return true;
   }
 
-  protected readonly environment = environment;
+  public readonly environment = environment;
 }

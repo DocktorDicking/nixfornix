@@ -16,8 +16,8 @@ import {ToastrService} from 'ngx-toastr';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  protected readonly environment = environment;
-  protected readonly SettingService = SettingService;
+  public readonly environment = environment;
+  public readonly SettingService = SettingService;
 
   // Chart elements
   @ViewChild('barChart', null) barElement: ElementRef<HTMLCanvasElement>;

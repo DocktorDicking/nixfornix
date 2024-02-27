@@ -163,6 +163,6 @@ export class ManageLocationsComponent implements OnInit {
   }
 
 
-  protected readonly environment = environment;
-  protected readonly SettingService = SettingService;
+  public readonly environment = environment;
+  public readonly SettingService = SettingService;
 }

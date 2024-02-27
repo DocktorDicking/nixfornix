@@ -79,5 +79,5 @@ export class MenuComponent implements OnInit {
     return (this.stateService.getCurrentStateString() === state);
   }
 
-  protected readonly environment = environment;
+  public readonly environment = environment;
 }
