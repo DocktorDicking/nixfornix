@@ -33,7 +33,7 @@
             <td style="width: 10%">{{time.hour | number: '0.1-2'}}</td>
             <td *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_DESCRIPTION]" style="width: 20%;">{{time.description}}</td>
             <td *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_LOCATION]" style="width: 20%">{{time.location}}</td>
-            <td *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_APPROVED]" style="width: 5%"><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
+            <td *ngIf="this.settingCache[SettingService.TABLE_SHOW_COL_APPROVED]" style="width: 5%"><span style="visibility: hidden;">{{time.approved ? '1' : '0'}}</span><i *ngIf="time.approved" class="fa fa-check-square-o"></i></td>
           </tr>
           </tbody>
         </table>

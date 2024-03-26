@@ -2,30 +2,40 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.
 
-## Development server
+## Table of Contents
+- [Development Server](#development-server)
+- [Code Scaffolding](#code-scaffolding)
+- [Building the Project](#building-the-project)
+- [Testing](#testing)
+  - [Unit Testing](#unit-testing)
+  - [End-to-End Testing](#end-to-end-testing)
+- [Further Help](#further-help)
+- [To Do List](#to-do-list)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Development Server
 
-## Code scaffolding
+For a development server, run `ng serve`. This navigates to `http://localhost:4200/`. The app automatically reloads when any source files are changed.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Code Scaffolding
 
-## Build
+Use `ng generate component component-name` to generate a new component. Other generation commands are:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+- `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Running unit tests
+## Building the Project
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Use `ng build` to build the project. The build artifacts are stored in the `dist/` directory. For a production build, use the `--prod` flag.
 
-## Running end-to-end tests
+## Testing
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Unit Testing
 
-## Further help
+To execute the unit tests, run `ng test`. Testing is done via [Karma](https://karma-runner.github.io).
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+### End-to-End Testing
 
-## TODO: 
-* UI: Fix styling of hour form which breaks css when phone is in landscape. Probebly some divs or css classes that cause this.
-* OPTIONAL: Add a loadingspinner which shows when the app is loading.
+Use `ng e2e` to execute end-to-end tests via [Protractor](http://www.protractortest.org/).
+
+## Further Help
+
+For more help on the Angular CLI, use `ng help` or refer to the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
