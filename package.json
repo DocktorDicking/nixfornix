@@ -30,7 +30,7 @@
     "file-saver": "^2.0.5",
     "firebase": "^7.15.1",
     "font-awesome": "^4.7.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.7.1",
     "ng2-charts": "^2.4.2",
     "ngx-spinner": "^8.1.0",
     "ngx-toastr": "^10.1.0",
