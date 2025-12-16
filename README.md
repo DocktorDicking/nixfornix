@@ -1,6 +1,6 @@
 # Nixfornix
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5.
+This project haves been a pet project for a while now. Decided to make this public since it is not really in use anymore. 
 
 ## Table of Contents
 - [Development Server](#development-server)
